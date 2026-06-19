@@ -16,6 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
+import { getUserSession } from "@/lib/core/session";
 
 type UserType = {
   name?: string | null;
@@ -30,15 +31,15 @@ const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  //   const { data: session } = authClient.useSession();
-  //   const user = session?.user as UserType | undefined;
+  const { data: session } = authClient.useSession();
+  const user = session?.user as UserType | undefined;
 
   const handleSignOut = async (): Promise<void> => {
     await authClient.signOut();
     router.push("/login");
   };
 
-  const user = false;
+  // const user = false;
 
   useEffect(() => {
     const handleScroll = (): void => {

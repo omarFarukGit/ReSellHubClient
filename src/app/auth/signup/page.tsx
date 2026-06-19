@@ -38,7 +38,7 @@ const SignUpPage = () => {
       image: user.image as string,
       fetchOptions: {
         body: {
-          role: user.role,
+          role: user.role, // ✅ FIXED
         },
       },
     });
@@ -60,166 +60,153 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 py-10">
-      <Card className="w-full max-w-md p-7 sm:p-9 border border-gray-200 rounded-3xl shadow-xl backdrop-blur-sm">
-        {/* HEADER */}
-        <div className="text-center mb-7">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Create Account
-          </h1>
+    <div className="min-h-screen bg-white">
+      <div className="grid min-h-screen lg:grid-cols-2">
+        {/* Left SIDE */}
+        <div className="flex items-center justify-center bg-gray-50 px-5 py-10">
+          <Card className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
+            {/* HEADER */}
+            <div className="mb-8 text-center">
+              <h2 className="text-3xl font-bold text-gray-900">
+                Create Account
+              </h2>
 
-          <p className="text-sm text-gray-500 mt-2">
-            Start your journey with Study Nook
-          </p>
+              <p className="mt-2 text-gray-500">Join ResellHub marketplace</p>
+            </div>
+
+            {/* FORM */}
+            <Form onSubmit={onSubmit} className="space-y-4">
+              <TextField isRequired name="name">
+                <Label>Name</Label>
+                <Input placeholder="Your name" />
+                <FieldError />
+              </TextField>
+
+              <TextField isRequired name="email">
+                <Label>Email</Label>
+                <Input placeholder="john@example.com" />
+                <FieldError />
+              </TextField>
+
+              <TextField isRequired name="password">
+                <Label>Password</Label>
+                <Input type="password" placeholder="Create password" />
+                <Description>8+ chars, 1 uppercase, 1 number</Description>
+                <FieldError />
+              </TextField>
+
+              {/* ROLE SELECT (LOGIN STYLE MATCHED CLEAN CARDS) */}
+              <div>
+                <Label>Select Role</Label>
+
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  <div
+                    onClick={() => setRole("buyer")}
+                    className={`cursor-pointer rounded-2xl border p-4 transition-all
+                      ${
+                        role === "buyer"
+                          ? "border-orange-500 bg-orange-50 shadow-md"
+                          : "border-gray-200 hover:border-orange-300"
+                      }`}
+                  >
+                    <p className="font-semibold">🛒 Buyer</p>
+                    <p className="text-xs text-gray-500">Purchase products</p>
+                  </div>
+
+                  <div
+                    onClick={() => setRole("seller")}
+                    className={`cursor-pointer rounded-2xl border p-4 transition-all
+                      ${
+                        role === "seller"
+                          ? "border-orange-500 bg-orange-50 shadow-md"
+                          : "border-gray-200 hover:border-orange-300"
+                      }`}
+                  >
+                    <p className="font-semibold">🏪 Seller</p>
+                    <p className="text-xs text-gray-500">Sell products</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* BUTTON */}
+              <Button
+                type="submit"
+                className="w-full h-12 bg-orange-500 text-white hover:bg-orange-600"
+              >
+                Create Account
+              </Button>
+            </Form>
+
+            {/* DIVIDER */}
+            <div className="my-6 flex items-center gap-3">
+              <Separator className="flex-1" />
+              <span className="text-sm text-gray-500">Or continue</span>
+              <Separator className="flex-1" />
+            </div>
+
+            {/* GITHUB */}
+            <Button
+              onClick={signIn}
+              className="h-12 w-full border hover:bg-gray-50"
+            >
+              <FaGithub />
+              Continue with GitHub
+            </Button>
+
+            {/* LOGIN LINK */}
+            <p className="mt-6 text-center text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link
+                href={`/signin?redirect=${redirectTo}`}
+                className="text-orange-600 font-semibold hover:underline"
+              >
+                Login
+              </Link>
+            </p>
+          </Card>
         </div>
+        {/* Right SIDE (MATCH LOGIN STYLE) */}
+        <div className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 p-12 text-white">
+          <div className="absolute left-10 top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute bottom-10 right-10 h-60 w-60 rounded-full bg-white/10 blur-3xl" />
 
-        {/* FORM */}
-        <Form onSubmit={onSubmit} className="flex flex-col gap-4">
-          {/* NAME */}
-          <TextField isRequired name="name" type="text">
-            <Label className="text-sm font-medium">Name</Label>
-            <Input placeholder="Enter your name" className="h-11" />
-            <FieldError />
-          </TextField>
+          <div className="relative z-10">
+            <h1 className="text-3xl font-bold">ResellHub</h1>
+            <p className="text-orange-100">Buy • Sell • Trade</p>
 
-          {/* IMAGE */}
-          <TextField name="image" type="url" className="hidden">
-            <Label>Image</Label>
-            <Input />
-          </TextField>
+            <h2 className="mt-20 text-5xl font-bold leading-tight">
+              Start Selling <br /> Smarter Today
+            </h2>
 
-          {/* EMAIL */}
-          <TextField
-            isRequired
-            name="email"
-            type="email"
-            validate={(value) => {
-              if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                return "Enter valid email address";
-              }
-              return null;
-            }}
-          >
-            <Label className="text-sm font-medium">Email</Label>
-            <Input placeholder="john@example.com" className="h-11" />
-            <FieldError />
-          </TextField>
+            <p className="mt-6 max-w-lg text-lg text-orange-100">
+              Join thousands of buyers and sellers on a trusted marketplace.
+            </p>
 
-          {/* PASSWORD */}
-          <TextField
-            isRequired
-            name="password"
-            type="password"
-            validate={(value) => {
-              if (value.length < 8) return "Minimum 8 characters";
-
-              if (!/[A-Z]/.test(value)) return "1 uppercase required";
-
-              if (!/[0-9]/.test(value)) return "1 number required";
-
-              return null;
-            }}
-          >
-            <Label className="text-sm font-medium">Password</Label>
-
-            <Input placeholder="Enter strong password" className="h-11" />
-
-            <Description className="text-xs text-gray-500">
-              Use 8+ chars, 1 uppercase, 1 number
-            </Description>
-
-            <FieldError />
-          </TextField>
-
-          {/* ROLE SELECT (MODERN CARDS) */}
-          <div>
-            <Label className="text-sm font-medium">Select Role</Label>
-
-            <input type="hidden" name="role" value={role} />
-
-            <div className="grid grid-cols-2 gap-3 mt-3">
-              {/* BUYER */}
-              <Card
-                onClick={() => setRole("buyer")}
-                className={`cursor-pointer p-4 rounded-2xl border transition-all duration-200 hover:scale-[1.02]
-                  ${
-                    role === "buyer"
-                      ? "border-orange-500 bg-orange-50 shadow-md"
-                      : "border-gray-200 hover:border-orange-300"
-                  }
-                `}
-              >
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold text-gray-900">
-                    🛒 Buyer
-                  </span>
-                  <span className="text-xs text-gray-500 mt-1">
-                    Purchase products
-                  </span>
-                </div>
-              </Card>
-
-              {/* SELLER */}
-              <Card
-                onClick={() => setRole("seller")}
-                className={`cursor-pointer p-4 rounded-2xl border transition-all duration-200 hover:scale-[1.02]
-                  ${
-                    role === "seller"
-                      ? "border-orange-500 bg-orange-50 shadow-md"
-                      : "border-gray-200 hover:border-orange-300"
-                  }
-                `}
-              >
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold text-gray-900">
-                    🏪 Seller
-                  </span>
-                  <span className="text-xs text-gray-500 mt-1">
-                    Sell products
-                  </span>
-                </div>
-              </Card>
+            <div className="mt-12 space-y-5">
+              <p>✔ Verified Community</p>
+              <p>✔ Secure Transactions</p>
+              <p>✔ Fast Listings</p>
             </div>
           </div>
 
-          {/* BUTTON */}
-          <Button
-            type="submit"
-            className="w-full h-11 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-medium transition-all"
-          >
-            Create Account
-          </Button>
-        </Form>
+          <div className="relative z-10 grid grid-cols-3 gap-6">
+            <div>
+              <h3 className="text-3xl font-bold">10K+</h3>
+              <p className="text-orange-100">Products</p>
+            </div>
 
-        {/* DIVIDER */}
-        <div className="flex items-center gap-3 my-7">
-          <Separator className="flex-1" />
-          <span className="text-xs text-gray-400">Or continue with</span>
-          <Separator className="flex-1" />
+            <div>
+              <h3 className="text-3xl font-bold">5K+</h3>
+              <p className="text-orange-100">Users</p>
+            </div>
+
+            <div>
+              <h3 className="text-3xl font-bold">99%</h3>
+              <p className="text-orange-100">Trust</p>
+            </div>
+          </div>
         </div>
-
-        {/* GITHUB */}
-        <Button
-          onClick={signIn}
-          className="w-full h-11 rounded-xl border hover:bg-gray-50"
-        >
-          <FaGithub className="text-lg" />
-          <span className="ml-2">GitHub</span>
-        </Button>
-
-        {/* LOGIN */}
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">
-            Already have an account?{" "}
-            <Link
-              href={`/signin?redirect=${redirectTo}`}
-              className="text-orange-600 font-medium hover:underline"
-            >
-              Login
-            </Link>
-          </p>
-        </div>
-      </Card>
+      </div>
     </div>
   );
 };
