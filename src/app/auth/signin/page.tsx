@@ -183,13 +183,17 @@ const LoginPage = () => {
               >
                 <Label>Password</Label>
 
-                <div className="relative">
-                  <Input placeholder="Enter your password" />
+                <div className="relative w-full">
+                  <Input
+                    placeholder="Enter your password"
+                    className="w-full pr-10"
+                    type={showPassword ? "text" : "password"}
+                  />
 
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
