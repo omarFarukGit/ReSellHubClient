@@ -9,121 +9,97 @@ import { RiTwitterXLine } from "react-icons/ri";
 const Footer = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     // toast.success("Message sent successfully!");
   };
 
   return (
-    <footer className="bg-slate-50 border-t">
+    <footer className="bg-white border-t">
       <div className="max-w-7xl mx-auto px-6 py-16">
+        {/* TOP GRID */}
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
+          {/* BRAND */}
           <div>
-            <h2 className="text-2xl font-bold">
-              <span className="text-[#F97316]">ReSell</span>Hub
+            <h2 className="text-2xl font-bold tracking-tight">
+              <span className="text-orange-500">ReSell</span>Hub
             </h2>
 
             <p className="mt-4 text-sm text-slate-600 leading-6">
-              Resell Hub is a trusted marketplace where users can buy and sell
-              quality second-hand products easily, securely, and at affordable
-              prices.
+              A trusted marketplace where users buy and sell quality second-hand
+              products safely and easily.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* QUICK LINKS */}
           <div>
             <h3 className="font-semibold text-slate-900 mb-4">Quick Links</h3>
 
             <ul className="space-y-3 text-sm">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-slate-600 hover:text-blue-600"
-                >
-                  About Us
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-slate-600 hover:text-blue-600"
-                >
-                  Contact
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/team"
-                  className="text-slate-600 hover:text-blue-600"
-                >
-                  Our Team
-                </Link>
-              </li>
+              {[
+                { href: "/about", label: "About Us" },
+                { href: "/contact", label: "Contact" },
+                { href: "/team", label: "Our Team" },
+              ].map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-slate-600 hover:text-orange-500 transition"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* CONTACT */}
           <div>
             <h3 className="font-semibold text-slate-900 mb-4">Contact Info</h3>
 
             <div className="space-y-2 text-sm text-slate-600">
-              <p>Dhaka, Bangladesh</p>
-              <p>support@studynook.com</p>
-              <p>+880 1700-000000</p>
+              <p>📍 Dhaka, Bangladesh</p>
+              <p>📧 support@resellhub.com</p>
+              <p>📞 +880 1700-000000</p>
             </div>
 
-            {/* Social */}
+            {/* SOCIAL */}
             <div className="flex gap-4 mt-5">
-              <a
-                href="#"
-                className="text-xl hover:scale-110 transition-transform"
-              >
+              <a className="hover:scale-110 transition">
                 <FaFacebookF className="text-[#1877F2]" />
               </a>
 
-              <a
-                href="#"
-                className="text-xl hover:scale-110 transition-transform"
-              >
+              <a className="hover:scale-110 transition">
                 <RiTwitterXLine />
               </a>
 
-              <a
-                href="#"
-                className="text-xl hover:scale-110 transition-transform"
-              >
+              <a className="hover:scale-110 transition">
                 <FaLinkedin className="text-[#0A66C2]" />
               </a>
             </div>
           </div>
 
-          {/* Newsletter */}
+          {/* MESSAGE BOX */}
           <div>
-            <h3 className="font-semibold text-slate-900 mb-4">
-              Send a Message
-            </h3>
+            <h3 className="font-semibold text-slate-900 mb-4">Send Message</h3>
 
             <form onSubmit={handleSubmit} className="space-y-3">
               <textarea
                 placeholder="Write your message..."
-                className="w-full h-24 rounded-lg border p-3 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full h-24 rounded-xl border border-slate-200 p-3 text-sm outline-none focus:ring-2 focus:ring-orange-500 resize-none"
               />
 
               <div className="relative">
-                <BiEnvelope className="absolute left-3 top-3 text-slate-500" />
+                <BiEnvelope className="absolute left-3 top-3 text-slate-400" />
 
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  className="w-full rounded-lg border pl-10 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Your email"
+                  className="w-full rounded-xl border border-slate-200 pl-10 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
 
               <button
                 type="submit"
-                className="flex items-center gap-2 rounded-lg bg-[#FF6F00] px-4 py-2 text-white hover:bg-[#E65C00] transition"
+                className="flex items-center justify-center gap-2 w-full rounded-xl bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 transition"
               >
                 <BsFillSendFill />
                 Send Message
@@ -132,20 +108,20 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom */}
+        {/* BOTTOM */}
         <div className="mt-12 border-t pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
           <p>© 2026 ReSellHub. All rights reserved.</p>
 
           <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-blue-600">
-              Privacy Policy
+            <Link className="hover:text-orange-500 transition" href="/privacy">
+              Privacy
             </Link>
 
-            <Link href="/terms" className="hover:text-blue-600">
-              Terms of Service
+            <Link className="hover:text-orange-500 transition" href="/terms">
+              Terms
             </Link>
 
-            <Link href="/cookies" className="hover:text-blue-600">
+            <Link className="hover:text-orange-500 transition" href="/cookies">
               Cookies
             </Link>
           </div>

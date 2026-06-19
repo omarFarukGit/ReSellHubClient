@@ -147,7 +147,7 @@ const SignUpPage = () => {
             {/* GITHUB */}
             <Button
               onClick={signIn}
-              className="h-12 w-full border hover:bg-gray-50"
+              className="h-12 w-full border bg-transparent text-orange-500"
             >
               <FaGithub />
               Continue with GitHub
