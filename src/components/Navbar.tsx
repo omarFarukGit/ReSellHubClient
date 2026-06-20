@@ -86,6 +86,12 @@ const Navbar = () => {
           <Link href="/categories" className={navClass("/categories")}>
             Categories
           </Link>
+          <Link href="/about" className={navClass("/about")}>
+            About
+          </Link>
+          <Link href="/contact" className={navClass("/contact")}>
+            Contact
+          </Link>
         </div>
 
         {/* RIGHT SIDE */}
@@ -190,6 +196,12 @@ const Navbar = () => {
           </Link>
           <Link href="/categories" className={mobileClass("/categories")}>
             Categories
+          </Link>
+          <Link href="/about" className={mobileClass("/about")}>
+            About
+          </Link>
+          <Link href="/contact" className={mobileClass("/contact")}>
+            Contact
           </Link>
 
           <div className="pt-4 border-t">
