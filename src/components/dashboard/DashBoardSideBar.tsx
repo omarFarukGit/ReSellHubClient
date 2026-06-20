@@ -26,7 +26,7 @@ export async function DashBoardSideBar() {
   }[] = [
     { icon: House, href: "/dashboard/buyer", label: "Overview" },
     { icon: Briefcase, href: "/dashboard/buyer/my-orders", label: "My Orders" },
-    { icon: CreditCard, href: "/dashboard/buyer/payment", label: "Payments" },
+    { icon: CreditCard, href: "/dashboard/buyer/payments", label: "Payments" },
     { icon: Person, href: "/dashboard/buyer/profile", label: "Profile" },
     { icon: Gear, href: "/profile", label: "Settings" },
   ];
@@ -71,7 +71,7 @@ export async function DashBoardSideBar() {
 
   // const navItems =
   //   navLinksMap[user?.role as keyof typeof navLinksMap] || buyerNavlinks;
-  const navItems = navLinksMap["admin"];
+  const navItems = navLinksMap["buyer"];
 
   const navContent = (
     <nav className="flex flex-col gap-1">
