@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import { Product } from "@/types/product";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
@@ -69,9 +70,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </h3>
           </div>
 
-          <button className="w-full mt-4 bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-xl font-medium transition-all duration-300">
-            View Details
-          </button>
+          <Link href={`/products/${product._id}`}>
+            <button className="w-full mt-4 bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-xl font-medium transition-all duration-300">
+              View Details
+            </button>
+          </Link>
         </div>
       </div>
     </div>

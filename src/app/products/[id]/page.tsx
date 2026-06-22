@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ProductDetailsPage = async ({ params }: Props) => {
-  const { id } =await params;
+  const { id } = await params;
 
   const res = await getProductById(id);
   const product = res?.data;
@@ -93,10 +93,12 @@ const ProductDetailsPage = async ({ params }: Props) => {
 
             {/* ACTION BUTTONS */}
             <div className="flex gap-3 mt-2">
-              <button className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium">
-                <ShoppingCart size={18} />
-                Buy Now
-              </button>
+              <Link href={`/checkout/${product._id}`} className=" flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium">
+                < >
+                  <ShoppingCart size={18} />
+                  Buy Now
+                </>
+              </Link>
 
               <button className="p-3 border border-zinc-700 rounded-xl hover:border-orange-500 hover:text-orange-400 transition">
                 <Heart size={18} />
@@ -105,9 +107,7 @@ const ProductDetailsPage = async ({ params }: Props) => {
 
             {/* SELLER CARD (like your image) */}
             <div className="mt-6 p-4 rounded-xl border border-zinc-800 bg-zinc-900/60">
-              <h3 className="text-sm text-zinc-400 mb-3">
-                Seller Information
-              </h3>
+              <h3 className="text-sm text-zinc-400 mb-3">Seller Information</h3>
 
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-orange-500 flex items-center justify-center font-bold">
@@ -115,9 +115,7 @@ const ProductDetailsPage = async ({ params }: Props) => {
                 </div>
 
                 <div>
-                  <p className="font-semibold">
-                    {product.sellerInfo?.name}
-                  </p>
+                  <p className="font-semibold">{product.sellerInfo?.name}</p>
                   <p className="text-xs text-zinc-400">
                     {product.sellerInfo?.email}
                   </p>
