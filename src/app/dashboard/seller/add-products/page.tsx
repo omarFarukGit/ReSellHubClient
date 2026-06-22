@@ -81,7 +81,7 @@ export default function CreateProductPage({
 
     // const res = await createProduct(payload);
 
-    console.log(res);
+    // console.log(res);
   };
 
   return (
