@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Menu,
   X,
@@ -20,12 +20,15 @@ type UserType = {
   name?: string | null;
   email?: string | null;
   image?: string | null;
+  role?: string | null;
 };
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -38,11 +41,50 @@ const Navbar = () => {
     router.push("/");
   };
 
+  // 🔥 OUTSIDE CLICK CLOSE FIX
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // scroll effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // ROLE BASED DASHBOARD
+  const getDashboardLink = () => {
+    if (!user) return "/dashboard/buyer";
+
+    const role = (session?.user as any)?.role;
+
+    if (role === "admin") return "/dashboard/admin";
+    if (role === "seller") return "/dashboard/seller";
+
+    return "/dashboard/buyer";
+  };
+
+  const getProfileLink = () => {
+    if (!user) return "/profile";
+
+    const role = (session?.user as any)?.role;
+
+    if (role === "admin") return "/dashboard/admin/profile";
+    if (role === "seller") return "/dashboard/seller/profile";
+
+    return "/dashboard/buyer/profile";
+  };
 
   const navClass = (path: string) =>
     `font-medium transition-colors ${
@@ -109,7 +151,7 @@ const Navbar = () => {
               </Link>
             </>
           ) : (
-            <div className="relative">
+            <div className="relative" ref={dropdownRef}>
               {/* USER BUTTON */}
               <button
                 onClick={() => setDropdown(!dropdown)}
@@ -121,6 +163,7 @@ const Navbar = () => {
                   width={40}
                   height={40}
                   className="rounded-full"
+                  unoptimized
                 />
 
                 <div className="hidden lg:block text-left">
@@ -140,7 +183,8 @@ const Navbar = () => {
                   </div>
 
                   <Link
-                    href="/dashboard"
+                    href={getDashboardLink()}
+                    onClick={() => setDropdown(false)}
                     className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
                   >
                     <LayoutDashboard className="w-4 h-4" />
@@ -148,19 +192,12 @@ const Navbar = () => {
                   </Link>
 
                   <Link
-                    href="/my-profile"
+                    href={getProfileLink()}
+                    onClick={() => setDropdown(false)}
                     className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
                   >
                     <User className="w-4 h-4" />
                     Profile
-                  </Link>
-
-                  <Link
-                    href="/settings"
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
-                  >
-                    <Settings className="w-4 h-4" />
-                    Settings
                   </Link>
 
                   <button
@@ -176,7 +213,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* MOBILE MENU BUTTON */}
+        {/* MOBILE BUTTON */}
         <button
           className="md:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -202,6 +239,14 @@ const Navbar = () => {
           </Link>
           <Link href="/contact" className={mobileClass("/contact")}>
             Contact
+          </Link>
+
+          <Link
+            href={getDashboardLink()}
+            className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            Dashboard
           </Link>
 
           <div className="pt-4 border-t">
