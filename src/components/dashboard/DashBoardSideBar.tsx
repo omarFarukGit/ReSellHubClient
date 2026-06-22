@@ -42,6 +42,11 @@ export async function DashBoardSideBar() {
       href: "/dashboard/seller/add-products",
       label: "Add Product",
     },
+    {
+      icon: Magnifier,
+      href: "/dashboard/seller/my-products",
+      label: "My Products",
+    },
     { icon: Bell, href: "/dashboard/seller/orders", label: "Orders" },
     {
       icon: BarChart3,

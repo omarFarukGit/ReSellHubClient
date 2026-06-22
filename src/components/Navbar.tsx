@@ -7,7 +7,6 @@ import {
   User,
   LogOut,
   LayoutDashboard,
-  Settings,
   ShoppingCart,
 } from "lucide-react";
 import Link from "next/link";
@@ -147,7 +146,7 @@ const Navbar = () => {
               </Link>
 
               <Link href="/auth/signup">
-                <Button variant="bordered">Sign Up</Button>
+                <Button variant="outline">Sign Up</Button>
               </Link>
             </>
           ) : (
@@ -257,7 +256,7 @@ const Navbar = () => {
                 </Link>
 
                 <Link href="/auth/signup">
-                  <Button variant="bordered" className="w-full">
+                  <Button variant="outline" className="w-full">
                     Signup
                   </Button>
                 </Link>
