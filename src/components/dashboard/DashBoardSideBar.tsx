@@ -71,7 +71,7 @@ export async function DashBoardSideBar() {
 
   // const navItems =
   //   navLinksMap[user?.role as keyof typeof navLinksMap] || buyerNavlinks;
-  const navItems = navLinksMap["buyer"];
+  const navItems = navLinksMap["seller"];
 
   const navContent = (
     <nav className="flex flex-col gap-1">

@@ -1,4 +1,5 @@
 import { stripe } from "@/lib/stripe";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Success({
@@ -40,64 +41,64 @@ export default async function Success({
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-8">
-        {/* Header */}
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+      <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-8 border border-slate-200">
+        {/* HEADER */}
         <div className="text-center mb-6">
-          <div className="mx-auto w-14 h-14 flex items-center justify-center rounded-full bg-green-100 text-green-600 text-2xl">
+          <div className="mx-auto w-14 h-14 flex items-center justify-center rounded-full bg-orange-100 text-orange-600 text-2xl">
             ✓
           </div>
 
-          <h1 className="text-2xl font-bold text-green-600 mt-3">
+          <h1 className="text-2xl font-bold text-orange-600 mt-3">
             Payment Successful
           </h1>
 
-          <p className="text-gray-500 text-sm">Thank you for your purchase</p>
+          <p className="text-slate-500 text-sm">Thank you for your purchase</p>
         </div>
 
-        {/* Order Details */}
+        {/* ORDER DETAILS */}
         <div className="space-y-3 text-sm">
           <div className="flex justify-between border-b pb-2">
-            <span className="text-gray-500">Transaction ID</span>
-            <span className="font-medium">{transactionId}</span>
+            <span className="text-slate-500">Transaction ID</span>
+            <span className="font-medium text-slate-900">{transactionId}</span>
           </div>
 
           <div className="flex justify-between border-b pb-2">
-            <span className="text-gray-500">Order ID</span>
-            <span className="font-medium">{orderId}</span>
+            <span className="text-slate-500">Order ID</span>
+            <span className="font-medium text-slate-900">{orderId}</span>
           </div>
 
           <div className="flex justify-between border-b pb-2">
-            <span className="text-gray-500">Product</span>
-            <span className="font-medium">{productName}</span>
+            <span className="text-slate-500">Product</span>
+            <span className="font-medium text-slate-900">{productName}</span>
           </div>
 
           <div className="flex justify-between border-b pb-2">
-            <span className="text-gray-500">Amount</span>
-            <span className="font-semibold text-blue-600">{amount}</span>
+            <span className="text-slate-500">Amount</span>
+            <span className="font-semibold text-orange-600">{amount}</span>
           </div>
 
           <div className="flex justify-between border-b pb-2">
-            <span className="text-gray-500">Date</span>
-            <span className="font-medium">{date}</span>
+            <span className="text-slate-500">Date</span>
+            <span className="font-medium text-slate-900">{date}</span>
           </div>
 
           <div className="flex justify-between pt-2">
-            <span className="text-gray-500">Status</span>
-            <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+            <span className="text-slate-500">Status</span>
+            <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold">
               SUCCESS
             </span>
           </div>
         </div>
 
-        {/* Button */}
+        {/* BUTTON */}
         <div className="mt-6">
-          <a
+          <Link
             href="/"
-            className="block text-center bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition"
+            className="block text-center bg-orange-500 text-white py-3 rounded-xl font-medium hover:bg-orange-600 transition shadow-md"
           >
             Back to Home
-          </a>
+          </Link>
         </div>
       </div>
     </div>
