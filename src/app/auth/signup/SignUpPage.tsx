@@ -58,7 +58,6 @@ const SignUpPage = () => {
             role: payload.role,
             phone: payload.phone,
             location: payload.location,
-            photo: payload.photo,
             status: "active",
           },
         },

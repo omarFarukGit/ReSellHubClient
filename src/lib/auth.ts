@@ -28,9 +28,6 @@ export const auth = betterAuth({
       location: {
         type: "string",
       },
-      photo: {
-        type: "string",
-      },
       status: {
         type: "string",
       },
