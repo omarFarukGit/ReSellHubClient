@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
+import { headers } from "next/headers";
+import { getUserSession } from "@/lib/core/session";
 
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: Request) {
   const { product, customerInfo } = await req.json();
-
+  const headersList = await headers();
+  const origin = headersList.get("origin");
+  const sessionUser = await getUserSession();
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
 
@@ -29,15 +33,19 @@ export async function POST(req: Request) {
     ],
 
     metadata: {
-      productId: product.id,
-      productTitle: product.title,
-      buyerName: customerInfo.fullName,
-      phone: customerInfo.phone,
-      address: customerInfo.address,
+      productId: product._id,
+
+      buyerId: sessionUser?.id as string,
+      buyerName: sessionUser?.name as string,
+      buyerEmail: sessionUser?.email as string,
+
+      sellerId: product.sellerInfo.userId,
+      sellerName: product.sellerInfo.name,
+      sellerEmail: product.sellerInfo.email,
     },
 
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout`,
+    success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/checkout`,
   });
 
   return NextResponse.json({
