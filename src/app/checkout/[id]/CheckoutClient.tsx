@@ -3,7 +3,13 @@
 import { Product } from "@/types/product";
 import { useState } from "react";
 
-export default function CheckoutClient(product: Product) {
+interface CheckoutClientProps {
+  product: Product;
+}
+
+export default function CheckoutClient({
+  product,
+}: CheckoutClientProps) {
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -15,30 +21,37 @@ export default function CheckoutClient(product: Product) {
   const total = product.price + tax;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  const handleCheckout = async (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const res = await fetch("/api/payment/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...formData,
-        productId: product._id,
-      }),
-    });
+    try {
+      const res = await fetch(
+        "/api/checkout_sessions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            product,
+            customerInfo: formData,
+          }),
+        }
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.url) {
-      window.location.href = data.url;
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error("Checkout Error:", error);
     }
   };
 
@@ -47,9 +60,10 @@ export default function CheckoutClient(product: Product) {
       <h1 className="text-4xl font-bold mb-10">Checkout</h1>
 
       <form onSubmit={handleCheckout} className="grid lg:grid-cols-3 gap-8">
-        {/* Delivery Info */}
         <div className="lg:col-span-2 border rounded-2xl p-8">
-          <h2 className="text-3xl font-semibold mb-8">Delivery Information</h2>
+          <h2 className="text-3xl font-semibold mb-8">
+            Delivery Information
+          </h2>
 
           <input
             name="fullName"
@@ -89,7 +103,6 @@ export default function CheckoutClient(product: Product) {
           />
         </div>
 
-        {/* Order Summary */}
         <div className="border rounded-2xl p-8 h-fit">
           <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
 
