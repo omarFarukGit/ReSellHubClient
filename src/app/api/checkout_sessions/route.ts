@@ -34,6 +34,9 @@ export async function POST(req: Request) {
 
     metadata: {
       productId: product._id,
+      productName: product.title,
+      productPrice: product.price,
+      productImage: product.images[0],
 
       buyerId: sessionUser?.id as string,
       buyerName: sessionUser?.name as string,

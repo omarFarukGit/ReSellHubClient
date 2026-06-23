@@ -40,6 +40,42 @@ export default async function Success({
     day: "numeric",
   });
 
+  const orderData = {
+    buyerInfo: {
+      userId: session.metadata?.buyerId,
+      name: session.metadata?.buyerName,
+      email: session.metadata?.buyerEmail,
+    },
+    sellerInfo: {
+      userId: session.metadata?.sellerId,
+      name: session.metadata?.sellerName,
+      email: session.metadata?.sellerEmail,
+    },
+    productId: session.metadata?.productId,
+    productName: session.metadata?.productName,
+    productPrice: session.metadata?.productPrice,
+    productImage: session.metadata?.productImage,
+    paymentStatus: "paid",
+    orderStatus: "pending",
+  };
+
+  const createOrder = async (orderData: any) => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/orders`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      },
+    );
+
+    return res.json();
+  };
+
+  createOrder(orderData);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
       <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-8 border border-slate-200">

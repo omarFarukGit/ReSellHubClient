@@ -1,73 +1,75 @@
+import { getUserSession } from "@/lib/core/session";
+import Image from "next/image";
 import React from "react";
 
-export const products = [
-  {
-    id: 1,
-    name: "Apple iPhone 13 Pro",
-    price: 85000,
-    location: "Dhaka, Bangladesh",
-    image: "https://images.unsplash.com/photo-1632661674596-79e4f1b6a3a7",
-    category: "Electronics",
-    condition: "Used - Like New",
-    description: "Lightly used iPhone 13 Pro, 128GB, battery health 90%.",
-    status: "available",
-  },
-  {
-    id: 2,
-    name: "MacBook Air M1",
-    price: 95000,
-    location: "Chattogram, Bangladesh",
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
-    category: "Electronics",
-    condition: "Used",
-    description: "M1 MacBook Air, very smooth performance, charger included.",
-    status: "available",
-  },
-  {
-    id: 3,
-    name: "Nike Air Jordan Sneakers",
-    price: 6500,
-    location: "Dhaka, Bangladesh",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-    category: "Fashion",
-    condition: "New",
-    description: "Original Nike Air Jordan shoes, size 42.",
-    status: "available",
-  },
-  {
-    id: 4,
-    name: "Wooden Study Table",
-    price: 4200,
-    location: "Sylhet, Bangladesh",
-    image: "https://images.unsplash.com/photo-1582582429416-9c4a6c4d0f0b",
-    category: "Furniture",
-    condition: "Used",
-    description: "Strong wooden table, perfect for students.",
-    status: "sold",
-  },
-  {
-    id: 5,
-    name: "Sony Headphones WH-1000XM4",
-    price: 22000,
-    location: "Rajshahi, Bangladesh",
-    image: "https://images.unsplash.com/photo-1518441902117-f0a4e2c3a9f5",
-    category: "Electronics",
-    condition: "Used - Excellent",
-    description: "Noise cancelling premium headphones, very good condition.",
-    status: "available",
-  },
-  {
-    id: 6,
-    name: "Gaming Chair RGB",
-    price: 13500,
-    location: "Khulna, Bangladesh",
-    image: "https://images.unsplash.com/photo-1616627982184-3f6c2d7c8a2e",
-    category: "Gaming",
-    condition: "New",
-    description: "Comfortable RGB gaming chair with adjustable height.",
-    status: "available",
-  },
-];
+// export const products = [
+//   {
+//     id: 1,
+//     name: "Apple iPhone 13 Pro",
+//     price: 85000,
+//     location: "Dhaka, Bangladesh",
+//     image: "https://images.unsplash.com/photo-1632661674596-79e4f1b6a3a7",
+//     category: "Electronics",
+//     condition: "Used - Like New",
+//     description: "Lightly used iPhone 13 Pro, 128GB, battery health 90%.",
+//     status: "available",
+//   },
+//   {
+//     id: 2,
+//     name: "MacBook Air M1",
+//     price: 95000,
+//     location: "Chattogram, Bangladesh",
+//     image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+//     category: "Electronics",
+//     condition: "Used",
+//     description: "M1 MacBook Air, very smooth performance, charger included.",
+//     status: "available",
+//   },
+//   {
+//     id: 3,
+//     name: "Nike Air Jordan Sneakers",
+//     price: 6500,
+//     location: "Dhaka, Bangladesh",
+//     image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+//     category: "Fashion",
+//     condition: "New",
+//     description: "Original Nike Air Jordan shoes, size 42.",
+//     status: "available",
+//   },
+//   {
+//     id: 4,
+//     name: "Wooden Study Table",
+//     price: 4200,
+//     location: "Sylhet, Bangladesh",
+//     image: "https://images.unsplash.com/photo-1582582429416-9c4a6c4d0f0b",
+//     category: "Furniture",
+//     condition: "Used",
+//     description: "Strong wooden table, perfect for students.",
+//     status: "sold",
+//   },
+//   {
+//     id: 5,
+//     name: "Sony Headphones WH-1000XM4",
+//     price: 22000,
+//     location: "Rajshahi, Bangladesh",
+//     image: "https://images.unsplash.com/photo-1518441902117-f0a4e2c3a9f5",
+//     category: "Electronics",
+//     condition: "Used - Excellent",
+//     description: "Noise cancelling premium headphones, very good condition.",
+//     status: "available",
+//   },
+//   {
+//     id: 6,
+//     name: "Gaming Chair RGB",
+//     price: 13500,
+//     location: "Khulna, Bangladesh",
+//     image: "https://images.unsplash.com/photo-1616627982184-3f6c2d7c8a2e",
+//     category: "Gaming",
+//     condition: "New",
+//     description: "Comfortable RGB gaming chair with adjustable height.",
+//     status: "available",
+//   },
+// ];
 
 const statusBadge = (status: string) => {
   switch (status) {
@@ -84,7 +86,16 @@ const statusBadge = (status: string) => {
   }
 };
 
-const ProductsPage = () => {
+const ProductsPage = async () => {
+  const user = await getUserSession();
+
+  const res = await fetch(
+    `http://localhost:3001/api/v1/products/seller/${user?.id}`,
+  );
+  const data = await res.json();
+  const products = data.data;
+  console.log(products);
+
   return (
     <div className="p-6 md:p-10">
       {/* Header */}
@@ -113,15 +124,17 @@ const ProductsPage = () => {
           <tbody>
             {products.map((product) => (
               <tr
-                key={product.id}
+                key={product._id}
                 className="border-t hover:bg-gray-50 transition"
               >
                 {/* Product */}
                 <td className="p-4 flex items-center gap-3">
-                  <img
-                    src={product.image}
+                  <Image
+                    src={product.images[0]}
                     alt={product.name}
                     className="w-10 h-10 rounded object-cover"
+                    width={200}
+                    height={200}
                   />
                   <div>
                     <p className="font-medium">{product.name}</p>
