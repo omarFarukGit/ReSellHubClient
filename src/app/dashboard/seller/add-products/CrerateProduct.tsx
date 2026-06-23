@@ -1,15 +1,18 @@
 "use client";
 
 import { createProducts } from "@/lib/action/product";
-import { useState } from "react";
 
-export default function CreateProductPage({ user }: { user: any }) {
+import Image from "next/image";
+import { useState } from "react";
+import { toast } from "react-toastify";
+
+export default function CreateProductPage({ user }: any) {
   const [images, setImages] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-
     if (!files) return;
 
     setUploading(true);
@@ -19,7 +22,6 @@ export default function CreateProductPage({ user }: { user: any }) {
 
       for (const file of Array.from(files)) {
         const formData = new FormData();
-
         formData.append("image", file);
 
         const res = await fetch(
@@ -40,6 +42,7 @@ export default function CreateProductPage({ user }: { user: any }) {
       setImages((prev) => [...prev, ...uploadedUrls]);
     } catch (error) {
       console.error(error);
+      toast.error("Image upload failed ❌");
     } finally {
       setUploading(false);
     }
@@ -48,8 +51,8 @@ export default function CreateProductPage({ user }: { user: any }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const product = Object.fromEntries(formData.entries());
 
     const payload = {
@@ -68,11 +71,28 @@ export default function CreateProductPage({ user }: { user: any }) {
       },
     };
 
-    console.log("Final Payload:", payload);
+    try {
+      setLoading(true);
 
-    // send to backend
-    const res = await createProducts(payload);
-    console.log("res Payload:", res);
+      const res = await createProducts(payload);
+
+      if (res) {
+        toast.success("Product created successfully ✅");
+
+        // ✅ reset form
+        form.reset();
+
+        // ✅ clear images
+        setImages([]);
+      } else {
+        toast.error("Failed to create product ❌");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong ❌");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,7 +100,6 @@ export default function CreateProductPage({ user }: { user: any }) {
       <div className="mx-auto max-w-5xl px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Sell Your Product</h1>
-
           <p className="text-zinc-500 mt-2">
             Create a listing and reach thousands of buyers.
           </p>
@@ -99,15 +118,19 @@ export default function CreateProductPage({ user }: { user: any }) {
               className="w-full"
             />
 
-            {uploading && <p className="mt-3 text-orange-500">Uploading...</p>}
+            {uploading && (
+              <p className="mt-3 text-orange-500">Uploading images...</p>
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
               {images.map((img, index) => (
-                <img
+                <Image
                   key={index}
                   src={img}
-                  alt=""
+                  alt={"create image"}
                   className="h-32 w-full rounded-xl object-cover border"
+                  width={200}
+                  height={200}
                 />
               ))}
             </div>
@@ -231,10 +254,10 @@ export default function CreateProductPage({ user }: { user: any }) {
           <div className="flex justify-end">
             <button
               type="submit"
-              disabled={uploading}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-medium"
+              disabled={uploading || loading}
+              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-medium disabled:opacity-50"
             >
-              Publish Product
+              {loading ? "Publishing..." : "Publish Product"}
             </button>
           </div>
         </form>
