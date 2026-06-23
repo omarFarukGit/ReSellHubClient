@@ -1,4 +1,17 @@
-export interface Product {
+export interface SellerInfo {
+  userId: string;
+  name: string;
+  email: string;
+  phone: string;
+}
+
+export type ProductStatus =
+  | "available"
+  | "pending"
+  | "sold"
+  | "rejected";
+
+export interface IProduct {
   _id: string;
   title: string;
   category: string;
@@ -6,5 +19,14 @@ export interface Product {
   price: number;
   images: string[];
   description: string;
-  status: "available" | "sold";
+  sellerInfo: SellerInfo;
+  status: ProductStatus;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ProductsResponse {
+  success: boolean;
+  message: string;
+  data: IProduct[];
 }
