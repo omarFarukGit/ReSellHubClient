@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import EditProductModal from "./EditPorductModal";
+import { useState } from "react";
 
 const statusBadge = (status: string) => {
   switch (status) {
@@ -21,7 +23,10 @@ const statusBadge = (status: string) => {
 };
 
 const ProductsPage = ({ products, user }: any) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const router = useRouter();
+
   const deleteProduct = async (productId: string, sellerId: string) => {
     try {
       const res = await fetch(
@@ -44,6 +49,11 @@ const ProductsPage = ({ products, user }: any) => {
     } catch (error) {
       toast.error("Something went wrong ❌");
     }
+  };
+
+  const handleEdit = (product: any) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
   };
 
   return (
@@ -127,7 +137,10 @@ const ProductsPage = ({ products, user }: any) => {
                         View
                       </button>
                     </Link>
-                    <button className="text-green-600 hover:underline">
+                    <button
+                      onClick={() => handleEdit(product)}
+                      className="text-green-600 hover:underline"
+                    >
                       Edit
                     </button>
                     <button
@@ -149,6 +162,13 @@ const ProductsPage = ({ products, user }: any) => {
         <span>Total Products: {products.length}</span>
         <span>Showing all records</span>
       </div>
+      <EditProductModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={selectedProduct}
+        setProduct={setSelectedProduct}
+        onSuccess={() => router.refresh()}
+      />
     </div>
   );
 };
