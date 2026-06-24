@@ -12,11 +12,11 @@ import {
   Users,
   BarChart3,
   Heart,
+  User,
 } from "lucide-react";
 
 import { FiFileText } from "react-icons/fi";
 import { getUserSession } from "@/lib/core/session";
-
 
 export async function DashBoardSideBar() {
   const user = await getUserSession();
@@ -68,6 +68,7 @@ export async function DashBoardSideBar() {
     { icon: Building, href: "/dashboard/admin/products", label: "Products" },
     { icon: Briefcase, href: "/dashboard/admin/orders", label: "Orders" },
     { icon: BarChart3, href: "/dashboard/admin/analytics", label: "Analytics" },
+    { icon: User, href: "/dashboard/admin/profile", label: "Profile" },
   ];
 
   const navLinksMap = {

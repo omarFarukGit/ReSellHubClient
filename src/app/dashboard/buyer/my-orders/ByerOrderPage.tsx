@@ -5,9 +5,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "react-toastify";
+import OrderNotFound from "./OrderNotFound";
 
 type OrderStatus = "pending" | "shipped" | "delivered" | "cancelled";
-
 
 const statusBadge = (status: OrderStatus) => {
   switch (status) {
@@ -25,41 +25,34 @@ interface OrdersTableProps {
   orders: IOrder[];
 }
 
-export default function BuyerOrdersPage({ orders}:OrdersTableProps) {
+export default function BuyerOrdersPage({ orders }: OrdersTableProps) {
   const router = useRouter();
 
-const cancelOrder = async (productId: string,buyerId:string) => {
+  const cancelOrder = async (productId: string, buyerId: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/orders/my-orders/${productId}/${buyerId}`,
+        {
+          method: "DELETE",
+        },
+      );
 
-
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/orders/my-orders/${productId}/${buyerId}`,
-      {
-        method: "DELETE",
+      if (!res.ok) {
+        toast.error("Order cancel failed ❌");
+        return;
       }
-    );
 
+      toast.success("Order cancelled successfully ✅");
 
-    if (!res.ok) {
-      toast.error("Order cancel failed ❌");
-      return;
+      router.refresh(); // 🔥 page data refresh
+    } catch (error: unknown) {
+      toast.error("Something went wrong ❌");
+      console.log(error);
     }
-
-    toast.success("Order cancelled successfully ✅");
-
-    router.refresh(); // 🔥 page data refresh
-  } catch (error:unknown) {
-    toast.error("Something went wrong ❌");
-    console.log(error)
-  }
-};
+  };
 
   if (!orders?.length) {
-    return (
-      <div>
-        <h1>order not found</h1>
-      </div>
-    );
+    return <OrderNotFound />;
   }
   return (
     <div className="p-6 md:p-10 space-y-6">
@@ -142,7 +135,9 @@ const cancelOrder = async (productId: string,buyerId:string) => {
                     {order.orderStatus === "pending" && (
                       <button
                         className="text-red-600 hover:underline"
-                        onClick={() => cancelOrder(order._id,order.buyerInfo.userId)}
+                        onClick={() =>
+                          cancelOrder(order._id, order.buyerInfo.userId)
+                        }
                       >
                         Cancel
                       </button>

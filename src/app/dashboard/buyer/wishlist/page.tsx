@@ -1,6 +1,7 @@
 import { getUserSession } from "@/lib/core/session";
 import React from "react";
 import WishlistCard from "./WishlistPage";
+import EmptyWishlist from "./WishlistNotFound";
 
 export interface IWishlist {
   _id: string;
@@ -24,6 +25,9 @@ const Settings = async () => {
   const data = await res.json();
   const wishlist = data.data;
 
+  if (!wishlist.length) {
+    return <EmptyWishlist />;
+  }
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
