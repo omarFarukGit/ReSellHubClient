@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Heart } from "lucide-react";
-import { Product } from "@/types/product";
+import { IProduct } from "@/types/product";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 
 interface ProductCardProps {
-  product: Product;
+  product: IProduct;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
@@ -158,11 +158,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 ${product.price.toLocaleString()}
               </p>
 
-              {product.originalPrice && (
-                <p className="text-xs text-slate-400 line-through">
-                  ${product.originalPrice.toLocaleString()}
-                </p>
-              )}
+              <p className="text-xs text-slate-400 line-through"></p>
             </div>
 
             <button
