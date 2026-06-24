@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import EditProductModal from "./EditPorductModal";
 import { useState } from "react";
+import { IProduct } from "@/types/product";
 
 const statusBadge = (status: string) => {
   switch (status) {

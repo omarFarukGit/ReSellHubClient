@@ -6,7 +6,7 @@ const OrderPage = async () => {
   const user = await getUserSession();
 
   const res = await fetch(
-    `http://localhost:3001/api/v1/orders/seller-orders/${user?.id}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/orders/seller-orders/${user?.id}`,
   );
   const data = await res.json();
   const orders = data.data;

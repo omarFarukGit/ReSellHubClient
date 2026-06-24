@@ -1,5 +1,6 @@
 "use client";
 
+import { IProduct } from "@/types/product";
 import Image from "next/image";
 
 import { toast } from "react-toastify";
@@ -7,8 +8,8 @@ import { toast } from "react-toastify";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  product: any;
-  setProduct: (data: any) => void;
+  product: IProduct;
+  setProduct: (data: IProduct) => void;
   onSuccess: () => void;
 }
 
@@ -46,14 +47,15 @@ const EditProductModal = ({
       toast.success("Updated successfully ✅");
       onSuccess();
       onClose();
-    } catch (error) {
+    } catch (error:unknown) {
       toast.error("Something went wrong ❌");
+      console.log(error)
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-[500px]">
+      <div className="bg-white p-6 rounded-lg w-125">
         <h2 className="text-xl font-bold mb-4">Edit Product</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
