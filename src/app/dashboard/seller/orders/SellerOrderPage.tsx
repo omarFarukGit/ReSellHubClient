@@ -54,8 +54,9 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
       console.log(res, orderId, sellerId, "orderstatus");
       toast.success("Status updated successfully ✅");
       router.refresh();
-    } catch (error) {
+    } catch (error:unknown) {
       toast.error("Something went wrong ❌");
+      console.log(error)
     }
   };
 

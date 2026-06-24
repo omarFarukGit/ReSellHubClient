@@ -44,7 +44,7 @@ export default function WishlistCard({ item, onRemove }: Props) {
       if (!data.success) {
         toast.error("not remove wishlist");
       }
-    } catch (error) {
+    } catch (error:unknown) {
       console.error(error);
     }
   };

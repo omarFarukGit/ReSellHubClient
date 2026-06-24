@@ -55,7 +55,7 @@ export default function SellerProfilePage({ user }: any) {
 
     const imageUrl = await uploadImage(file);
 
-    setForm((prev) => ({
+    setForm((prev:any) => ({
       ...prev,
       avatar: imageUrl,
     }));

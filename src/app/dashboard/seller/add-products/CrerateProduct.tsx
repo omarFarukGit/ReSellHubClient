@@ -67,7 +67,7 @@ export default function CreateProductPage({ user }: any) {
         userId: user?.id,
         name: user?.name,
         email: user?.email,
-        phone: user?.phone || "01785081521",
+        phone: user?.phone || "017XXXXXXXX",
       },
     };
 
@@ -87,7 +87,7 @@ export default function CreateProductPage({ user }: any) {
       } else {
         toast.error("Failed to create product ❌");
       }
-    } catch (error) {
+    } catch (error:unknown) {
       console.error(error);
       toast.error("Something went wrong ❌");
     } finally {

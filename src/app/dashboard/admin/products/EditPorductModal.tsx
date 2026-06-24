@@ -47,8 +47,9 @@ const EditProductModal = ({
       toast.success("Updated successfully ✅");
       onSuccess();
       onClose();
-    } catch (error) {
+    } catch (error:unknown) {
       toast.error("Something went wrong ❌");
+      console.log(error)
     }
   };
 

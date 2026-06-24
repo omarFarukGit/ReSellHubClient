@@ -7,12 +7,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   Button,
   Card,
-  Description,
   FieldError,
   Form,
   Input,
   Label,
-  Separator,
   TextField,
 } from "@heroui/react";
 
@@ -21,9 +19,6 @@ import { FaGithub } from "react-icons/fa";
 
 import {
   ShoppingBag,
-  CheckCircle2,
-  ShieldCheck,
-  Package,
   Eye,
   EyeOff,
 } from "lucide-react";
