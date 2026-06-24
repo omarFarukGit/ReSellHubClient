@@ -4,8 +4,6 @@ import { getUserSession } from "@/lib/core/session";
 
 const Profile = async () => {
   const user = await getUserSession();
-
-  console.log(user, "user");
   return (
     <div>
       <SellerProfilePage user={user}/>

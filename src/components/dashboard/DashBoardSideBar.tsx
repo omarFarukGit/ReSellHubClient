@@ -11,10 +11,12 @@ import {
   CreditCard,
   Users,
   BarChart3,
+  Heart,
 } from "lucide-react";
 
 import { FiFileText } from "react-icons/fi";
 import { getUserSession } from "@/lib/core/session";
+
 
 export async function DashBoardSideBar() {
   const user = await getUserSession();
@@ -28,7 +30,7 @@ export async function DashBoardSideBar() {
     { icon: Briefcase, href: "/dashboard/buyer/my-orders", label: "My Orders" },
     { icon: CreditCard, href: "/dashboard/buyer/payments", label: "Payments" },
     { icon: Person, href: "/dashboard/buyer/profile", label: "Profile" },
-    { icon: Gear, href: "/profile", label: "Settings" },
+    { icon: Heart, href: "/dashboard/buyer/wishlist", label: "Wishlist" },
   ];
 
   const sellerNavlinks: {

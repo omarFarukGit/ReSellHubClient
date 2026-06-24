@@ -83,7 +83,7 @@ const ProductsPage = ({ products, user }: any) => {
           </thead>
 
           <tbody>
-            {products.map((product) => (
+            {products.map((product:any) => (
               <tr
                 key={product._id}
                 className="border-t hover:bg-gray-50 transition"

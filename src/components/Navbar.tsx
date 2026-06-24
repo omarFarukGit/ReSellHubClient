@@ -158,10 +158,10 @@ const Navbar = () => {
               >
                 <Image
                   src={user?.image || "https://ui-avatars.com/api/?name=User"}
-                  alt="user"
+                  alt={user?.name as string}
                   width={40}
                   height={40}
-                  className="rounded-full"
+                  className=" w-12 h-12 rounded-full mt-2"
                   unoptimized
                 />
 
