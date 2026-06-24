@@ -1,10 +1,10 @@
 "use client";
 
-import { Product } from "@/types/product";
+import { IProduct } from "@/types/product";
 import ProductCard from "./productCard";
 
 interface ProductListingContainerProps {
-  products: Product[];
+  products: IProduct[];
 }
 
 const ProductListingContainer = ({

@@ -74,7 +74,6 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-white">
       <div className="grid min-h-screen lg:grid-cols-2">
-
         {/* LEFT SIDE */}
         <div className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 p-12 text-white">
           <div className="relative z-10">
@@ -101,14 +100,12 @@ const LoginPage = () => {
         {/* RIGHT SIDE */}
         <div className="flex items-center justify-center bg-gray-50 px-5 py-10">
           <Card className="w-full max-w-md p-8 shadow-xl">
-
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold">Welcome Back</h2>
               <p className="text-gray-500">Sign in to your account</p>
             </div>
 
             <Form onSubmit={onSubmit} className="space-y-4">
-
               <TextField name="email" type="email" isRequired>
                 <Label>Email</Label>
                 <Input placeholder="john@example.com" />
@@ -146,11 +143,12 @@ const LoginPage = () => {
               </Button>
             </Form>
 
-            <div className="my-6 text-center text-sm text-gray-500">
-              OR
-            </div>
+            <div className="my-6 text-center text-sm text-gray-500">OR</div>
 
-            <Button onClick={signIn} className="w-full">
+            <Button
+              onClick={signIn}
+              className=" w-full h-12 border bg-white hover:bg-gray-50 text-black"
+            >
               <FaGithub />
               Continue with GitHub
             </Button>
@@ -161,10 +159,8 @@ const LoginPage = () => {
                 Sign up
               </Link>
             </p>
-
           </Card>
         </div>
-
       </div>
     </div>
   );

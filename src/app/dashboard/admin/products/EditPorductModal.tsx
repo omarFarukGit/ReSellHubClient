@@ -1,5 +1,6 @@
 "use client";
 
+import { IProduct } from "@/types/product";
 import Image from "next/image";
 
 import { toast } from "react-toastify";
@@ -7,8 +8,8 @@ import { toast } from "react-toastify";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  product: any;
-  setProduct: (data: any) => void;
+  product: IProduct;
+  setProduct: (data: IProduct) => void;
   onSuccess: () => void;
 }
 

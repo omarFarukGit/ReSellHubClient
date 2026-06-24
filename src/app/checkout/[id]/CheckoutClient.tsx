@@ -1,10 +1,10 @@
 "use client";
 
-import { Product } from "@/types/product";
+import { IProduct } from "@/types/product";
 import { useState } from "react";
 
 interface CheckoutClientProps {
-  product: Product;
+  product: IProduct;
 }
 
 export default function CheckoutClient({ product }: CheckoutClientProps) {

@@ -30,7 +30,7 @@ const AdminProductPage = ({ products }: AdminProductPageProps) => {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const router = useRouter();
 
-  const handleEdit = (product: any) => {
+  const handleEdit = (product: IProduct) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };

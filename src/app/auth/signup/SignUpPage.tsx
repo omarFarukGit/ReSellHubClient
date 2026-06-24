@@ -189,7 +189,7 @@ const SignUpPage = () => {
 
               <Button
                 type="submit"
-                disabled={loading}
+                isDisabled={loading}
                 className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold"
               >
                 {loading ? "Creating Account..." : "Create Account"}
@@ -236,7 +236,7 @@ const SignUpPage = () => {
             </h2>
 
             <p className="mt-6 max-w-md text-orange-100 text-lg">
-              Join thousands of buyers and sellers on Bangladesh's trusted
+              Join thousands of buyers and sellers on Bangladesh is trusted
               marketplace.
             </p>
           </div>
