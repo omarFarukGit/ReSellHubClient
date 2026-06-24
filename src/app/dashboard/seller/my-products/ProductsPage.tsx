@@ -162,6 +162,7 @@ const ProductsPage = ({ products, user }: any) => {
         <span>Total Products: {products.length}</span>
         <span>Showing all records</span>
       </div>
+      
       <EditProductModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

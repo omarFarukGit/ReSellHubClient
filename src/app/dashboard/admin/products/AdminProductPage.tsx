@@ -3,8 +3,9 @@ import { IProduct } from "@/types/product";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
+import EditProductModal from "./EditPorductModal";
 
 interface AdminProductPageProps {
   products: IProduct[];
@@ -25,7 +26,15 @@ const statusBadge = (status: string) => {
 };
 
 const AdminProductPage = ({ products }: AdminProductPageProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const router = useRouter();
+
+  const handleEdit = (product: any) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
   const deleteProduct = async (productId: string) => {
     try {
       const res = await fetch(
@@ -173,7 +182,10 @@ const AdminProductPage = ({ products }: AdminProductPageProps) => {
                     >
                       View
                     </Link>
-                    <button className="text-green-600 hover:underline">
+                    <button
+                      className="text-green-600 hover:underline"
+                      onClick={() => handleEdit(product)}
+                    >
                       Edit
                     </button>
                     <button
@@ -197,6 +209,14 @@ const AdminProductPage = ({ products }: AdminProductPageProps) => {
         <span>Total Products: {products.length}</span>
         <span>Showing all records</span>
       </div>
+
+      <EditProductModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={selectedProduct}
+        setProduct={setSelectedProduct}
+        onSuccess={() => router.refresh()}
+      />
     </div>
   );
 };

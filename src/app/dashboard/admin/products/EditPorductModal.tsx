@@ -28,7 +28,7 @@ const EditProductModal = ({
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${product._id}/${product.sellerInfo.userId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/all/products/${product._id}`,
         {
           method: "PATCH",
           headers: {
