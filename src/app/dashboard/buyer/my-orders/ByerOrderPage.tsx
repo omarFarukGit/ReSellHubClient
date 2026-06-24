@@ -1,5 +1,6 @@
 "use client";
 
+import { IOrder } from "@/types/orderType";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -7,15 +8,6 @@ import { toast } from "react-toastify";
 
 type OrderStatus = "pending" | "shipped" | "delivered" | "cancelled";
 
-interface Order {
-  id: number;
-  productName: string;
-  productImage: string;
-  price: number;
-  sellerName: string;
-  status: OrderStatus;
-  date: string;
-}
 
 const statusBadge = (status: OrderStatus) => {
   switch (status) {
@@ -29,8 +21,11 @@ const statusBadge = (status: OrderStatus) => {
       return "bg-red-100 text-red-700";
   }
 };
+interface OrdersTableProps {
+  orders: IOrder[];
+}
 
-export default function BuyerOrdersPage({ orders, user }: any) {
+export default function BuyerOrdersPage({ orders}:OrdersTableProps) {
   const router = useRouter();
 
 const cancelOrder = async (productId: string,buyerId:string) => {
@@ -44,7 +39,6 @@ const cancelOrder = async (productId: string,buyerId:string) => {
       }
     );
 
-    const data = await res.json();
 
     if (!res.ok) {
       toast.error("Order cancel failed ❌");
@@ -54,8 +48,9 @@ const cancelOrder = async (productId: string,buyerId:string) => {
     toast.success("Order cancelled successfully ✅");
 
     router.refresh(); // 🔥 page data refresh
-  } catch (error) {
+  } catch (error:unknown) {
     toast.error("Something went wrong ❌");
+    console.log(error)
   }
 };
 
@@ -78,7 +73,7 @@ const cancelOrder = async (productId: string,buyerId:string) => {
 
       {/* TABLE */}
       <div className="bg-white rounded-xl shadow overflow-x-auto">
-        <table className="w-full min-w-[900px] text-sm">
+        <table className="w-full min-w-225 text-sm">
           {/* HEAD */}
           <thead className="bg-gray-100 text-left">
             <tr>

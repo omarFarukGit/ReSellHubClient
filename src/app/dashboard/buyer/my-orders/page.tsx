@@ -1,4 +1,4 @@
-import React from "react";
+
 import BuyerOrdersPage from "./ByerOrderPage";
 import { getUserSession } from "@/lib/core/session";
 
@@ -13,7 +13,7 @@ const OrderPage = async () => {
   console.log(orders);
   return (
     <div>
-      <BuyerOrdersPage orders={orders} user={user} />
+      <BuyerOrdersPage orders={orders} />
     </div>
   );
 };

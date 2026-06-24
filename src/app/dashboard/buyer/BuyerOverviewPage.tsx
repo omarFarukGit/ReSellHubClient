@@ -1,5 +1,6 @@
 "use client";
 
+import { IUser } from "@/types/userType";
 import {
   ShoppingBag,
   Heart,
@@ -11,6 +12,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+interface Props {
+  user: IUser;
+}
 
 export default function BuyerOverviewPage({ user }: any) {
   const stats = [
