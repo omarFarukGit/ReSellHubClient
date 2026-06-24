@@ -76,7 +76,7 @@ const ProductsPage = ({ products, user }: any) => {
               <th className="p-4">Price</th>
               <th className="p-4">Condition</th>
               <th className="p-4">Status</th>
-              <th className="p-4">Location</th>
+              {/* <th className="p-4">Location</th> */}
               <th className="p-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -91,13 +91,13 @@ const ProductsPage = ({ products, user }: any) => {
                 <td className="p-4 flex items-center gap-3">
                   <Image
                     src={product.images[0]}
-                    alt={product.name}
+                    alt={product.title}
                     className="w-10 h-10 rounded object-cover"
                     width={200}
                     height={200}
                   />
                   <div>
-                    <p className="font-medium">{product.name}</p>
+                    <p className="font-medium">{product.title}</p>
                     <p className="text-xs text-gray-500">
                       {product.description.slice(0, 40)}...
                     </p>
@@ -127,7 +127,7 @@ const ProductsPage = ({ products, user }: any) => {
                 </td>
 
                 {/* Location */}
-                <td className="p-4 text-gray-600">{product.location}</td>
+                {/* <td className="p-4 text-gray-600">{product.location}</td> */}
 
                 {/* Actions */}
                 <td className="p-4 text-right">
@@ -162,7 +162,7 @@ const ProductsPage = ({ products, user }: any) => {
         <span>Total Products: {products.length}</span>
         <span>Showing all records</span>
       </div>
-      
+
       <EditProductModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

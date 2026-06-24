@@ -1,20 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
 import OrderNotFound from "./OrderNotFound";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { OrdersTableProps } from "@/types/orderType";
 
 type OrderStatus = "pending" | "shipped" | "delivered" | "cancelled";
-
-interface Order {
-  id: number;
-  productName: string;
-  buyerName: string;
-  price: number;
-  status: OrderStatus;
-  date: string;
-}
 
 const statusBadge = (status: OrderStatus) => {
   switch (status) {
@@ -29,11 +21,45 @@ const statusBadge = (status: OrderStatus) => {
   }
 };
 
-export default function SellerOrdersPage(orders) {
+export default function SellerOrdersPage({ orders }: OrdersTableProps) {
   console.log(orders, "ordr");
   const router = useRouter();
 
-  if (!orders?.orders?.length) {
+  const updateStatus = async (
+    orderId: string,
+    sellerId: string,
+    orderStatus:
+      | "pending"
+      | "processing"
+      | "shipped"
+      | "delivered"
+      | "cancelled",
+  ) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/orders/seller-orders/${orderId}/${sellerId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ orderStatus }),
+        },
+      );
+
+      if (!res.ok) {
+        toast.error("Status update failed ❌");
+        return;
+      }
+      console.log(res, orderId, sellerId, "orderstatus");
+      toast.success("Status updated successfully ✅");
+      router.refresh();
+    } catch (error) {
+      toast.error("Something went wrong ❌");
+    }
+  };
+
+  if (!orders?.length) {
     return <OrderNotFound />;
   }
   return (
@@ -61,9 +87,9 @@ export default function SellerOrdersPage(orders) {
           </thead>
 
           <tbody>
-            {orders.orders.map((order) => (
+            {orders.map((order) => (
               <tr
-                key={order.id}
+                key={order._id}
                 className="border-t hover:bg-gray-50 transition"
               >
                 {/* Product */}
@@ -82,7 +108,7 @@ export default function SellerOrdersPage(orders) {
                 <td className="p-4 text-gray-600">{order.buyerInfo.name}</td>
 
                 {/* Price */}
-                <td className="p-4 font-semibold">৳ {order.price}</td>
+                <td className="p-4 font-semibold">৳ {order.productPrice}</td>
 
                 {/* Status */}
                 <td className="p-4">
@@ -103,31 +129,42 @@ export default function SellerOrdersPage(orders) {
 
                 {/* Actions */}
                 <td className="p-4 text-right">
-                  <div
-                    className="flex justify-end gap-3 text-xs"
-                    onClick={() => router.push(`/products/${order.productId}`)}
-                  >
-                    <button className="text-blue-600 hover:underline">
+                  <div className="flex justify-end gap-3 text-xs">
+                    <button
+                      className="text-blue-600 hover:underline"
+                      onClick={() =>
+                        router.push(`/products/${order.productId}`)
+                      }
+                    >
                       View
                     </button>
 
-                    {order.orderStatus === "pending" && (
-                      <button className="text-green-600 hover:underline">
-                        Accept
-                      </button>
-                    )}
-
-                    {order.orderStatus === "shipped" && (
-                      <button className="text-purple-600 hover:underline">
-                        Mark Delivered
-                      </button>
-                    )}
-
-                    {order.orderStatus !== "delivered" && (
-                      <button className="text-red-600 hover:underline">
-                        Cancel
-                      </button>
-                    )}
+                    <div className="p-4">
+                      <select
+                        value={order.orderStatus}
+                        onChange={(e) =>
+                          updateStatus(
+                            order._id,
+                            order.sellerInfo.userId,
+                            e.target.value as
+                              | "pending"
+                              | "processing"
+                              | "shipped"
+                              | "delivered"
+                              | "cancelled",
+                          )
+                        }
+                        className={`rounded-md border px-2 py-1 text-xs font-medium ${statusBadge(
+                          order.orderStatus,
+                        )}`}
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="processing">processing</option>
+                        <option value="shipped">shipped</option>
+                        <option value="delivered">delivered</option>
+                        <option value="cancelled">cancelled</option>
+                      </select>
+                    </div>
                   </div>
                 </td>
               </tr>
