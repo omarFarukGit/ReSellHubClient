@@ -8,7 +8,7 @@ const BuyerLayout = async ({ children }: { children: React.ReactNode }) => {
     redirect("/auth/signin");
   }
   if (user?.role !== "buyer") {
-    return redirect("/unathorized");
+    return redirect("/forbiden");
   }
   return children;
 };

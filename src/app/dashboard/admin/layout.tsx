@@ -5,10 +5,10 @@ import React from 'react';
 const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUserSession();
   if (!user) {
-    redirect("/signin");
+    redirect("/auth/signin");
   }
   if (user?.role !== "admin") {
-    return redirect("/unathorized");
+    return redirect("/forbiden");
   }
   return children;
 };
