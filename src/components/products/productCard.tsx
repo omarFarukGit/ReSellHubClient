@@ -7,6 +7,7 @@ import { Star, Heart } from "lucide-react";
 import { IProduct } from "@/types/product";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: IProduct;
@@ -16,7 +17,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { data: session, isPending } = useSession();
   console.log(session, "pro");
-
+  const router = useRouter();
   useEffect(() => {
     const getWishlistStatus = async () => {
       if (!session?.user?.id) return;
@@ -47,7 +48,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
       console.log(buyerId);
 
       if (!buyerId) {
-        alert("Please login first");
+        toast.error("Please login first");
+        router.push("/auth/signin");
         return;
       }
 

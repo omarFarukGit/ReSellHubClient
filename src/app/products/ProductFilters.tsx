@@ -88,14 +88,14 @@ const ProductFilters = () => {
         <div className="flex gap-2">
           <button
             onClick={handleFilter}
-            className="flex-1 rounded-lg bg-orange-500 px-4 py-2 font-medium text-white"
+            className="flex-1 rounded-lg bg-orange-500 px-4 py-2 font-medium text-white cursor-pointer"
           >
             Filter
           </button>
 
           <button
             onClick={clearFilters}
-            className="rounded-lg border border-zinc-700 px-4 py-2 text-white"
+            className="rounded-lg border border-zinc-700 px-4 py-2 text-white cursor-pointer"
           >
             Reset
           </button>

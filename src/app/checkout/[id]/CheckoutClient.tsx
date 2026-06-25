@@ -8,6 +8,8 @@ interface CheckoutClientProps {
 }
 
 export default function CheckoutClient({ product }: CheckoutClientProps) {
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -29,6 +31,8 @@ export default function CheckoutClient({ product }: CheckoutClientProps) {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       const res = await fetch("/api/checkout_sessions", {
         method: "POST",
         headers: {
@@ -47,6 +51,7 @@ export default function CheckoutClient({ product }: CheckoutClientProps) {
       }
     } catch (error) {
       console.error("Checkout Error:", error);
+      setLoading(false);
     }
   };
 
@@ -128,9 +133,35 @@ export default function CheckoutClient({ product }: CheckoutClientProps) {
 
           <button
             type="submit"
-            className="w-full mt-6 bg-orange-500 hover:bg-orange-600 transition text-white py-3 rounded-xl font-semibold shadow-md"
+            disabled={loading}
+            className="w-full mt-6 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed transition text-white py-3 rounded-xl font-semibold shadow-md flex items-center justify-center gap-2 cursor-pointer"
           >
-            Pay ${total.toFixed(2)}
+            {loading ? (
+              <>
+                <svg
+                  className="w-5 h-5 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    className="opacity-25"
+                  />
+                  <path
+                    fill="currentColor"
+                    className="opacity-75"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  />
+                </svg>
+                Processing Payment...
+              </>
+            ) : (
+              <>Pay ${total.toFixed(2)}</>
+            )}
           </button>
         </div>
       </form>

@@ -2,6 +2,7 @@ import ProductListingContainer from "@/components/products/ProductListingContain
 import { getProducts } from "@/lib/api/products";
 import ProductFilters from "./ProductFilters";
 import ProductNotFound from "./ProductNotFound";
+import Pagination from "@/components/products/Pagination";
 
 interface ProductsPageProps {
   searchParams: Promise<{
@@ -9,20 +10,28 @@ interface ProductsPageProps {
     category?: string;
     minPrice?: string;
     maxPrice?: string;
+    page?: string;
   }>;
 }
 
 const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   const params = await searchParams;
 
+  const page = Number(params.page) || 1;
+
   const res = await getProducts({
     search: params.search,
     category: params.category,
     minPrice: params.minPrice,
     maxPrice: params.maxPrice,
+    page,
   });
 
   const products = res?.data || [];
+  const totalPages = res?.meta?.totalPage || 1;
+  // console.log(res);
+  // console.log(res?.meta);
+  // console.log(res?.meta?.totalPage);
 
   return (
     <div className=" min-h-screen overflow-hidden  relative z-10 px-4 py-8 md:px-8 lg:px-12">
@@ -50,7 +59,10 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
         {products.length === 0 ? (
           <ProductNotFound />
         ) : (
-          <ProductListingContainer products={products} />
+          <>
+            <ProductListingContainer products={products} />
+            <Pagination totalPages={totalPages} />
+          </>
         )}
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -21,7 +22,7 @@ export default function ContactPage() {
     e.preventDefault();
 
     console.log(form);
-    alert("Message sent successfully!");
+    toast.success("Message sent successfully!");
 
     setForm({
       name: "",
