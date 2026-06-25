@@ -45,6 +45,8 @@ export default async function Success({
       userId: session.metadata?.buyerId,
       name: session.metadata?.buyerName,
       email: session.metadata?.buyerEmail,
+      phone: session.metadata?.phone,
+      address: session.metadata?.address,
     },
     sellerInfo: {
       userId: session.metadata?.sellerId,
@@ -55,6 +57,7 @@ export default async function Success({
     productName: session.metadata?.productName,
     productPrice: session.metadata?.productPrice,
     productImage: session.metadata?.productImage,
+    transactionId,
     paymentStatus: "paid",
     orderStatus: "pending",
   };

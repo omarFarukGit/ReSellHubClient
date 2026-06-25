@@ -147,7 +147,7 @@ const AdminProductPage = ({ products }: AdminProductPageProps) => {
 
                           {/* Mobile Info */}
                           <div className="md:hidden space-y-1 text-xs text-gray-500">
-                            <p>৳ {product.price.toLocaleString()}</p>
+                            <p>$ {product.price.toLocaleString()}</p>
                             <p>{product.category}</p>
                           </div>
 

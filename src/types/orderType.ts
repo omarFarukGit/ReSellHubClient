@@ -6,6 +6,7 @@ export interface IUserInfo {
   userId: string;
   name: string;
   email: string;
+  address?: string;
 }
 
 export interface IOrder {

@@ -45,6 +45,8 @@ export async function POST(req: Request) {
       sellerId: product.sellerInfo.userId,
       sellerName: product.sellerInfo.name,
       sellerEmail: product.sellerInfo.email,
+      phone: customerInfo.phone,
+      address: customerInfo.address,
     },
 
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,

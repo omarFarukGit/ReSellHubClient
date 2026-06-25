@@ -88,6 +88,7 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
                 <th className="p-4">Status</th>
 
                 <th className="hidden lg:table-cell p-4">Date</th>
+                <th className="hidden lg:table-cell p-4">Location</th>
 
                 <th className="p-4 text-right">Actions</th>
               </tr>
@@ -147,6 +148,10 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
                     {/* Date */}
                     <td className="hidden lg:table-cell p-4 text-gray-600">
                       {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                    {/* Loccation */}
+                    <td className="hidden lg:table-cell p-4 text-gray-600">
+                      {order.buyerInfo.address}
                     </td>
 
                     {/* Actions */}
