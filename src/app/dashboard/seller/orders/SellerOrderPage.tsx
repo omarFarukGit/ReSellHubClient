@@ -54,9 +54,9 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
       console.log(res, orderId, sellerId, "orderstatus");
       toast.success("Status updated successfully ✅");
       router.refresh();
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       toast.error("Something went wrong ❌");
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -74,108 +74,135 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl shadow overflow-x-auto">
-        <table className="w-full min-w-[800px] text-sm">
-          <thead className="bg-gray-100 text-left">
-            <tr>
-              <th className="p-4">Product</th>
-              <th className="p-4">Buyer</th>
-              <th className="p-4">Price</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Date</th>
-              <th className="p-4 text-right">Actions</th>
-            </tr>
-          </thead>
+      <div className="overflow-hidden rounded-xl bg-white shadow">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-100 text-left">
+              <tr>
+                <th className="p-4">Product</th>
 
-          <tbody>
-            {orders.map((order) => (
-              <tr
-                key={order._id}
-                className="border-t hover:bg-gray-50 transition"
-              >
-                {/* Product */}
-                <td className="p-4 flex items-center gap-3">
-                  <Image
-                    src={order.productImage}
-                    className="w-10 h-10 rounded object-cover"
-                    alt={order.productName}
-                    width={200}
-                    height={200}
-                  />
-                  <span className="font-medium">{order.productName}</span>
-                </td>
+                <th className="hidden md:table-cell p-4">Buyer</th>
 
-                {/* Buyer */}
-                <td className="p-4 text-gray-600">{order.buyerInfo.name}</td>
+                <th className="hidden lg:table-cell p-4">Price</th>
 
-                {/* Price */}
-                <td className="p-4 font-semibold">৳ {order.productPrice}</td>
+                <th className="p-4">Status</th>
 
-                {/* Status */}
-                <td className="p-4">
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${statusBadge(
-                      order.orderStatus,
-                    )}`}
+                <th className="hidden lg:table-cell p-4">Date</th>
+
+                <th className="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {orders.length > 0 ? (
+                orders.map((order) => (
+                  <tr
+                    key={order._id}
+                    className="border-t hover:bg-gray-50 transition"
                   >
-                    {order.orderStatus}
-                  </span>
-                </td>
+                    {/* Product */}
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <Image
+                          src={order.productImage}
+                          className="h-10 w-10 rounded object-cover"
+                          alt={order.productName}
+                          width={200}
+                          height={200}
+                        />
 
-                {/* Date */}
+                        <div>
+                          <p className="font-medium">{order.productName}</p>
 
-                <td className="p-4 text-gray-600">
-                  {new Date(order.createdAt).toLocaleDateString()}
-                </td>
+                          {/* Mobile Info */}
+                          <div className="md:hidden text-xs text-gray-500 space-y-1">
+                            <p>{order.buyerInfo.name}</p>
+                            <p>$ {order.productPrice}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
 
-                {/* Actions */}
-                <td className="p-4 text-right">
-                  <div className="flex justify-end gap-3 text-xs">
-                    <button
-                      className="text-blue-600 hover:underline"
-                      onClick={() =>
-                        router.push(`/products/${order.productId}`)
-                      }
-                    >
-                      View
-                    </button>
+                    {/* Buyer */}
+                    <td className="hidden md:table-cell p-4 text-gray-600">
+                      {order.buyerInfo.name}
+                    </td>
 
-                    <div className="p-4">
-                      <select
-                        value={order.orderStatus}
-                        onChange={(e) =>
-                          updateStatus(
-                            order._id,
-                            order.sellerInfo.userId,
-                            e.target.value as
-                              | "pending"
-                              | "processing"
-                              | "shipped"
-                              | "delivered"
-                              | "cancelled",
-                          )
-                        }
-                        className={`rounded-md border px-2 py-1 text-xs font-medium ${statusBadge(
+                    {/* Price */}
+                    <td className="hidden lg:table-cell p-4 font-semibold">
+                      $ {order.productPrice}
+                    </td>
+
+                    {/* Status */}
+                    <td className="p-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${statusBadge(
                           order.orderStatus,
                         )}`}
                       >
-                        <option value="pending">Pending</option>
-                        <option value="processing">processing</option>
-                        <option value="shipped">shipped</option>
-                        <option value="delivered">delivered</option>
-                        <option value="cancelled">cancelled</option>
-                      </select>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                        {order.orderStatus}
+                      </span>
+                    </td>
+
+                    {/* Date */}
+                    <td className="hidden lg:table-cell p-4 text-gray-600">
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+
+                    {/* Actions */}
+                    <td className="p-4">
+                      <div className="flex flex-wrap justify-end gap-2 text-xs">
+                        <button
+                          className="rounded px-2 py-1 text-blue-600 hover:bg-blue-50"
+                          onClick={() =>
+                            router.push(`/products/${order.productId}`)
+                          }
+                        >
+                          View
+                        </button>
+
+                        <select
+                          value={order.orderStatus}
+                          onChange={(e) =>
+                            updateStatus(
+                              order._id,
+                              order.sellerInfo.userId,
+                              e.target.value as
+                                | "pending"
+                                | "processing"
+                                | "shipped"
+                                | "delivered"
+                                | "cancelled",
+                            )
+                          }
+                          className={`rounded-md border px-2 py-1 text-xs font-medium ${statusBadge(
+                            order.orderStatus,
+                          )}`}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="processing">Processing</option>
+                          <option value="shipped">Shipped</option>
+                          <option value="delivered">Delivered</option>
+                          <option value="cancelled">Cancelled</option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="py-16 text-center text-gray-500">
+                    No orders found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Footer */}
-      <div className="flex justify-between text-xs text-gray-500">
+      <div className="flex flex-col gap-2 text-xs text-gray-500 md:flex-row md:justify-between">
         <span>Total Orders: {orders.length}</span>
         <span>Seller Dashboard</span>
       </div>

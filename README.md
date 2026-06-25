@@ -4,9 +4,9 @@ A modern second-hand marketplace platform where users can buy and sell pre-owned
 
 ## 🌐 Live Links
 
-- Live Site: https://your-live-link.com
-- Client Repository: https://github.com/your-username/resellhub-client
-- Server Repository: https://github.com/your-username/resellhub-server
+- Live Site: https://re-sell-hub-client.vercel.app/
+- Client Repository: https://github.com/omarFarukGit/ReSellHubClient
+- Server Repository: https://github.com/omarFarukGit/ReSellHubServer
 
 ---
 
@@ -135,8 +135,6 @@ The platform aims to reduce waste, promote sustainability, and create earning op
 - Tailwind CSS
 - Hero UI
 - Framer Motion
-- TanStack Query
-- React Hook Form
 - React Toastify
 
 ### Backend
@@ -156,7 +154,6 @@ The platform aims to reduce waste, promote sustainability, and create earning op
 ### Deployment
 
 - Vercel
-- Render
 - MongoDB Atlas
 
 ---
@@ -170,20 +167,19 @@ next
 react
 typescript
 tailwindcss
-@tanstack/react-query
 react-hook-form
 framer-motion
 react-toastify
-axios
 lucide-react
 react-icons
 @heroui/react
-zod
+
 ```
 
 ### Backend
 
 ```bash
+typescript
 express
 mongoose
 jsonwebtoken
@@ -191,10 +187,7 @@ bcryptjs
 cors
 dotenv
 stripe
-better-auth
-cookie-parser
-multer
-cloudinary
+ImageBB
 ```
 
 ---
@@ -205,13 +198,7 @@ cloudinary
 
 ```js
 {
-  name,
-  email,
-  image,
-  role,
-  phone,
-  location,
-  status
+  (name, email, image, role, phone, location, status);
 }
 ```
 
@@ -219,14 +206,7 @@ cloudinary
 
 ```js
 {
-  title,
-  category,
-  condition,
-  price,
-  images,
-  description,
-  sellerInfo,
-  status
+  (title, category, condition, price, images, description, sellerInfo, status);
 }
 ```
 
@@ -234,33 +214,7 @@ cloudinary
 
 ```js
 {
-  buyerInfo,
-  sellerInfo,
-  productId,
-  paymentStatus,
-  orderStatus
-}
-```
-
-### Reviews
-
-```js
-{
-  reviewerInfo,
-  productId,
-  rating,
-  comment
-}
-```
-
-### Payments
-
-```js
-{
-  transactionId,
-  orderId,
-  amount,
-  paymentStatus
+  (buyerInfo, sellerInfo, productId, paymentStatus, orderStatus);
 }
 ```
 
@@ -293,8 +247,8 @@ The application is fully responsive and optimized for:
 ### Clone Repositories
 
 ```bash
-git clone https://github.com/your-username/resellhub-client.git
-git clone https://github.com/your-username/resellhub-server.git
+git clone https://github.com/your-username/ReSellHubClient.git
+git clone https://github.com/your-username//ReSellHubClient.git
 ```
 
 ### Install Dependencies
@@ -323,20 +277,16 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 ### Server
 
 ```env
-PORT=
-DATABASE_URL=
-JWT_SECRET=
 BETTER_AUTH_SECRET=
 BETTER_AUTH_URL=
+NEXT_PUBLIC_BASE_URL=
 
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
+MONGO_URI=
 
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 STRIPE_SECRET_KEY=
+NEXT_PUBLIC_IMGBB_KEY=
 
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
 ```
 
 ---

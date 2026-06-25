@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import EditProductModal from "./EditPorductModal";
 import { useState } from "react";
 
-
 const statusBadge = (status: string) => {
   switch (status) {
     case "available":
@@ -68,98 +67,126 @@ const ProductsPage = ({ products, user }: any) => {
       </div>
 
       {/* Table Card */}
-      <div className="bg-white rounded-xl shadow overflow-x-auto">
-        <table className="w-full min-w-[900px] text-sm">
-          <thead className="bg-gray-100 text-left">
-            <tr>
-              <th className="p-4">Product</th>
-              <th className="p-4">Category</th>
-              <th className="p-4">Price</th>
-              <th className="p-4">Condition</th>
-              <th className="p-4">Status</th>
-              {/* <th className="p-4">Location</th> */}
-              <th className="p-4 text-right">Actions</th>
-            </tr>
-          </thead>
+      <div className="overflow-hidden rounded-xl bg-white shadow">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-100 text-left">
+              <tr>
+                <th className="p-4">Product</th>
 
-          <tbody>
-            {products.map((product:any) => (
-              <tr
-                key={product._id}
-                className="border-t hover:bg-gray-50 transition"
-              >
-                {/* Product */}
-                <td className="p-4 flex items-center gap-3">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.title}
-                    className="w-10 h-10 rounded object-cover"
-                    width={200}
-                    height={200}
-                  />
-                  <div>
-                    <p className="font-medium">{product.title}</p>
-                    <p className="text-xs text-gray-500">
-                      {product.description.slice(0, 40)}...
-                    </p>
-                  </div>
-                </td>
+                <th className="hidden md:table-cell p-4">Category</th>
 
-                {/* Category */}
-                <td className="p-4">{product.category}</td>
+                <th className="hidden lg:table-cell p-4">Price</th>
 
-                {/* Price */}
-                <td className="p-4 font-semibold">
-                  ৳ {product.price.toLocaleString()}
-                </td>
+                <th className="hidden lg:table-cell p-4">Condition</th>
 
-                {/* Condition */}
-                <td className="p-4">{product.condition}</td>
+                <th className="p-4">Status</th>
 
-                {/* Status */}
-                <td className="p-4">
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${statusBadge(
-                      product.status,
-                    )}`}
-                  >
-                    {product.status}
-                  </span>
-                </td>
-
-                {/* Location */}
-                {/* <td className="p-4 text-gray-600">{product.location}</td> */}
-
-                {/* Actions */}
-                <td className="p-4 text-right">
-                  <div className="flex justify-end gap-3 text-xs">
-                    <Link href={`/products/${product._id}`}>
-                      <button className="text-blue-600 hover:underline">
-                        View
-                      </button>
-                    </Link>
-                    <button
-                      onClick={() => handleEdit(product)}
-                      className="text-green-600 hover:underline"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteProduct(product._id, user.id)}
-                      className="text-red-600 hover:underline"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
+                <th className="p-4 text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {products.map((product: any) => (
+                <tr
+                  key={product._id}
+                  className="border-t hover:bg-gray-50 transition"
+                >
+                  {/* Product */}
+                  <td className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src={product.images[0]}
+                        alt={product.title}
+                        className="h-10 w-10 rounded object-cover"
+                        width={200}
+                        height={200}
+                      />
+
+                      <div>
+                        <p className="font-medium">{product.title}</p>
+
+                        {/* Mobile Info */}
+                        <div className="md:hidden text-xs text-gray-500 space-y-1">
+                          <p>$ {product.price.toLocaleString()}</p>
+                          <p>{product.category}</p>
+                        </div>
+
+                        <p className="hidden md:block text-xs text-gray-500">
+                          {product.description.slice(0, 40)}...
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+
+                  {/* Category */}
+                  <td className="hidden md:table-cell p-4">
+                    {product.category}
+                  </td>
+
+                  {/* Price */}
+                  <td className="hidden lg:table-cell p-4 font-semibold">
+                    $ {product.price.toLocaleString()}
+                  </td>
+
+                  {/* Condition */}
+                  <td className="hidden lg:table-cell p-4">
+                    {product.condition}
+                  </td>
+
+                  {/* Status */}
+                  <td className="p-4">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${statusBadge(
+                        product.status,
+                      )}`}
+                    >
+                      {product.status}
+                    </span>
+                  </td>
+
+                  {/* Actions */}
+                  <td className="p-4">
+                    <div className="flex flex-wrap justify-end gap-2 text-xs">
+                      <Link
+                        href={`/products/${product._id}`}
+                        className="rounded px-2 py-1 text-blue-600 hover:bg-blue-50"
+                      >
+                        View
+                      </Link>
+
+                      <button
+                        onClick={() => handleEdit(product)}
+                        className="rounded px-2 py-1 text-green-600 hover:bg-green-50"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => deleteProduct(product._id, user.id)}
+                        className="rounded px-2 py-1 text-red-600 hover:bg-red-50"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+
+              {products.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="py-16 text-center text-gray-500">
+                    No products found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Footer */}
-      <div className="flex justify-between mt-4 text-xs text-gray-500">
+      <div className="mt-4 flex flex-col gap-2 text-xs text-gray-500 md:flex-row md:justify-between">
         <span>Total Products: {products.length}</span>
         <span>Showing all records</span>
       </div>

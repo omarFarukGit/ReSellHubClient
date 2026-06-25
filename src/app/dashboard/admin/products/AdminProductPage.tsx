@@ -91,123 +91,155 @@ const AdminProductPage = ({ products }: AdminProductPageProps) => {
   return (
     <div className="p-6 md:p-10">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Products</h1>
-        <p className="text-sm text-gray-500">
-          Manage all listed products in your marketplace
-        </p>
+      <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Products</h1>
+          <p className="text-sm text-gray-500">
+            Manage all listed products in your marketplace
+          </p>
+        </div>
+
+        <div className="text-sm text-gray-500">
+          Total Products: {products.length}
+        </div>
       </div>
 
       {/* Table Card */}
-      <div className="bg-white rounded-xl shadow overflow-x-auto">
-        <table className="w-full min-w-[900px] text-sm">
-          <thead className="bg-gray-100 text-left">
-            <tr>
-              <th className="p-4">Product</th>
-              <th className="p-4">Category</th>
-              <th className="p-4">Price</th>
-              <th className="p-4">Condition</th>
-              <th className="p-4">Status</th>
-              {/* <th className="p-4">Location</th> */}
-              <th className="p-4 text-right">Actions</th>
-            </tr>
-          </thead>
+      <div className="overflow-hidden rounded-xl bg-white shadow">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-100 text-left">
+              <tr>
+                <th className="p-4">Product</th>
 
-          <tbody>
-            {products.map((product) => (
-              <tr
-                key={product._id}
-                className="border-t hover:bg-gray-50 transition"
-              >
-                {/* Product */}
-                <td className="p-4 flex items-center gap-3">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.title}
-                    className="w-10 h-10 rounded object-cover"
-                    width={200}
-                    height={200}
-                  />
-                  <div>
-                    <p className="font-medium">{product.title}</p>
-                    <p className="text-xs text-gray-500">
-                      {product.description.slice(0, 40)}...
-                    </p>
-                  </div>
-                </td>
+                <th className="hidden md:table-cell p-4">Category</th>
 
-                {/* Category */}
-                <td className="p-4">{product.category}</td>
+                <th className="hidden lg:table-cell p-4">Price</th>
 
-                {/* Price */}
-                <td className="p-4 font-semibold">
-                  ৳ {product.price.toLocaleString()}
-                </td>
+                <th className="hidden lg:table-cell p-4">Condition</th>
 
-                {/* Condition */}
-                <td className="p-4">{product.condition}</td>
+                <th className="p-4">Status</th>
 
-                {/* Status */}
-                <td className="p-4">
-                  <select
-                    value={product.status}
-                    onChange={(e) =>
-                      updateStatus(
-                        product._id,
-                        e.target.value as
-                          | "available"
-                          | "pending"
-                          | "sold"
-                          | "rejected",
-                      )
-                    }
-                    className={`rounded-md border px-2 py-1 text-xs font-medium ${statusBadge(
-                      product.status,
-                    )}`}
-                  >
-                    <option value="available">Available</option>
-                    <option value="pending">Pending</option>
-                    <option value="sold">Sold</option>
-                    <option value="rejected">Rejected</option>
-                  </select>
-                </td>
-
-                {/* Location */}
-                {/* <td className="p-4 text-gray-600">{product.location}</td> */}
-
-                {/* Actions */}
-                <td className="p-4 text-right">
-                  <div className="flex justify-end gap-3 text-xs">
-                    <Link
-                      href={`/products/${product._id}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      View
-                    </Link>
-                    <button
-                      className="text-green-600 hover:underline"
-                      onClick={() => handleEdit(product)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="text-red-600 hover:underline"
-                      onClick={() => {
-                        deleteProduct(product._id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
+                <th className="p-4 text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <tr
+                    key={product._id}
+                    className="border-t hover:bg-gray-50 transition"
+                  >
+                    {/* Product */}
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <Image
+                          src={product.images[0]}
+                          alt={product.title}
+                          className="h-10 w-10 rounded object-cover"
+                          width={200}
+                          height={200}
+                        />
+
+                        <div>
+                          <p className="font-medium">{product.title}</p>
+
+                          {/* Mobile Info */}
+                          <div className="md:hidden space-y-1 text-xs text-gray-500">
+                            <p>৳ {product.price.toLocaleString()}</p>
+                            <p>{product.category}</p>
+                          </div>
+
+                          {/* Tablet Info */}
+                          <div className="hidden md:block lg:hidden text-xs text-gray-500">
+                            $ {product.price.toLocaleString()}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Category */}
+                    <td className="hidden md:table-cell p-4">
+                      {product.category}
+                    </td>
+
+                    {/* Price */}
+                    <td className="hidden lg:table-cell p-4 font-semibold">
+                      $ {product.price.toLocaleString()}
+                    </td>
+
+                    {/* Condition */}
+                    <td className="hidden lg:table-cell p-4">
+                      {product.condition}
+                    </td>
+
+                    {/* Status */}
+                    <td className="p-4">
+                      <select
+                        value={product.status}
+                        onChange={(e) =>
+                          updateStatus(
+                            product._id,
+                            e.target.value as
+                              | "available"
+                              | "pending"
+                              | "sold"
+                              | "rejected",
+                          )
+                        }
+                        className={`rounded-md border px-2 py-1 text-xs font-medium ${statusBadge(
+                          product.status,
+                        )}`}
+                      >
+                        <option value="available">Available</option>
+                        <option value="pending">Pending</option>
+                        <option value="sold">Sold</option>
+                        <option value="rejected">Rejected</option>
+                      </select>
+                    </td>
+
+                    {/* Actions */}
+                    <td className="p-4">
+                      <div className="flex flex-wrap justify-end gap-2 text-xs">
+                        <Link
+                          href={`/products/${product._id}`}
+                          className="rounded px-2 py-1 text-blue-600 hover:bg-blue-50"
+                        >
+                          View
+                        </Link>
+
+                        <button
+                          className="rounded px-2 py-1 text-green-600 hover:bg-green-50"
+                          onClick={() => handleEdit(product)}
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          className="rounded px-2 py-1 text-red-600 hover:bg-red-50"
+                          onClick={() => deleteProduct(product._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="py-16 text-center text-gray-500">
+                    No products found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Footer */}
-      <div className="flex justify-between mt-4 text-xs text-gray-500">
+      <div className="mt-4 flex flex-col gap-2 text-xs text-gray-500 md:flex-row md:justify-between">
         <span>Total Products: {products.length}</span>
         <span>Showing all records</span>
       </div>

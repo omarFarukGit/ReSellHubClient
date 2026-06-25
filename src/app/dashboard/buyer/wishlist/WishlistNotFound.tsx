@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 
 export default function EmptyWishlist() {
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
+    <div className="flex flex-col items-center justify-center  sm:py-20 text-center">
       <div className="mb-4 rounded-full bg-pink-100 p-4">
         <Heart className="h-10 w-10 text-pink-500" />
       </div>

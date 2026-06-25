@@ -192,9 +192,9 @@ export default function AdminUsersPage({ users }: UsersTableProps) {
                     {/* Actions */}
                     <td className="p-4">
                       <div className="flex flex-col items-end gap-1 sm:flex-row sm:justify-end">
-                        <button className="rounded-lg px-2 py-1 text-blue-600 hover:bg-blue-50">
+                        {/* <button className="rounded-lg px-2 py-1 text-blue-600 hover:bg-blue-50">
                           View
-                        </button>
+                        </button> */}
 
                         <button
                           onClick={() =>

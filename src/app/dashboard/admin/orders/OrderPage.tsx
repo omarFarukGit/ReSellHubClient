@@ -52,96 +52,122 @@ export default function OrdersPage({ orders }: OrdersTableProps) {
 
   return (
     <div className="p-4 md:p-6 lg:p-8">
-      {" "}
+      {/* Header */}
       <div className="mb-6">
-        {" "}
-        <h1 className="text-2xl font-bold">Orders</h1>{" "}
-        <p className="text-sm text-gray-500">
-          Manage all marketplace orders{" "}
-        </p>{" "}
+        <h1 className="text-2xl font-bold">Orders</h1>
+        <p className="text-sm text-gray-500">Manage all marketplace orders</p>
       </div>
-      <div className="overflow-x-auto rounded-xl bg-white shadow">
-        <table className="w-full min-w-[700px] text-sm">
-          <thead className="bg-gray-100 text-left">
-            <tr>
-              <th className="p-4">Product</th>
-              <th className="p-4">Buyer</th>
-              <th className="p-4">Price</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Date</th>
-              <th className="p-4">Action</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            {orders.map((order) => (
-              <tr
-                key={order._id}
-                className="border-t hover:bg-gray-50 transition"
-              >
-                <td className="p-4">
-                  <div className="flex items-center gap-3 min-w-[220px]">
-                    <Image
-                      src={order.productImage}
-                      alt={order.productName}
-                      width={48}
-                      height={48}
-                      className="h-12 w-12 rounded-lg object-cover flex-shrink-0"
-                    />
+      {/* Table */}
+      <div className="overflow-hidden rounded-xl bg-white shadow">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-100 text-left">
+              <tr>
+                <th className="p-4">Product</th>
 
-                    <div className="min-w-0">
-                      <p className="font-medium truncate">
-                        {order.productName}
-                      </p>
-                    </div>
-                  </div>
-                </td>
+                <th className="hidden md:table-cell p-4">Buyer</th>
 
-                <td className="p-4 whitespace-nowrap">
-                  {order.buyerInfo.name}
-                </td>
+                <th className="hidden lg:table-cell p-4">Price</th>
 
-                <td className="p-4 font-semibold whitespace-nowrap">
-                  ৳ {order.productPrice}
-                </td>
+                <th className="p-4">Status</th>
 
-                <td className="p-4 whitespace-nowrap">
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor(
-                      order.orderStatus,
-                    )}`}
-                  >
-                    {order.orderStatus}
-                  </span>
-                </td>
+                <th className="hidden lg:table-cell p-4">Date</th>
 
-                <td className="p-4 whitespace-nowrap">
-                  {new Date(order.createdAt).toLocaleDateString()}
-                </td>
-
-                <td className="p-4">
-                  <div className="flex gap-3 whitespace-nowrap">
-                    <Link
-                      href={`/products/${order.productId}`}
-                      className="text-orange-600 font-medium hover:underline"
-                    >
-                      View
-                    </Link>
-
-                    <button
-                      onClick={() => deleteProduct(order._id)}
-                      className="text-red-600 font-medium hover:underline cursor-pointer"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
+                <th className="p-4">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {orders.map((order) => (
+                <tr
+                  key={order._id}
+                  className="border-t hover:bg-gray-50 transition"
+                >
+                  {/* Product */}
+                  <td className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src={order.productImage}
+                        alt={order.productName}
+                        width={48}
+                        height={48}
+                        className="h-12 w-12 rounded-lg object-cover flex-shrink-0"
+                      />
+
+                      <div>
+                        <p className="font-medium">{order.productName}</p>
+
+                        {/* Mobile Info */}
+                        <div className="md:hidden text-xs text-gray-500 space-y-1">
+                          <p>{order.buyerInfo.name}</p>
+                          <p>$ {order.productPrice}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+
+                  {/* Buyer */}
+                  <td className="hidden md:table-cell p-4">
+                    {order.buyerInfo.name}
+                  </td>
+
+                  {/* Price */}
+                  <td className="hidden lg:table-cell p-4 font-semibold">
+                    $ {order.productPrice}
+                  </td>
+
+                  {/* Status */}
+                  <td className="p-4">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor(
+                        order.orderStatus,
+                      )}`}
+                    >
+                      {order.orderStatus}
+                    </span>
+                  </td>
+
+                  {/* Date */}
+                  <td className="hidden lg:table-cell p-4">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </td>
+
+                  {/* Action */}
+                  <td className="p-4">
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      <Link
+                        href={`/products/${order.productId}`}
+                        className="rounded px-2 py-1 text-orange-600 hover:bg-orange-50"
+                      >
+                        View
+                      </Link>
+
+                      <button
+                        onClick={() => deleteProduct(order._id)}
+                        className="rounded px-2 py-1 text-red-600 hover:bg-red-50"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+
+              {orders.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="py-16 text-center text-gray-500">
+                    No orders found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div className="mt-4 flex justify-between text-xs text-gray-500">
+
+      {/* Footer */}
+      <div className="mt-4 flex flex-col gap-2 text-xs text-gray-500 md:flex-row md:justify-between">
         <span>Total Orders: {orders.length}</span>
         <span>Showing all records</span>
       </div>
