@@ -2,21 +2,21 @@
 
 import Link from "next/link";
 import {
-  ShoppingBag,
   Smartphone,
-  Sofa,
-  Gamepad2,
-  Shirt,
-  BookOpen,
+  Laptop,
+  Computer,
+Camera ,
+  Watch,
+  Headphones,
 } from "lucide-react";
 
 const categories = [
-  { name: "Electronics", icon: Smartphone },
-  { name: "Fashion", icon: Shirt },
-  { name: "Furniture", icon: Sofa },
-  { name: "Sports", icon: Gamepad2 },
-  { name: "Books", icon: BookOpen },
-  { name: "Others", icon: ShoppingBag },
+  { name: "Phone", icon: Smartphone },
+  { name: "Computer", icon: Computer },
+  { name: "Laptop", icon: Laptop },
+  { name: "Camera", icon: Camera },
+  { name: "Watch", icon: Watch },
+  { name: "Head Phones", icon: Headphones },
 ];
 
 const CategorySection = () => {

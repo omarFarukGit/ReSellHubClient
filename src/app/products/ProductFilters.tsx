@@ -4,12 +4,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const categories = [
-  "Electronics",
-  "Fashion",
-  "Furniture",
-  "Books",
-  "Sports",
-  "Vehicles",
+  "Phone",
+  "Laptop",
+  "Computer",
+  "Camera",
+  "Head Phone",
+  "Watch",
 ];
 
 const ProductFilters = () => {

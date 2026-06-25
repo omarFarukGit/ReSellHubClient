@@ -52,7 +52,7 @@ const SignUpPage = () => {
         email: payload.email,
         password: payload.password,
         name: payload.name,
-        image: payload.photo,
+        image: "https://i.ibb.co/fdmzM1Kr/profile-icon.png",
         fetchOptions: {
           body: {
             role: payload.role,

@@ -3,6 +3,7 @@
 import { fromJSONSchema } from "better-auth";
 import Image from "next/image";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 // const initialSeller = {
 //   name: User.name
@@ -55,7 +56,7 @@ export default function SellerProfilePage({ user }: any) {
 
     const imageUrl = await uploadImage(file);
 
-    setForm((prev:any) => ({
+    setForm((prev: any) => ({
       ...prev,
       avatar: imageUrl,
     }));
@@ -90,10 +91,10 @@ export default function SellerProfilePage({ user }: any) {
       setSeller(data.data);
       setOpen(false);
 
-      alert("Profile updated successfully");
+      toast.success("Profile updated successfully");
     } catch (error) {
       console.error(error);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 

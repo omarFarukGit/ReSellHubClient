@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ProductDetailsPage = async ({ params }: Props) => {
-  const { id } =await params;
+  const { id } = await params;
 
   const res = await getProductById(id);
   const product = res?.data;
@@ -25,9 +25,7 @@ const ProductDetailsPage = async ({ params }: Props) => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 p-6 md:p-12">
-
       <div className="max-w-6xl mx-auto">
-
         {/* BACK */}
         <Link
           href="/products"
@@ -39,11 +37,9 @@ const ProductDetailsPage = async ({ params }: Props) => {
 
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-
           {/* LEFT IMAGE */}
           <div className="relative">
             <div className="relative h-[500px] w-full rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-
               <Image
                 src={product.images?.[0] || "/placeholder-product.jpg"}
                 alt={product.title}
@@ -60,13 +56,11 @@ const ProductDetailsPage = async ({ params }: Props) => {
               <span className="absolute top-4 left-4 px-3 py-1 text-xs rounded-full bg-orange-50 text-orange-600 border border-orange-200">
                 {product.category}
               </span>
-
             </div>
           </div>
 
           {/* RIGHT CONTENT */}
           <div className="flex flex-col gap-5">
-
             {/* TITLE */}
             <h1 className="text-3xl font-bold text-slate-900">
               {product.title}
@@ -74,12 +68,11 @@ const ProductDetailsPage = async ({ params }: Props) => {
 
             {/* PRICE */}
             <h2 className="text-4xl font-bold text-orange-600">
-              ৳ {product.price.toLocaleString()}
+              $ {product.price.toLocaleString()}
             </h2>
 
             {/* CONDITION + STATUS */}
             <div className="flex gap-2">
-
               <span className="px-3 py-1 text-xs rounded-full bg-blue-50 text-blue-600 border border-blue-200">
                 {product.condition}
               </span>
@@ -93,7 +86,6 @@ const ProductDetailsPage = async ({ params }: Props) => {
               >
                 {product.status}
               </span>
-
             </div>
 
             {/* DESCRIPTION */}
@@ -103,7 +95,6 @@ const ProductDetailsPage = async ({ params }: Props) => {
 
             {/* ACTIONS */}
             <div className="flex gap-3 mt-2">
-
               <Link
                 href={`/checkout/${product._id}`}
                 className="flex-1 flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-medium shadow-md transition"
@@ -115,18 +106,15 @@ const ProductDetailsPage = async ({ params }: Props) => {
               <button className="p-3 border border-slate-200 rounded-xl hover:border-orange-500 hover:text-orange-500 transition">
                 <Heart size={18} />
               </button>
-
             </div>
 
             {/* SELLER CARD */}
             <div className="mt-6 p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
-
               <h3 className="text-sm text-slate-500 mb-3">
                 Seller Information
               </h3>
 
               <div className="flex items-center gap-3">
-
                 <div className="h-10 w-10 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold">
                   {product.sellerInfo?.name?.charAt(0)}
                 </div>
@@ -139,15 +127,12 @@ const ProductDetailsPage = async ({ params }: Props) => {
                     {product.sellerInfo?.email}
                   </p>
                 </div>
-
               </div>
 
               <p className="text-xs text-slate-500 mt-2">
                 📞 {product.sellerInfo?.phone}
               </p>
-
             </div>
-
           </div>
         </div>
       </div>

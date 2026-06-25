@@ -138,7 +138,9 @@ const Navbar = () => {
 
         {/* RIGHT SIDE */}
         <div className="hidden md:flex items-center gap-3">
-          <NavbarWishlist />
+          {user?.role === "buyer" ? (
+            <NavbarWishlist />
+          ) : null}
           {!user ? (
             <>
               <Link href="/auth/signin">

@@ -87,7 +87,7 @@ export default function CreateProductPage({ user }: any) {
       } else {
         toast.error("Failed to create product ❌");
       }
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       console.error(error);
       toast.error("Something went wrong ❌");
     } finally {
@@ -149,12 +149,12 @@ export default function CreateProductPage({ user }: any) {
               />
 
               <select name="category" className="border rounded-xl px-4 py-3">
-                <option>Electronics</option>
-                <option>Mobile Phones</option>
-                <option>Laptops</option>
-                <option>Fashion</option>
-                <option>Furniture</option>
-                <option>Vehicles</option>
+                <option>Phone</option>
+                <option>Computer</option>
+                <option>Laptop</option>
+                <option>Camera</option>
+                <option>Watch</option>
+                <option>Head Phone</option>
               </select>
 
               <input
@@ -255,7 +255,7 @@ export default function CreateProductPage({ user }: any) {
             <button
               type="submit"
               disabled={uploading || loading}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-medium disabled:opacity-50"
+              className="bg-orange-500 cursor-pointer hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-medium disabled:opacity-50"
             >
               {loading ? "Publishing..." : "Publish Product"}
             </button>
