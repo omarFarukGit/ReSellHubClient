@@ -40,6 +40,7 @@ const Navbar = () => {
     await authClient.signOut();
     router.push("/");
   };
+  const closeMobileMenu = () => setIsMenuOpen(false);
 
   // 🔥 OUTSIDE CLICK CLOSE FIX
   useEffect(() => {
@@ -138,9 +139,7 @@ const Navbar = () => {
 
         {/* RIGHT SIDE */}
         <div className="hidden md:flex items-center gap-3">
-          {user?.role === "buyer" ? (
-            <NavbarWishlist />
-          ) : null}
+          {user?.role === "buyer" ? <NavbarWishlist /> : null}
           {!user ? (
             <>
               <Link href="/auth/signin">
@@ -158,7 +157,7 @@ const Navbar = () => {
               {/* USER BUTTON */}
               <button
                 onClick={() => setDropdown(!dropdown)}
-                className="flex items-center gap-2 p-1 rounded-full hover:bg-slate-100"
+                className="flex items-center gap-2 p-1 rounded-full hover:bg-slate-100 cursor-pointer"
               >
                 <Image
                   src={user?.image || "https://ui-avatars.com/api/?name=User"}
@@ -228,24 +227,45 @@ const Navbar = () => {
       {/* MOBILE MENU */}
       {isMenuOpen && (
         <div className="md:hidden px-4 pb-6 space-y-2 bg-white border-t">
-          <Link href="/" className={mobileClass("/")}>
+          <Link href="/" className={mobileClass("/")} onClick={closeMobileMenu}>
             Home
           </Link>
-          <Link href="/products" className={mobileClass("/products")}>
+
+          <Link
+            href="/products"
+            className={mobileClass("/products")}
+            onClick={closeMobileMenu}
+          >
             Products
           </Link>
-          <Link href="/categories" className={mobileClass("/categories")}>
+
+          <Link
+            href="/categories"
+            className={mobileClass("/categories")}
+            onClick={closeMobileMenu}
+          >
             Categories
           </Link>
-          <Link href="/about" className={mobileClass("/about")}>
+
+          <Link
+            href="/about"
+            className={mobileClass("/about")}
+            onClick={closeMobileMenu}
+          >
             About
           </Link>
-          <Link href="/contact" className={mobileClass("/contact")}>
+
+          <Link
+            href="/contact"
+            className={mobileClass("/contact")}
+            onClick={closeMobileMenu}
+          >
             Contact
           </Link>
 
           <Link
             href={getDashboardLink()}
+            onClick={closeMobileMenu}
             className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
           >
             <LayoutDashboard className="w-4 h-4" />
