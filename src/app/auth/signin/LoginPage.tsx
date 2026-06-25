@@ -17,11 +17,7 @@ import {
 import { toast } from "react-toastify";
 import { FaGithub } from "react-icons/fa";
 
-import {
-  ShoppingBag,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { ShoppingBag, Eye, EyeOff } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
 
@@ -114,13 +110,13 @@ const LoginPage = () => {
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter password"
-                    className="pr-10"
+                    className="pr-10 w-full"
                   />
 
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-2 text-gray-500"
+                    className="absolute  right-3 top-2 text-gray-500"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>

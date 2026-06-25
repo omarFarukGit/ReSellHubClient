@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Card, Description, Separator } from "@heroui/react";
+import React, { useState } from "react";
+import { Card, Description, FieldError, Separator } from "@heroui/react";
 import { Button, Form, Input, Label, TextField } from "@heroui/react";
 
 import Link from "next/link";
@@ -9,12 +9,13 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import { FaGithub } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
+import { EyeOff, Eye } from "lucide-react";
 
 const SignUpPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams?.get("redirect") ?? "/";
-
+  const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = React.useState<"buyer" | "seller">("buyer");
   const [loading, setLoading] = React.useState(false);
 
@@ -120,14 +121,26 @@ const SignUpPage = () => {
                 <Input placeholder="rakib@gmail.com" className="h-12" />
               </TextField>
 
-              <TextField isRequired name="password">
+              <TextField name="password" isRequired>
                 <Label>Password</Label>
-                <Input
-                  type="password"
-                  placeholder="********"
-                  className="h-12"
-                />
-                <Description>Minimum 8 characters recommended</Description>
+
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter password"
+                    className="pr-10 w-full"
+                  />
+                  <Description>Minimum 8 characters recommended</Description>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute  right-3 top-2 text-gray-500"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+
+                <FieldError />
               </TextField>
 
               <TextField name="photo" hidden>
@@ -139,12 +152,16 @@ const SignUpPage = () => {
               </TextField>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <TextField name="phone">
+                <TextField isRequired name="phone">
                   <Label>Phone Number</Label>
-                  <Input placeholder="+8801712345678" className="h-12" />
+                  <Input
+                    required
+                    placeholder="+8801712345678"
+                    className="h-12"
+                  />
                 </TextField>
 
-                <TextField name="location">
+                <TextField isRequired name="location">
                   <Label>Location</Label>
                   <Input placeholder="Dhaka, Bangladesh" className="h-12" />
                 </TextField>
