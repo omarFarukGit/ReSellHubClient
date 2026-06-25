@@ -1,26 +1,8 @@
 "use client";
 
-import { fromJSONSchema } from "better-auth";
 import Image from "next/image";
 import React, { useState } from "react";
 
-// const initialadmin = {
-//   name: User.name
-//   email: "rakib.admin@gmail.com",
-//   phone: "+880 17XXXXXXXX",
-//   location: "Dhaka, Bangladesh",
-//   role: "Verified admin",
-//   joinDate: "2025-12-10",
-//   avatar: "https://i.pravatar.cc/150?img=12",
-
-//   // ➕ extra marketplace info
-//   rating: 4.7,
-//   totalSales: 42,
-//   revenue: "৳ 2,35,000",
-//   activeListings: 8,
-//   bio: "Verified admin with fast delivery and trusted service in electronics and fashion products.",
-//   verificationStatus: "verified",
-// };
 
 export default function AdminProfile({ user }: any) {
   const [admin, setAdmin] = useState(user);
