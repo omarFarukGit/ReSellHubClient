@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Hero = () => {
   return (
     <section
@@ -26,9 +28,11 @@ const Hero = () => {
           </p>
 
           <div className="mt-10 flex gap-4">
-            <button className="rounded-xl bg-[#FF6B00] px-8 py-4 text-white font-semibold hover:bg-[#e65f00] transition">
-              Shop Now
-            </button>
+            <Link href={"/products"}>
+              <button className="rounded-xl bg-[#FF6B00] px-8 py-4 text-white font-semibold hover:bg-[#e65f00] transition cursor-pointer">
+                Shop Now
+              </button>
+            </Link>
 
             <button className="rounded-xl border bg-white/80 px-8 py-4 font-semibold">
               Learn More

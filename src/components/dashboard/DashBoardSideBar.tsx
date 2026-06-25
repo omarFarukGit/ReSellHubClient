@@ -13,6 +13,7 @@ import {
   BarChart3,
   Heart,
   User,
+  PanelLeftOpen,
 } from "lucide-react";
 
 import { FiFileText } from "react-icons/fi";
@@ -105,9 +106,9 @@ export async function DashBoardSideBar() {
 
       {/* Mobile Drawer */}
       <Drawer>
-        <Button variant="secondary" className="lg:hidden">
-          <Bars />
-          Menu
+        <Button variant="secondary" className="lg:hidden bg-none p-4">
+          <PanelLeftOpen />
+          Aside
         </Button>
 
         <Drawer.Backdrop>

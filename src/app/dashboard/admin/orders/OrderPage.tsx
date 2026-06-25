@@ -18,11 +18,14 @@ const statusColor = (status: OrderStatus) => {
       return "bg-green-100 text-green-700";
     case "cancelled":
       return "bg-red-100 text-red-700";
+    default:
+      return "bg-gray-100 text-gray-600";
   }
 };
 
 export default function OrdersPage({ orders }: OrdersTableProps) {
   const router = useRouter();
+
   const deleteProduct = async (productId: string) => {
     try {
       const res = await fetch(
@@ -32,31 +35,37 @@ export default function OrdersPage({ orders }: OrdersTableProps) {
         },
       );
 
-      const data = await res.json();
+      await res.json();
 
       if (!res.ok) {
-        toast.error("delete order failed ❌");
+        toast.error("Delete order failed ❌");
         return;
       }
 
-      toast.success("delete order successfully ✅");
-
-      router.refresh(); // 🔥 page data refresh
+      toast.success("Delete order successfully ✅");
+      router.refresh();
     } catch (error) {
+      console.log(error);
       toast.error("Something went wrong ❌");
     }
   };
-  return (
-    <div className="p-6 md:p-10">
-      <h1 className="text-2xl font-bold mb-6">Orders</h1>
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow">
-        <table className="w-full min-w-[800px]">
+  return (
+    <div className="p-4 md:p-6 lg:p-8">
+      {" "}
+      <div className="mb-6">
+        {" "}
+        <h1 className="text-2xl font-bold">Orders</h1>{" "}
+        <p className="text-sm text-gray-500">
+          Manage all marketplace orders{" "}
+        </p>{" "}
+      </div>
+      <div className="overflow-x-auto rounded-xl bg-white shadow">
+        <table className="w-full min-w-[700px] text-sm">
           <thead className="bg-gray-100 text-left">
             <tr>
               <th className="p-4">Product</th>
               <th className="p-4">Buyer</th>
-              {/* <th className="p-4">Location</th> */}
               <th className="p-4">Price</th>
               <th className="p-4">Status</th>
               <th className="p-4">Date</th>
@@ -66,32 +75,39 @@ export default function OrdersPage({ orders }: OrdersTableProps) {
 
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id} className="border-t hover:bg-gray-50">
-                {/* Product */}
-                <td className="p-4 flex items-center gap-3">
-                  <Image
-                    src={order.productImage}
-                    className="w-10 h-10 rounded object-cover"
-                    alt={order.productName}
-                    width={200}
-                    height={200}
-                  />
-                  <span className="font-medium">{order.productName}</span>
+              <tr
+                key={order._id}
+                className="border-t hover:bg-gray-50 transition"
+              >
+                <td className="p-4">
+                  <div className="flex items-center gap-3 min-w-[220px]">
+                    <Image
+                      src={order.productImage}
+                      alt={order.productName}
+                      width={48}
+                      height={48}
+                      className="h-12 w-12 rounded-lg object-cover flex-shrink-0"
+                    />
+
+                    <div className="min-w-0">
+                      <p className="font-medium truncate">
+                        {order.productName}
+                      </p>
+                    </div>
+                  </div>
                 </td>
 
-                {/* Buyer */}
-                <td className="p-4">{order.buyerInfo.name}</td>
+                <td className="p-4 whitespace-nowrap">
+                  {order.buyerInfo.name}
+                </td>
 
-                {/* Location */}
-                {/* <td className="p-4">{order.location}</td> */}
+                <td className="p-4 font-semibold whitespace-nowrap">
+                  ৳ {order.productPrice}
+                </td>
 
-                {/* Price */}
-                <td className="p-4 font-semibold">৳ {order.productPrice}</td>
-
-                {/* Status */}
-                <td className="p-4">
+                <td className="p-4 whitespace-nowrap">
                   <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${statusColor(
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor(
                       order.orderStatus,
                     )}`}
                   >
@@ -99,32 +115,35 @@ export default function OrdersPage({ orders }: OrdersTableProps) {
                   </span>
                 </td>
 
-                {/* Date */}
-                <td className="p-4">
+                <td className="p-4 whitespace-nowrap">
                   {new Date(order.createdAt).toLocaleDateString()}
                 </td>
 
-                {/* Action */}
-                <td className="p-4 flex gap-2">
-                  <Link
-                    href={`/products/${order.productId}`}
-                    className="text-orange-600 font-medium hover:underline"
-                  >
-                    View
-                  </Link>
-                  <button
-                    className="text-red-600 font-medium hover:underline cursor-pointer"
-                    onClick={() => {
-                      deleteProduct(order._id);
-                    }}
-                  >
-                    Delete
-                  </button>
+                <td className="p-4">
+                  <div className="flex gap-3 whitespace-nowrap">
+                    <Link
+                      href={`/products/${order.productId}`}
+                      className="text-orange-600 font-medium hover:underline"
+                    >
+                      View
+                    </Link>
+
+                    <button
+                      onClick={() => deleteProduct(order._id)}
+                      className="text-red-600 font-medium hover:underline cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="mt-4 flex justify-between text-xs text-gray-500">
+        <span>Total Orders: {orders.length}</span>
+        <span>Showing all records</span>
       </div>
     </div>
   );

@@ -54,9 +54,9 @@ const AdminProductPage = ({ products }: AdminProductPageProps) => {
       toast.success("delete product successfully ✅");
 
       router.refresh(); // 🔥 page data refresh
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       toast.error("Something went wrong ❌");
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -83,9 +83,9 @@ const AdminProductPage = ({ products }: AdminProductPageProps) => {
 
       toast.success("Status updated successfully ✅");
       router.refresh();
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       toast.error("Something went wrong ❌");
-      console.log(error)
+      console.log(error);
     }
   };
   return (

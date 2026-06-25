@@ -14,6 +14,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
+import NavbarWishlist from "./NavbarWislist";
 
 type UserType = {
   name?: string | null;
@@ -137,6 +138,7 @@ const Navbar = () => {
 
         {/* RIGHT SIDE */}
         <div className="hidden md:flex items-center gap-3">
+          <NavbarWishlist />
           {!user ? (
             <>
               <Link href="/auth/signin">
