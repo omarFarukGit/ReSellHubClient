@@ -227,7 +227,7 @@ ImageBB
 - Protected APIs
 - Role-Based Authorization
 - Environment Variables
-- Secure Stripe Payment Processing
+- Secure Stripe Payment Processing 
 
 ---
 
