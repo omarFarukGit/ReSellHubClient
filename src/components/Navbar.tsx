@@ -112,10 +112,11 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* LOGO */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="p-2 bg-orange-500 rounded-xl">
+          {/* <div className="p-2 bg-orange-500 rounded-xl">
             <ShoppingCart className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold">ReSellHub</span>
+          <span className="text-xl font-bold">ReSellHub</span> */}
+          <Image src={"/images/logo.png"} alt="logo" width={100} height={100} />
         </Link>
 
         {/* DESKTOP MENU */}
