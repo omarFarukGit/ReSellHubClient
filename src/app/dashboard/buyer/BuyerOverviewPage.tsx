@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
 interface Props {
   user: IUser;
 }
@@ -65,7 +66,7 @@ export default function BuyerOverviewPage({ user }: any) {
   ];
 
   return (
-    <div className="space-y-8 p-6">
+    <div className="min-h-screen space-y-8 bg-gray-50 p-6 text-gray-900 transition-colors dark:bg-gray-950 dark:text-gray-100">
       {/* Banner */}
       <div className="rounded-3xl bg-gradient-to-r from-indigo-600 to-violet-600 p-8 text-white">
         <h1 className="text-3xl font-bold">Welcome Back 👋</h1>
@@ -83,17 +84,24 @@ export default function BuyerOverviewPage({ user }: any) {
           return (
             <div
               key={item.title}
-              className="rounded-2xl border bg-white p-6 shadow-sm"
+              className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-colors dark:border-gray-800 dark:bg-gray-900"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">{item.title}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {item.title}
+                  </p>
 
-                  <h2 className="mt-2 text-3xl font-bold">{item.value}</h2>
+                  <h2 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                    {item.value}
+                  </h2>
                 </div>
 
-                <div className="rounded-xl bg-gray-100 p-3">
-                  <Icon size={24} />
+                <div className="rounded-xl bg-gray-100 p-3 dark:bg-gray-800">
+                  <Icon
+                    size={24}
+                    className="text-gray-700 dark:text-gray-200"
+                  />
                 </div>
               </div>
             </div>
@@ -103,11 +111,13 @@ export default function BuyerOverviewPage({ user }: any) {
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Orders */}
-        <div className="rounded-2xl border bg-white p-6 lg:col-span-2">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 lg:col-span-2 dark:border-gray-800 dark:bg-gray-900">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Recent Orders</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Recent Orders
+            </h2>
 
-            <button className="text-sm font-medium text-indigo-600">
+            <button className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
               View All
             </button>
           </div>
@@ -115,37 +125,59 @@ export default function BuyerOverviewPage({ user }: any) {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b">
-                  <th className="py-3 text-left">Order</th>
-                  <th className="py-3 text-left">Seller</th>
-                  <th className="py-3 text-left">Price</th>
-                  <th className="py-3 text-left">Status</th>
+                <tr className="border-b border-gray-200 dark:border-gray-800">
+                  <th className="py-3 text-left text-gray-700 dark:text-gray-300">
+                    Order
+                  </th>
+
+                  <th className="py-3 text-left text-gray-700 dark:text-gray-300">
+                    Seller
+                  </th>
+
+                  <th className="py-3 text-left text-gray-700 dark:text-gray-300">
+                    Price
+                  </th>
+
+                  <th className="py-3 text-left text-gray-700 dark:text-gray-300">
+                    Status
+                  </th>
                 </tr>
               </thead>
 
               <tbody>
                 {recentOrders.map((order) => (
-                  <tr key={order.id} className="border-b last:border-0">
+                  <tr
+                    key={order.id}
+                    className="border-b border-gray-200 last:border-0 dark:border-gray-800"
+                  >
                     <td className="py-4">
                       <div>
-                        <p className="font-medium">{order.product}</p>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          {order.product}
+                        </p>
 
-                        <p className="text-sm text-gray-500">{order.id}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {order.id}
+                        </p>
                       </div>
                     </td>
 
-                    <td>{order.seller}</td>
+                    <td className="text-gray-700 dark:text-gray-300">
+                      {order.seller}
+                    </td>
 
-                    <td>{order.price}</td>
+                    <td className="text-gray-900 dark:text-gray-200">
+                      {order.price}
+                    </td>
 
                     <td>
                       <span
                         className={`rounded-full px-3 py-1 text-xs font-medium ${
                           order.status === "Delivered"
-                            ? "bg-green-100 text-green-700"
+                            ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
                             : order.status === "Shipped"
-                              ? "bg-blue-100 text-blue-700"
-                              : "bg-yellow-100 text-yellow-700"
+                              ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                              : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
                         }`}
                       >
                         {order.status}
@@ -159,40 +191,62 @@ export default function BuyerOverviewPage({ user }: any) {
         </div>
 
         {/* Profile */}
-        <div className="rounded-2xl border bg-white p-6">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
           <div className="flex flex-col items-center">
             <Image
               src={user.image || "https://i.pravatar.cc/150?img=12"}
               alt={user.name}
-              className="h-24 w-24 rounded-full"
+              className="h-24 w-24 rounded-full border border-gray-200 object-cover dark:border-gray-700"
               width={200}
               height={200}
             />
 
-            <h2 className="mt-4 text-xl font-bold">{user.name}</h2>
+            <h2 className="mt-4 text-xl font-bold text-gray-900 dark:text-white">
+              {user.name}
+            </h2>
 
-            <p className="text-sm text-gray-500">Buyer Account</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Buyer Account
+            </p>
           </div>
 
           <div className="mt-6 space-y-4">
             <div className="flex items-center gap-3">
-              <Mail size={18} />
-              <span className="text-sm">{user.email}</span>
+              <Mail
+                size={18}
+                className="text-gray-600 dark:text-gray-400"
+              />
+
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {user.email}
+              </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <Phone size={18} />
-              <span className="text-sm">{user.phone || "01"}</span>
+              <Phone
+                size={18}
+                className="text-gray-600 dark:text-gray-400"
+              />
+
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {user.phone || "01"}
+              </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <MapPin size={18} />
-              <span className="text-sm">{user.location}</span>
+              <MapPin
+                size={18}
+                className="text-gray-600 dark:text-gray-400"
+              />
+
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {user.location}
+              </span>
             </div>
           </div>
 
-          <Link href={"/dashboard/buyer/profile"}>
-            <button className="mt-6 w-full rounded-xl bg-orange-600 py-3 text-white cursor-pointer">
+          <Link href="/dashboard/buyer/profile">
+            <button className="mt-6 w-full cursor-pointer rounded-xl bg-orange-600 py-3 text-white transition hover:bg-orange-700">
               Profile
             </button>
           </Link>
@@ -200,21 +254,27 @@ export default function BuyerOverviewPage({ user }: any) {
       </div>
 
       {/* Order Tracking */}
-      <div className="rounded-2xl border bg-white p-6">
-        <h2 className="mb-6 text-xl font-semibold">Active Order Tracking</h2>
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+        <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-white">
+          Active Order Tracking
+        </h2>
 
         <div className="flex flex-wrap items-center gap-4">
-          <div className="rounded-xl bg-green-100 px-4 py-2">
+          <div className="rounded-xl bg-green-100 px-4 py-2 text-green-700 dark:bg-green-900/30 dark:text-green-400">
             ✓ Order Placed
           </div>
 
-          <div className="rounded-xl bg-green-100 px-4 py-2">
+          <div className="rounded-xl bg-green-100 px-4 py-2 text-green-700 dark:bg-green-900/30 dark:text-green-400">
             ✓ Payment Complete
           </div>
 
-          <div className="rounded-xl bg-green-100 px-4 py-2">✓ Shipped</div>
+          <div className="rounded-xl bg-green-100 px-4 py-2 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+            ✓ Shipped
+          </div>
 
-          <div className="rounded-xl bg-gray-100 px-4 py-2">Delivered</div>
+          <div className="rounded-xl bg-gray-100 px-4 py-2 text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+            Delivered
+          </div>
         </div>
       </div>
     </div>

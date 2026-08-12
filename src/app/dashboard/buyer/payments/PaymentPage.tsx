@@ -9,13 +9,16 @@ type PaymentStatus = "paid" | "pending" | "failed" | "refunded";
 const statusBadge = (status: PaymentStatus) => {
   switch (status) {
     case "paid":
-      return "bg-green-100 text-green-700";
+      return "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400";
+
     case "pending":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400";
+
     case "failed":
-      return "bg-red-100 text-red-700";
+      return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
+
     case "refunded":
-      return "bg-blue-100 text-blue-700";
+      return "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400";
   }
 };
 
@@ -25,34 +28,51 @@ export default function BuyerPaymentsPage({ payments }: any) {
   }
 
   return (
-    <div className="p-6 md:p-10 space-y-6">
+    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 p-6 md:p-10 space-y-6 transition-colors">
       {/* HEADER */}
       <div>
-        <h1 className="text-2xl font-bold">Payment Status</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Payment Status
+        </h1>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Track all your transactions and payment history
         </p>
       </div>
 
       {/* TABLE */}
-      <div className="overflow-hidden rounded-xl bg-white shadow">
+      <div className="overflow-hidden rounded-xl bg-white dark:bg-gray-900 shadow border border-gray-200 dark:border-gray-800">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-100 text-left">
+            <thead className="bg-gray-100 dark:bg-gray-800 text-left">
               <tr>
-                <th className="p-4">Product</th>
+                <th className="p-4 text-gray-700 dark:text-gray-200">
+                  Product
+                </th>
 
-                <th className="hidden md:table-cell p-4">Order ID</th>
+                <th className="hidden md:table-cell p-4 text-gray-700 dark:text-gray-200">
+                  Order ID
+                </th>
 
-                <th className="hidden lg:table-cell p-4">Amount</th>
+                <th className="hidden lg:table-cell p-4 text-gray-700 dark:text-gray-200">
+                  Amount
+                </th>
 
-                <th className="hidden lg:table-cell p-4">Method</th>
+                <th className="hidden lg:table-cell p-4 text-gray-700 dark:text-gray-200">
+                  Method
+                </th>
 
-                <th className="hidden xl:table-cell p-4">Transaction ID</th>
+                <th className="hidden xl:table-cell p-4 text-gray-700 dark:text-gray-200">
+                  Transaction ID
+                </th>
 
-                <th className="p-4">Status</th>
+                <th className="p-4 text-gray-700 dark:text-gray-200">
+                  Status
+                </th>
 
-                <th className="hidden lg:table-cell p-4">Date</th>
+                <th className="hidden lg:table-cell p-4 text-gray-700 dark:text-gray-200">
+                  Date
+                </th>
               </tr>
             </thead>
 
@@ -61,7 +81,7 @@ export default function BuyerPaymentsPage({ payments }: any) {
                 payments.map((pay: any) => (
                   <tr
                     key={pay._id}
-                    className="border-t hover:bg-gray-50 transition"
+                    className="border-t border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition"
                   >
                     {/* PRODUCT */}
                     <td className="p-4">
@@ -75,10 +95,12 @@ export default function BuyerPaymentsPage({ payments }: any) {
                         />
 
                         <div>
-                          <p className="font-medium">{pay.productName}</p>
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            {pay.productName}
+                          </p>
 
                           {/* Mobile Info */}
-                          <div className="md:hidden text-xs text-gray-500 space-y-1">
+                          <div className="md:hidden text-xs text-gray-500 dark:text-gray-400 space-y-1">
                             <p>$ {pay.productPrice}</p>
                             <p>#{pay._id}</p>
                           </div>
@@ -87,22 +109,22 @@ export default function BuyerPaymentsPage({ payments }: any) {
                     </td>
 
                     {/* ORDER ID */}
-                    <td className="hidden md:table-cell p-4 text-gray-600">
+                    <td className="hidden md:table-cell p-4 text-gray-600 dark:text-gray-400">
                       #{pay._id}
                     </td>
 
                     {/* AMOUNT */}
-                    <td className="hidden lg:table-cell p-4 font-semibold">
+                    <td className="hidden lg:table-cell p-4 font-semibold text-gray-900 dark:text-white">
                       $ {pay.productPrice}
                     </td>
 
                     {/* METHOD */}
-                    <td className="hidden lg:table-cell p-4 capitalize text-gray-600">
+                    <td className="hidden lg:table-cell p-4 capitalize text-gray-600 dark:text-gray-400">
                       Card
                     </td>
 
                     {/* TXN ID */}
-                    <td className="hidden xl:table-cell p-4 text-xs text-gray-500">
+                    <td className="hidden xl:table-cell p-4 text-xs text-gray-500 dark:text-gray-400">
                       {pay.transactionId}
                     </td>
 
@@ -118,14 +140,17 @@ export default function BuyerPaymentsPage({ payments }: any) {
                     </td>
 
                     {/* DATE */}
-                    <td className="hidden lg:table-cell p-4 text-gray-600">
+                    <td className="hidden lg:table-cell p-4 text-gray-600 dark:text-gray-400">
                       {new Date(pay.createdAt).toLocaleDateString()}
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="py-16 text-center text-gray-500">
+                  <td
+                    colSpan={7}
+                    className="py-16 text-center text-gray-500 dark:text-gray-400"
+                  >
                     No payment history found
                   </td>
                 </tr>
@@ -136,8 +161,9 @@ export default function BuyerPaymentsPage({ payments }: any) {
       </div>
 
       {/* FOOTER */}
-      <div className="flex flex-col gap-2 text-xs text-gray-500 md:flex-row md:justify-between">
+      <div className="flex flex-col gap-2 text-xs text-gray-500 dark:text-gray-400 md:flex-row md:justify-between">
         <span>Total Transactions: {payments.length}</span>
+
         <span>Buyer Payment Center</span>
       </div>
     </div>

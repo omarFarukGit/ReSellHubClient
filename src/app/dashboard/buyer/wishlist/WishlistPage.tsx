@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, Star, Trash2 } from "lucide-react";
+import { Star, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
@@ -25,6 +25,7 @@ interface Props {
 export default function WishlistCard({ item, onRemove }: Props) {
   const { data: session, isPending } = useSession();
   const router = useRouter();
+
   const handleRemove = async (wishlistId: string) => {
     try {
       const res = await fetch(
@@ -33,6 +34,7 @@ export default function WishlistCard({ item, onRemove }: Props) {
           method: "DELETE",
         },
       );
+
       console.log(wishlistId, "wi");
 
       const data = await res.json();
@@ -41,63 +43,124 @@ export default function WishlistCard({ item, onRemove }: Props) {
         toast.success("remove wishlist");
         router.refresh();
       }
+
       if (!data.success) {
         toast.error("not remove wishlist");
       }
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       console.error(error);
     }
   };
+
   return (
     <Link href={`/products/${item.productId}`}>
-      <div className="border border-slate-200 rounded-xl px-3 md:px-4 py-3 bg-white w-full cursor-pointer hover:shadow-lg transition-all duration-300 group">
+      <div
+        className="
+          w-full cursor-pointer rounded-xl
+          border border-slate-200 bg-white
+          px-3 py-3
+          transition-all duration-300
+          hover:shadow-lg
+          group
+
+          dark:border-slate-700
+          dark:bg-slate-900
+          dark:hover:border-slate-600
+          dark:hover:shadow-black/20
+        "
+      >
         {/* Product Image */}
-        <div className="flex items-center justify-center overflow-hidden">
-          <div className="relative w-32 h-32 md:w-40 md:h-40">
+        <div
+          className="
+            flex items-center justify-center overflow-hidden
+            rounded-lg
+            bg-slate-50
+            dark:bg-slate-800
+          "
+        >
+          <div className="relative h-32 w-32 md:h-40 md:w-40">
             <Image
               src={item.productSnapshot.image}
               alt={item.productSnapshot.title}
               fill
-              className="object-contain group-hover:scale-105 transition duration-300"
+              className="
+                object-contain
+                transition duration-300
+                group-hover:scale-105
+              "
             />
           </div>
         </div>
 
         {/* Product Info */}
         <div className="mt-3">
-          <p className="text-xs text-slate-500">Wishlist Item</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Wishlist Item
+          </p>
 
-          <h3 className="text-base md:text-lg font-semibold text-slate-800 line-clamp-2">
+          <h3
+            className="
+              line-clamp-2
+              text-base font-semibold
+              text-slate-800
+              md:text-lg
+
+              dark:text-slate-100
+            "
+          >
             {item.productSnapshot.title}
           </h3>
 
           {/* Rating */}
-          <div className="flex items-center gap-1 mt-1">
+          <div className="mt-1 flex items-center gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <Star
                 key={star}
                 size={14}
-                className={`${
+                className={
                   star <= 4
                     ? "fill-yellow-400 text-yellow-400"
-                    : "text-slate-300"
-                }`}
+                    : "text-slate-300 dark:text-slate-600"
+                }
               />
             ))}
-            <span className="text-xs text-slate-500">(4)</span>
+
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              (4)
+            </span>
           </div>
 
           {/* Wishlist Badge */}
           <div className="mt-2">
-            <span className="inline-flex px-2 py-1 text-xs rounded-full bg-red-50 text-red-600 border border-red-200">
+            <span
+              className="
+                inline-flex rounded-full
+                border border-red-200
+                bg-red-50
+                px-2 py-1
+                text-xs text-red-600
+
+                dark:border-red-900/60
+                dark:bg-red-950/40
+                dark:text-red-400
+              "
+            >
               In Wishlist
             </span>
           </div>
 
           {/* Price + Remove */}
-          <div className="flex items-end justify-between mt-4">
+          <div className="mt-4 flex items-end justify-between">
             <div>
-              <p className="text-lg md:text-xl font-bold text-orange-600">
+              <p
+                className="
+                  text-lg font-bold
+                  text-orange-600
+                  md:text-xl
+
+                  dark:text-orange-400
+                "
+              >
                 ৳ {item.productSnapshot.price.toLocaleString()}
               </p>
             </div>
@@ -108,7 +171,24 @@ export default function WishlistCard({ item, onRemove }: Props) {
                 e.stopPropagation();
                 handleRemove(item.productId);
               }}
-              className="flex items-center justify-center bg-red-50 border border-red-300 p-2 rounded-lg text-red-500 hover:bg-red-500 hover:text-white transition"
+              className="
+                flex items-center justify-center
+                rounded-lg
+                border border-red-300
+                bg-red-50
+                p-2
+                text-red-500
+                transition
+
+                hover:bg-red-500
+                hover:text-white
+
+                dark:border-red-900/60
+                dark:bg-red-950/40
+                dark:text-red-400
+                dark:hover:bg-red-600
+                dark:hover:text-white
+              "
             >
               <Trash2 size={18} />
             </button>
