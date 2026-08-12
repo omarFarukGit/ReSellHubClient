@@ -88,9 +88,9 @@ export async function DashBoardSideBar() {
         <Link
           key={item.label}
           href={item.href}
-          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default dark:text-white"
         >
-          <item.icon className="size-5 text-muted" />
+          <item.icon className="size-5 text-black dark:text-white" />
           {item.label}
         </Link>
       ))}

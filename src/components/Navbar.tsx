@@ -1,20 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import {
-  Menu,
-  X,
-  User,
-  LogOut,
-  LayoutDashboard,
-  ShoppingCart,
-} from "lucide-react";
+import { Menu, X, User, LogOut, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import NavbarWishlist from "./NavbarWislist";
+import { ModeToggle } from "./ModeToggle";
 
 type UserType = {
   name?: string | null;
@@ -38,11 +32,14 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await authClient.signOut();
+    setDropdown(false);
+    setIsMenuOpen(false);
     router.push("/");
   };
+
   const closeMobileMenu = () => setIsMenuOpen(false);
 
-  // 🔥 OUTSIDE CLICK CLOSE FIX
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -54,21 +51,30 @@ const Navbar = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
-  // scroll effect
+  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  // ROLE BASED DASHBOARD
+  // Role based dashboard
   const getDashboardLink = () => {
     if (!user) return "/dashboard/buyer";
 
-    const role = (session?.user as any)?.role;
+    const role = user.role;
 
     if (role === "admin") return "/dashboard/admin";
     if (role === "seller") return "/dashboard/seller";
@@ -76,10 +82,11 @@ const Navbar = () => {
     return "/dashboard/buyer";
   };
 
+  // Role based profile
   const getProfileLink = () => {
     if (!user) return "/profile";
 
-    const role = (session?.user as any)?.role;
+    const role = user.role;
 
     if (role === "admin") return "/dashboard/admin/profile";
     if (role === "seller") return "/dashboard/seller/profile";
@@ -87,52 +94,66 @@ const Navbar = () => {
     return "/dashboard/buyer/profile";
   };
 
+  // Desktop nav class
   const navClass = (path: string) =>
     `font-medium transition-colors ${
       pathname === path
         ? "text-orange-500"
-        : "text-slate-700 hover:text-orange-500"
+        : "text-slate-700 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400"
     }`;
 
+  // Mobile nav class
   const mobileClass = (path: string) =>
     `block px-4 py-3 rounded-xl font-medium transition ${
       pathname === path
-        ? "bg-orange-50 text-orange-500"
-        : "text-slate-900 hover:bg-slate-100"
+        ? "bg-orange-50 text-orange-500 dark:bg-orange-500/10 dark:text-orange-400"
+        : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
     }`;
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all ${
-        scrolled
-          ? "bg-white/80 backdrop-blur-md shadow-sm py-2"
-          : "bg-white py-4"
-      }`}
+      className={`
+        sticky top-0 z-50
+        border-b
+        transition-all duration-300
+        ${
+          scrolled
+            ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-md shadow-sm"
+            : "bg-white dark:bg-slate-950"
+        }
+        border-slate-200 dark:border-slate-800
+      `}
     >
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* LOGO */}
         <Link href="/" className="flex items-center gap-2">
-          {/* <div className="p-2 bg-orange-500 rounded-xl">
-            <ShoppingCart className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-xl font-bold">ReSellHub</span> */}
-          <Image src={"/images/logo.png"} alt="logo" width={100} height={100} />
+          <Image
+            src="/images/logo.png"
+            alt="ReSellHub"
+            width={100}
+            height={100}
+            className="w-auto h-12 dark:bg-white rounded-full object-contain"
+          />
         </Link>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex gap-8">
+        <div className="hidden md:flex items-center gap-8">
           <Link href="/" className={navClass("/")}>
             Home
           </Link>
+
           <Link href="/products" className={navClass("/products")}>
             Products
           </Link>
+
           <Link href="/categories" className={navClass("/categories")}>
             Categories
           </Link>
+
           <Link href="/about" className={navClass("/about")}>
             About
           </Link>
+
           <Link href="/contact" className={navClass("/contact")}>
             Contact
           </Link>
@@ -140,17 +161,37 @@ const Navbar = () => {
 
         {/* RIGHT SIDE */}
         <div className="hidden md:flex items-center gap-3">
-          {user?.role === "buyer" ? <NavbarWishlist /> : null}
+          {/* Wishlist */}
+          {user?.role === "buyer" && <NavbarWishlist />}
+
+          {/* Theme Toggle */}
+          <ModeToggle />
+
           {!user ? (
             <>
+              {/* Sign In */}
               <Link href="/auth/signin">
                 <Button className="bg-orange-500 text-white hover:bg-orange-600">
                   Sign In
                 </Button>
               </Link>
 
+              {/* Sign Up */}
               <Link href="/auth/signup">
-                <Button variant="outline">Sign Up</Button>
+                <Button
+                  variant="bordered"
+                  className="
+                    border-slate-300
+                    text-slate-700
+                    hover:bg-slate-100
+
+                    dark:border-slate-700
+                    dark:text-slate-200
+                    dark:hover:bg-slate-800
+                  "
+                >
+                  Sign Up
+                </Button>
               </Link>
             </>
           ) : (
@@ -158,54 +199,121 @@ const Navbar = () => {
               {/* USER BUTTON */}
               <button
                 onClick={() => setDropdown(!dropdown)}
-                className="flex items-center gap-2 p-1 rounded-full hover:bg-slate-100 cursor-pointer"
+                className="
+                  flex items-center gap-2
+                  p-1.5
+                  rounded-full
+                  cursor-pointer
+                  transition-colors
+                  hover:bg-slate-100
+                  dark:hover:bg-slate-800
+                "
               >
                 <Image
-                  src={user?.image || "https://ui-avatars.com/api/?name=User"}
-                  alt={user?.name as string}
+                  src={user.image || "https://ui-avatars.com/api/?name=User"}
+                  alt={user.name || "User"}
                   width={40}
                   height={40}
-                  className=" w-12 h-12 rounded-full mt-2"
+                  className="w-10 h-10 rounded-full object-cover"
                   unoptimized
                 />
 
                 <div className="hidden lg:block text-left">
-                  <p className="text-sm font-semibold">{user?.name}</p>
-                  <p className="text-[11px] text-slate-500">{user?.email}</p>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                    {user.name}
+                  </p>
+
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    {user.email}
+                  </p>
                 </div>
               </button>
 
               {/* DROPDOWN */}
               {dropdown && (
-                <div className="absolute right-0 mt-3 w-56 bg-white border rounded-xl shadow-lg overflow-hidden">
-                  <div className="px-4 py-3 border-b">
-                    <p className="text-sm font-semibold">Account</p>
-                    <p className="text-xs text-slate-500 truncate">
-                      {user?.email}
+                <div
+                  className="
+                    absolute right-0 top-full mt-3
+                    w-60
+                    overflow-hidden
+                    rounded-xl
+                    border
+                    shadow-xl
+                    bg-white
+                    border-slate-200
+
+                    dark:bg-slate-900
+                    dark:border-slate-700
+                  "
+                >
+                  {/* Account Header */}
+                  <div
+                    className="
+                      px-4 py-3
+                      border-b
+                      border-slate-200
+                      dark:border-slate-700
+                    "
+                  >
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                      Account
+                    </p>
+
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                      {user.email}
                     </p>
                   </div>
 
+                  {/* Dashboard */}
                   <Link
                     href={getDashboardLink()}
                     onClick={() => setDropdown(false)}
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
+                    className="
+                      flex items-center gap-3
+                      px-4 py-3
+                      text-slate-700
+                      hover:bg-slate-50
+
+                      dark:text-slate-200
+                      dark:hover:bg-slate-800
+                      transition-colors
+                    "
                   >
                     <LayoutDashboard className="w-4 h-4" />
                     Dashboard
                   </Link>
 
+                  {/* Profile */}
                   <Link
                     href={getProfileLink()}
                     onClick={() => setDropdown(false)}
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
+                    className="
+                      flex items-center gap-3
+                      px-4 py-3
+                      text-slate-700
+                      hover:bg-slate-50
+
+                      dark:text-slate-200
+                      dark:hover:bg-slate-800
+                      transition-colors
+                    "
                   >
                     <User className="w-4 h-4" />
                     Profile
                   </Link>
 
+                  {/* Logout */}
                   <button
                     onClick={handleSignOut}
-                    className="flex w-full items-center gap-3 px-4 py-2 text-red-500 hover:bg-red-50"
+                    className="
+                      flex w-full items-center gap-3
+                      px-4 py-3
+                      text-red-500
+                      hover:bg-red-50
+
+                      dark:hover:bg-red-500/10
+                      transition-colors
+                    "
                   >
                     <LogOut className="w-4 h-4" />
                     Logout
@@ -218,16 +326,44 @@ const Navbar = () => {
 
         {/* MOBILE BUTTON */}
         <button
-          className="md:hidden"
+          className="
+            md:hidden
+            p-2
+            rounded-lg
+            text-slate-800
+            hover:bg-slate-100
+
+            dark:text-white
+            dark:hover:bg-slate-800
+            transition-colors
+          "
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
         >
-          {isMenuOpen ? <X /> : <Menu />}
+          {isMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
         </button>
       </div>
 
       {/* MOBILE MENU */}
       {isMenuOpen && (
-        <div className="md:hidden px-4 pb-6 space-y-2 bg-white border-t">
+        <div
+          className="
+            md:hidden
+            px-4 pb-6 pt-3
+            space-y-2
+            border-t
+            bg-white
+            border-slate-200
+
+            dark:bg-slate-950
+            dark:border-slate-800
+          "
+        >
+          {/* Navigation */}
           <Link href="/" className={mobileClass("/")} onClick={closeMobileMenu}>
             Home
           </Link>
@@ -264,33 +400,87 @@ const Navbar = () => {
             Contact
           </Link>
 
-          <Link
-            href={getDashboardLink()}
-            onClick={closeMobileMenu}
-            className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50"
-          >
-            <LayoutDashboard className="w-4 h-4" />
-            Dashboard
-          </Link>
+          {/* Dashboard */}
+          {user && (
+            <Link
+              href={getDashboardLink()}
+              onClick={closeMobileMenu}
+              className="
+                flex items-center gap-3
+                px-4 py-3
+                rounded-xl
+                text-slate-800
+                hover:bg-slate-100
 
-          <div className="pt-4 border-t">
+                dark:text-slate-200
+                dark:hover:bg-slate-800
+                transition-colors
+              "
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              Dashboard
+            </Link>
+          )}
+
+          {/* Mobile Actions */}
+          <div
+            className="
+              pt-4 mt-3
+              border-t
+              border-slate-200
+              dark:border-slate-800
+            "
+          >
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                Theme
+              </span>
+
+              <ModeToggle />
+            </div>
+
             {!user ? (
               <div className="grid grid-cols-2 gap-3">
-                <Link href="/auth/signin">
-                  <Button className="w-full">Login</Button>
+                <Link href="/auth/signin" onClick={closeMobileMenu}>
+                  <Button className="w-full bg-orange-500 text-white hover:bg-orange-600">
+                    Sign In
+                  </Button>
                 </Link>
 
-                <Link href="/auth/signup">
-                  <Button variant="outline" className="w-full">
-                    Signup
+                <Link href="/auth/signup" onClick={closeMobileMenu}>
+                  <Button
+                    variant="bordered"
+                    className="
+                      w-full
+                      border-slate-300
+                      text-slate-700
+                      hover:bg-slate-100
+
+                      dark:border-slate-700
+                      dark:text-slate-200
+                      dark:hover:bg-slate-800
+                    "
+                  >
+                    Sign Up
                   </Button>
                 </Link>
               </div>
             ) : (
               <button
                 onClick={handleSignOut}
-                className="w-full text-left px-4 py-3 text-red-500"
+                className="
+                  flex items-center gap-3
+                  w-full
+                  px-4 py-3
+                  rounded-xl
+                  text-red-500
+                  hover:bg-red-50
+
+                  dark:hover:bg-red-500/10
+                  transition-colors
+                "
               >
+                <LogOut className="w-4 h-4" />
                 Logout
               </button>
             )}

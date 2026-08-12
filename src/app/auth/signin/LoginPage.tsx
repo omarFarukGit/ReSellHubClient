@@ -21,9 +21,26 @@ import { ShoppingBag, Eye, EyeOff } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
 
+const demoUsers = {
+  seller: {
+    email: "seller@gamil.com",
+    password: "getOnly1",
+  },
+  buyer: {
+    email: "buyer@gmail.com",
+    password: "getOnly1",
+  },
+  admin: {
+    email: " admin@example.com",
+    password: "getOnly1",
+  },
+};
+
 const LoginPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // SAFE FIX (SSR issue fix)
   const redirectTo = searchParams?.get("redirect") ?? "/";
@@ -62,6 +79,13 @@ const LoginPage = () => {
     });
   };
 
+  const handleDemoLogin = (role: keyof typeof demoUsers) => {
+    const user = demoUsers[role];
+
+    setEmail(user.email);
+    setPassword(user.password);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <div className="grid min-h-screen lg:grid-cols-2">
@@ -95,11 +119,43 @@ const LoginPage = () => {
               <h2 className="text-3xl font-bold">Welcome Back</h2>
               <p className="text-gray-500">Sign in to your account</p>
             </div>
+            {/* Demo Login */}
+            <div className="space-y-3">
+              <p className="text-center text-sm font-medium text-muted-foreground">
+                Quick Demo Login
+              </p>
+
+              <div className="grid grid-cols-3 gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => handleDemoLogin("seller")}
+                >
+                  Seller
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => handleDemoLogin("buyer")}
+                >
+                  Buyer
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => handleDemoLogin("admin")}
+                >
+                  Admin
+                </Button>
+              </div>
+            </div>
 
             <Form onSubmit={onSubmit} className="space-y-4">
               <TextField name="email" type="email" isRequired>
                 <Label>Email</Label>
-                <Input placeholder="john@example.com" />
+                <Input value={email} placeholder="john@example.com" />
                 <FieldError />
               </TextField>
 
@@ -108,6 +164,7 @@ const LoginPage = () => {
 
                 <div className="relative">
                   <Input
+                    value={password}
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter password"
                     className="pr-10 w-full"
