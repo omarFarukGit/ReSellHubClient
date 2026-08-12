@@ -1,16 +1,32 @@
-
 import OrdersPage from "./OrderPage";
 
-const page = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/orders`);
+const Page = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/orders`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch orders");
+  }
+
   const data = await res.json();
-  const orders = data.data;
-  console.log(orders);
+  const orders = data?.data ?? [];
+
   return (
-    <div>
+    <main
+      className="
+        min-h-screen
+        bg-gray-50
+        transition-colors duration-300
+        dark:bg-gray-950
+      "
+    >
       <OrdersPage orders={orders} />
-    </div>
+    </main>
   );
 };
 
-export default page;
+export default Page;

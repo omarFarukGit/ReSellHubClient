@@ -44,35 +44,146 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="w-full py-14 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
+    <section
+      className="
+        w-full
+        bg-white
+        py-14
+        transition-colors duration-300
+        dark:bg-gray-950
+      "
+    >
+      <div className="mx-auto max-w-7xl px-4">
         {/* Title */}
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-10">
-          Why Choose Resellhub
-        </h2>
+        <div className="mb-10 text-center">
+          <span
+            className="
+              text-sm
+              font-semibold
+              uppercase
+              tracking-wider
+              text-orange-500
+              dark:text-orange-400
+            "
+          >
+            Why Resellhub?
+          </span>
+
+          <h2
+            className="
+              mt-2
+              text-2xl
+              font-bold
+              text-gray-800
+              transition-colors
+              dark:text-white
+              md:text-3xl
+            "
+          >
+            Why Choose Resellhub
+          </h2>
+
+          <p
+            className="
+              mx-auto
+              mt-3
+              max-w-2xl
+              text-sm
+              text-gray-500
+              dark:text-gray-400
+            "
+          >
+            Everything you need for a simple, secure and reliable
+            second-hand marketplace experience.
+          </p>
+        </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {features.map((item, index) => {
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {features.map((item) => {
             const Icon = item.icon;
 
             return (
               <div
-                key={index}
-                className="p-6 rounded-2xl border bg-gray-50 hover:bg-white hover:shadow-md transition"
+                key={item.title}
+                className="
+                  group
+                  rounded-2xl
+                  border
+                  border-gray-200
+                  bg-gray-50
+                  p-6
+                  transition-all duration-300
+
+                  hover:-translate-y-1
+                  hover:border-orange-200
+                  hover:bg-white
+                  hover:shadow-lg
+
+                  dark:border-gray-800
+                  dark:bg-gray-900
+                  dark:hover:border-orange-500/30
+                  dark:hover:bg-gray-900
+                "
               >
                 {/* Icon */}
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-orange-100 mb-4">
-                  <Icon className="w-6 h-6 text-orange-500" />
+                <div
+                  className="
+                    mb-4
+                    flex
+                    h-12
+                    w-12
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-orange-100
+                    transition-all duration-300
+
+                    group-hover:scale-110
+                    group-hover:bg-orange-200
+
+                    dark:bg-orange-500/10
+                    dark:group-hover:bg-orange-500/20
+                  "
+                >
+                  <Icon
+                    className="
+                      h-6
+                      w-6
+                      text-orange-500
+                      transition-colors duration-300
+                      dark:text-orange-400
+                    "
+                  />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                <h3
+                  className="
+                    mb-2
+                    text-lg
+                    font-semibold
+                    text-gray-800
+                    transition-colors
+
+                    dark:text-white
+                  "
+                >
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-gray-500">{item.desc}</p>
+                <p
+                  className="
+                    text-sm
+                    leading-6
+                    text-gray-500
+
+                    dark:text-gray-400
+                  "
+                >
+                  {item.desc}
+                </p>
               </div>
             );
           })}

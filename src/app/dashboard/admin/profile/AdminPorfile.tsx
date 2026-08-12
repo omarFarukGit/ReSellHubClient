@@ -3,7 +3,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-
 export default function AdminProfile({ user }: any) {
   const [admin, setAdmin] = useState(user);
   const [open, setOpen] = useState(false);
@@ -31,7 +30,9 @@ export default function AdminProfile({ user }: any) {
     return data.data.url;
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -80,35 +81,48 @@ export default function AdminProfile({ user }: any) {
   };
 
   return (
-    <div className="p-6 md:p-10 space-y-8">
+    <div className="p-6 md:p-10 space-y-8 bg-gray-50 dark:bg-gray-950 min-h-screen">
       {/* PROFILE HEADER */}
-      <div className="bg-white rounded-xl shadow p-6 flex flex-col md:flex-row items-center gap-6">
+      <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-6 flex flex-col md:flex-row items-center gap-6">
         <Image
-          src={admin.image || "https://i.pravatar.cc/150?img=12"}
-          className="w-24 h-24 rounded-full object-cover border"
+          src={
+            admin.image ||
+            "https://i.pravatar.cc/150?img=12"
+          }
+          className="w-24 h-24 rounded-full object-cover border border-gray-200 dark:border-gray-700"
           width={200}
           height={200}
           alt={admin.name}
         />
 
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold">{admin.name}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {admin.name}
+          </h1>
 
-          <p className="text-gray-500">{admin.email}</p>
-          <p className="text-gray-500">{admin.phone || "+880 17XXXXXXXX"}</p>
-          <p className="text-gray-500">{admin.location}</p>
+          <p className="text-gray-500 dark:text-gray-400">
+            {admin.email}
+          </p>
+
+          <p className="text-gray-500 dark:text-gray-400">
+            {admin.phone || "+880 17XXXXXXXX"}
+          </p>
+
+          <p className="text-gray-500 dark:text-gray-400">
+            {admin.location}
+          </p>
 
           {/* BADGES */}
           <div className="flex gap-2 mt-2 flex-wrap">
-            <span className="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700">
+            <span className="px-3 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
               {admin.role}
             </span>
 
-            <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
+            <span className="px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
               ⭐ {admin.rating} Rating
             </span>
 
-            <span className="px-3 py-1 text-xs rounded-full bg-purple-100 text-purple-700">
+            <span className="px-3 py-1 text-xs rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400">
               {"verified"}
             </span>
           </div>
@@ -116,7 +130,7 @@ export default function AdminProfile({ user }: any) {
 
         <button
           onClick={() => setOpen(true)}
-          className="ml-auto bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer"
+          className="ml-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg cursor-pointer transition"
         >
           Edit Profile
         </button>
@@ -124,76 +138,120 @@ export default function AdminProfile({ user }: any) {
 
       {/* STATS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-xl shadow">
-          <p className="text-gray-500 text-sm">Total Sales</p>
-          <h2 className="text-2xl font-bold">{admin.totalSales}</h2>
+        <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            Total Sales
+          </p>
+
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {admin.totalSales}
+          </h2>
         </div>
 
-        <div className="bg-white p-5 rounded-xl shadow">
-          <p className="text-gray-500 text-sm">Revenue</p>
-          <h2 className="text-2xl font-bold">{admin.revenue}</h2>
+        <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            Revenue
+          </p>
+
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {admin.revenue}
+          </h2>
         </div>
 
-        <div className="bg-white p-5 rounded-xl shadow">
-          <p className="text-gray-500 text-sm">Active Listings</p>
-          <h2 className="text-2xl font-bold">{admin.activeListings}</h2>
+        <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            Active Listings
+          </p>
+
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {admin.activeListings}
+          </h2>
         </div>
 
-        <div className="bg-white p-5 rounded-xl shadow">
-          <p className="text-gray-500 text-sm">Member Since</p>
-          <h2 className="text-md font-bold">{admin.joinDate}</h2>
+        <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            Member Since
+          </p>
+
+          <h2 className="text-md font-bold text-gray-900 dark:text-white">
+            {admin.joinDate}
+          </h2>
         </div>
       </div>
 
       {/* ABOUT */}
-      <div className="bg-white p-6 rounded-xl shadow">
-        <h2 className="font-bold mb-2">About admin</h2>
-        <p className="text-gray-600 text-sm leading-6">
+      <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow">
+        <h2 className="font-bold mb-2 text-gray-900 dark:text-white">
+          About admin
+        </h2>
+
+        <p className="text-gray-600 dark:text-gray-400 text-sm leading-6">
           {admin.bio || "added your bio"}
         </p>
       </div>
 
       {/* EDIT MODAL */}
       {open && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-md p-6 rounded-xl space-y-3">
-            <h2 className="text-xl font-bold">Update Profile</h2>
+        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-900 w-full max-w-md p-6 rounded-xl space-y-3">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              Update Profile
+            </h2>
 
             <input
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-2 rounded placeholder:text-gray-400"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, name: e.target.value })
+              }
             />
 
             <input
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-2 rounded placeholder:text-gray-400"
               value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, email: e.target.value })
+              }
             />
 
             <input
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-2 rounded placeholder:text-gray-400"
               value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, phone: e.target.value })
+              }
             />
 
             <input
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-2 rounded placeholder:text-gray-400"
               value={form.location}
-              onChange={(e) => setForm({ ...form, location: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, location: e.target.value })
+              }
             />
 
             <input
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-2 rounded placeholder:text-gray-400"
               value={form.bio}
-              onChange={(e) => setForm({ ...form, bio: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, bio: e.target.value })
+              }
               placeholder="Bio"
             />
 
             {/* IMAGE UPLOAD */}
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-full text-sm text-gray-600 dark:text-gray-400"
+            />
 
-            {uploading && <p className="text-xs text-blue-500">Uploading...</p>}
+            {uploading && (
+              <p className="text-xs text-blue-500">
+                Uploading...
+              </p>
+            )}
 
             {form.avatar && (
               <Image
@@ -209,14 +267,14 @@ export default function AdminProfile({ user }: any) {
             <div className="flex justify-end gap-2 pt-2">
               <button
                 onClick={() => setOpen(false)}
-                className="px-4 py-2 border rounded cursor-pointer"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 Cancel
               </button>
 
               <button
                 onClick={() => handleSave(user.id)}
-                className="px-4 py-2 bg-green-600 text-white rounded cursor-pointer"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded cursor-pointer"
               >
                 Save
               </button>

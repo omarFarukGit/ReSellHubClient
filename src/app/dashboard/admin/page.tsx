@@ -7,29 +7,29 @@ const cards = [
     title: "Total Users",
     value: 245,
     change: "+12%",
-    color: "text-blue-600",
-    bg: "bg-blue-50",
+    color: "text-blue-600 dark:text-blue-400",
+    bg: "bg-blue-50 dark:bg-blue-950/40",
   },
   {
     title: "Total Products",
     value: 128,
     change: "+8%",
-    color: "text-green-600",
-    bg: "bg-green-50",
+    color: "text-green-600 dark:text-green-400",
+    bg: "bg-green-50 dark:bg-green-950/40",
   },
   {
     title: "Total Orders",
     value: 54,
     change: "+5%",
-    color: "text-purple-600",
-    bg: "bg-purple-50",
+    color: "text-purple-600 dark:text-purple-400",
+    bg: "bg-purple-50 dark:bg-purple-950/40",
   },
   {
     title: "Revenue",
     value: "৳ 3,25,000",
     change: "+15%",
-    color: "text-yellow-600",
-    bg: "bg-yellow-50",
+    color: "text-yellow-600 dark:text-yellow-400",
+    bg: "bg-yellow-50 dark:bg-yellow-950/40",
   },
 ];
 
@@ -57,23 +57,26 @@ const recentOrders = [
 const statusBadge = (status: string) => {
   switch (status) {
     case "pending":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-950/50 dark:text-yellow-400";
     case "shipped":
-      return "bg-blue-100 text-blue-700";
+      return "bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400";
     case "delivered":
-      return "bg-green-100 text-green-700";
+      return "bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-400";
     default:
-      return "bg-gray-100 text-gray-600";
+      return "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400";
   }
 };
 
 export default function AdminOverviewPage() {
   return (
-    <div className="p-6 md:p-10 space-y-8">
+    <div className="p-6 md:p-10 space-y-8 bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold">Admin Overview</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Admin Overview
+        </h1>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Quick summary of your marketplace
         </p>
       </div>
@@ -81,10 +84,21 @@ export default function AdminOverviewPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {cards.map((c, i) => (
-          <div key={i} className={`p-5 rounded-xl shadow border ${c.bg}`}>
-            <p className="text-sm text-gray-500">{c.title}</p>
-            <h2 className={`text-2xl font-bold mt-2 ${c.color}`}>{c.value}</h2>
-            <p className="text-xs text-gray-500 mt-1">Growth: {c.change}</p>
+          <div
+            key={i}
+            className={`p-5 rounded-xl shadow border border-gray-200 dark:border-gray-800 ${c.bg}`}
+          >
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {c.title}
+            </p>
+
+            <h2 className={`text-2xl font-bold mt-2 ${c.color}`}>
+              {c.value}
+            </h2>
+
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Growth: {c.change}
+            </p>
           </div>
         ))}
       </div>
@@ -92,18 +106,25 @@ export default function AdminOverviewPage() {
       {/* Middle Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow">
-          <h2 className="font-semibold mb-4">Recent Orders</h2>
+        <div className="lg:col-span-2 bg-white dark:bg-gray-900 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-800">
+          <h2 className="font-semibold mb-4 text-gray-900 dark:text-white">
+            Recent Orders
+          </h2>
 
           <div className="space-y-4">
             {recentOrders.map((order) => (
               <div
                 key={order.id}
-                className="flex items-center justify-between border-b pb-3"
+                className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-3"
               >
                 <div>
-                  <p className="font-medium">{order.product}</p>
-                  <p className="text-xs text-gray-500">{order.buyer}</p>
+                  <p className="font-medium text-gray-900 dark:text-white">
+                    {order.product}
+                  </p>
+
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {order.buyer}
+                  </p>
                 </div>
 
                 <span
@@ -119,23 +140,25 @@ export default function AdminOverviewPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white p-6 rounded-xl shadow">
-          <h2 className="font-semibold mb-4">Quick Actions</h2>
+        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-800">
+          <h2 className="font-semibold mb-4 text-gray-900 dark:text-white">
+            Quick Actions
+          </h2>
 
           <div className="space-y-3 text-sm">
-            <button className="w-full bg-blue-600 text-white py-2 rounded-lg">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">
               Add Product
             </button>
 
-            <button className="w-full bg-green-600 text-white py-2 rounded-lg">
+            <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition">
               Approve Listings
             </button>
 
-            <button className="w-full bg-purple-600 text-white py-2 rounded-lg">
+            <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition">
               View Orders
             </button>
 
-            <button className="w-full bg-gray-800 text-white py-2 rounded-lg">
+            <button className="w-full bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white py-2 rounded-lg transition">
               View Analytics
             </button>
           </div>
@@ -143,23 +166,40 @@ export default function AdminOverviewPage() {
       </div>
 
       {/* Bottom Status */}
-      <div className="bg-white p-6 rounded-xl shadow">
-        <h2 className="font-semibold mb-4">System Status</h2>
+      <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-800">
+        <h2 className="font-semibold mb-4 text-gray-900 dark:text-white">
+          System Status
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div className="p-4 bg-green-50 rounded-lg">
-            <p className="text-green-700 font-medium">Server</p>
-            <p className="text-green-600 text-xs">Running Smooth</p>
+          <div className="p-4 bg-green-50 dark:bg-green-950/40 rounded-lg">
+            <p className="text-green-700 dark:text-green-400 font-medium">
+              Server
+            </p>
+
+            <p className="text-green-600 dark:text-green-500 text-xs">
+              Running Smooth
+            </p>
           </div>
 
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <p className="text-blue-700 font-medium">Database</p>
-            <p className="text-blue-600 text-xs">Connected</p>
+          <div className="p-4 bg-blue-50 dark:bg-blue-950/40 rounded-lg">
+            <p className="text-blue-700 dark:text-blue-400 font-medium">
+              Database
+            </p>
+
+            <p className="text-blue-600 dark:text-blue-500 text-xs">
+              Connected
+            </p>
           </div>
 
-          <div className="p-4 bg-yellow-50 rounded-lg">
-            <p className="text-yellow-700 font-medium">API</p>
-            <p className="text-yellow-600 text-xs">Stable</p>
+          <div className="p-4 bg-yellow-50 dark:bg-yellow-950/40 rounded-lg">
+            <p className="text-yellow-700 dark:text-yellow-400 font-medium">
+              API
+            </p>
+
+            <p className="text-yellow-600 dark:text-yellow-500 text-xs">
+              Stable
+            </p>
           </div>
         </div>
       </div>

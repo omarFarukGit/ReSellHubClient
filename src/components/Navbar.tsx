@@ -159,7 +159,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* DESKTOP RIGHT SIDE */}
         <div className="hidden md:flex items-center gap-3">
           {/* Wishlist */}
           {user?.role === "buyer" && <NavbarWishlist />}
@@ -179,7 +179,6 @@ const Navbar = () => {
               {/* Sign Up */}
               <Link href="/auth/signup">
                 <Button
-                  variant="bordered"
                   className="
                     border-slate-300
                     text-slate-700
@@ -324,28 +323,34 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* MOBILE BUTTON */}
-        <button
-          className="
-            md:hidden
-            p-2
-            rounded-lg
-            text-slate-800
-            hover:bg-slate-100
+        {/* MOBILE ACTIONS */}
+        <div className="md:hidden flex items-center gap-2">
+          {/* Dark / Light Mode */}
+          <ModeToggle />
 
-            dark:text-white
-            dark:hover:bg-slate-800
-            transition-colors
-          "
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
-        </button>
+          {/* Mobile Menu Button */}
+          <button
+            className="
+              p-2
+              rounded-lg
+              text-slate-800
+              hover:bg-slate-100
+
+              dark:text-white
+              dark:hover:bg-slate-800
+
+              transition-colors
+            "
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* MOBILE MENU */}
@@ -431,14 +436,6 @@ const Navbar = () => {
               dark:border-slate-800
             "
           >
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                Theme
-              </span>
-
-              <ModeToggle />
-            </div>
-
             {!user ? (
               <div className="grid grid-cols-2 gap-3">
                 <Link href="/auth/signin" onClick={closeMobileMenu}>
@@ -449,7 +446,6 @@ const Navbar = () => {
 
                 <Link href="/auth/signup" onClick={closeMobileMenu}>
                   <Button
-                    variant="bordered"
                     className="
                       w-full
                       border-slate-300

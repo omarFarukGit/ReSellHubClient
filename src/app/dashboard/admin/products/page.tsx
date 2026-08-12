@@ -12,14 +12,25 @@ const page = async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        ...(await authHeader())
+        ...(await authHeader()),
       },
     },
   );
+
   const data = await res.json();
   const products = data.data;
+
   return (
-    <div>
+    <div
+      className="
+        min-h-screen
+        bg-gray-50
+        transition-colors
+        duration-300
+
+        dark:bg-gray-950
+      "
+    >
       <AdminProductPage products={products} />
     </div>
   );

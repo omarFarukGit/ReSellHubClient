@@ -8,26 +8,50 @@ import { toast } from "react-toastify";
 const statusBadge = (status: string) => {
   switch (status) {
     case "active":
-      return "bg-green-100 text-green-700";
+      return `
+        bg-green-100 text-green-700
+        dark:bg-green-500/10 dark:text-green-400
+      `;
+
     case "blocked":
-      return "bg-red-100 text-red-700";
+      return `
+        bg-red-100 text-red-700
+        dark:bg-red-500/10 dark:text-red-400
+      `;
+
     default:
-      return "bg-gray-100 text-gray-600";
+      return `
+        bg-gray-100 text-gray-600
+        dark:bg-gray-800 dark:text-gray-400
+      `;
   }
 };
 
 const roleBadge = (role: string) => {
   switch (role) {
     case "seller":
-      return "bg-blue-100 text-blue-700";
+      return `
+        bg-blue-100 text-blue-700
+        dark:bg-blue-500/10 dark:text-blue-400
+      `;
+
     case "buyer":
-      return "bg-purple-100 text-purple-700";
+      return `
+        bg-purple-100 text-purple-700
+        dark:bg-purple-500/10 dark:text-purple-400
+      `;
+
     default:
-      return "bg-gray-100 text-gray-600";
+      return `
+        bg-gray-100 text-gray-600
+        dark:bg-gray-800 dark:text-gray-400
+      `;
   }
 };
 
-export default function AdminUsersPage({ users }: UsersTableProps) {
+export default function AdminUsersPage({
+  users,
+}: UsersTableProps) {
   const router = useRouter();
 
   const deleteUser = async (userId: string) => {
@@ -54,10 +78,16 @@ export default function AdminUsersPage({ users }: UsersTableProps) {
     }
   };
 
-  const statusChangeUser = async (userId: string, currentStatus: string) => {
+  const statusChangeUser = async (
+    userId: string,
+    currentStatus: string,
+  ) => {
     try {
       const payload = {
-        status: currentStatus === "active" ? "blocked" : "active",
+        status:
+          currentStatus === "active"
+            ? "blocked"
+            : "active",
       };
 
       const res = await fetch(
@@ -80,7 +110,9 @@ export default function AdminUsersPage({ users }: UsersTableProps) {
 
       toast.success(
         `User ${
-          payload.status === "blocked" ? "blocked" : "unblocked"
+          payload.status === "blocked"
+            ? "blocked"
+            : "unblocked"
         } successfully ✅`,
       );
 
@@ -92,65 +124,238 @@ export default function AdminUsersPage({ users }: UsersTableProps) {
   };
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 space-y-6">
+    <div
+      className="
+        min-h-screen
+        space-y-6
+        bg-gray-50
+        p-4
+        transition-colors
+        duration-300
+
+        dark:bg-gray-950
+
+        md:p-6
+        lg:p-8
+      "
+    >
       {/* Header */}
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div
+        className="
+          flex
+          flex-col
+          gap-2
+          md:flex-row
+          md:items-center
+          md:justify-between
+        "
+      >
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Users Management</h1>
-          <p className="text-sm text-gray-500">Manage all buyers and sellers</p>
+          <h1
+            className="
+              text-2xl
+              font-bold
+              text-gray-900
+
+              dark:text-white
+            "
+          >
+            Users Management
+          </h1>
+
+          <p
+            className="
+              text-sm
+              text-gray-500
+
+              dark:text-gray-400
+            "
+          >
+            Manage all buyers and sellers
+          </p>
         </div>
 
-        <div className="text-sm text-gray-500">Total Users: {users.length}</div>
+        <div
+          className="
+            text-sm
+            text-gray-500
+
+            dark:text-gray-400
+          "
+        >
+          Total Users:{" "}
+          <span className="font-semibold text-orange-500">
+            {users.length}
+          </span>
+        </div>
       </div>
 
       {/* Table Card */}
-      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-        <div className="w-full">
+      <div
+        className="
+          overflow-hidden
+          rounded-2xl
+          border
+          border-gray-200
+          bg-white
+          shadow-sm
+          transition-colors
+          duration-300
+
+          dark:border-gray-800
+          dark:bg-gray-900
+        "
+      >
+        <div className="w-full overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            {/* Table Header */}
+            <thead
+              className="
+                bg-gray-50
+
+                dark:bg-gray-800
+              "
+            >
               <tr>
-                <th className="p-4 text-left font-semibold text-gray-700">
+                <th
+                  className="
+                    p-4
+                    text-left
+                    font-semibold
+                    text-gray-700
+
+                    dark:text-gray-300
+                  "
+                >
                   User
                 </th>
 
-                <th className="p-4 text-left font-semibold text-gray-700">
+                <th
+                  className="
+                    p-4
+                    text-left
+                    font-semibold
+                    text-gray-700
+
+                    dark:text-gray-300
+                  "
+                >
                   Email
                 </th>
 
-                <th className="hidden md:table-cell p-4 text-left font-semibold text-gray-700">
+                <th
+                  className="
+                    hidden
+                    p-4
+                    text-left
+                    font-semibold
+                    text-gray-700
+
+                    dark:text-gray-300
+
+                    md:table-cell
+                  "
+                >
                   Role
                 </th>
 
-                <th className="hidden lg:table-cell p-4 text-left font-semibold text-gray-700">
+                <th
+                  className="
+                    hidden
+                    p-4
+                    text-left
+                    font-semibold
+                    text-gray-700
+
+                    dark:text-gray-300
+
+                    lg:table-cell
+                  "
+                >
                   Status
                 </th>
 
-                <th className="hidden xl:table-cell p-4 text-left font-semibold text-gray-700">
+                <th
+                  className="
+                    hidden
+                    p-4
+                    text-left
+                    font-semibold
+                    text-gray-700
+
+                    dark:text-gray-300
+
+                    xl:table-cell
+                  "
+                >
                   Joined
                 </th>
 
-                <th className="p-4 text-right font-semibold text-gray-700">
+                <th
+                  className="
+                    p-4
+                    text-right
+                    font-semibold
+                    text-gray-700
+
+                    dark:text-gray-300
+                  "
+                >
                   Actions
                 </th>
               </tr>
             </thead>
 
+            {/* Table Body */}
             <tbody>
               {users.length > 0 ? (
                 users.map((user) => (
                   <tr
                     key={user._id}
-                    className="border-t border-gray-100 hover:bg-gray-50 transition-colors"
+                    className="
+                      border-t
+                      border-gray-100
+                      transition-colors
+                      hover:bg-gray-50
+
+                      dark:border-gray-800
+                      dark:hover:bg-gray-800/50
+                    "
                   >
                     {/* User */}
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-semibold text-indigo-700">
-                          {user.name?.charAt(0)?.toUpperCase()}
+                        <div
+                          className="
+                            flex
+                            h-10
+                            w-10
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-full
+                            bg-indigo-100
+                            font-semibold
+                            text-indigo-700
+
+                            dark:bg-indigo-500/10
+                            dark:text-indigo-400
+                          "
+                        >
+                          {user.name
+                            ?.charAt(0)
+                            ?.toUpperCase()}
                         </div>
 
                         <div>
-                          <p className="font-medium text-gray-900">
+                          <p
+                            className="
+                              font-medium
+                              text-gray-900
+
+                              dark:text-white
+                            "
+                          >
                             {user.name}
                           </p>
                         </div>
@@ -158,60 +363,150 @@ export default function AdminUsersPage({ users }: UsersTableProps) {
                     </td>
 
                     {/* Email */}
-                    <td className="p-4 text-gray-600 break-all">
+                    <td
+                      className="
+                        break-all
+                        p-4
+                        text-gray-600
+
+                        dark:text-gray-400
+                      "
+                    >
                       {user.email}
                     </td>
 
                     {/* Role */}
-                    <td className="hidden md:table-cell p-4">
+                    <td
+                      className="
+                        hidden
+                        p-4
+
+                        md:table-cell
+                      "
+                    >
                       <span
-                        className={`rounded-full px-3 py-1 text-xs font-medium ${roleBadge(
-                          user.role,
-                        )}`}
+                        className={`
+                          rounded-full
+                          px-3
+                          py-1
+                          text-xs
+                          font-medium
+                          ${roleBadge(user.role)}
+                        `}
                       >
                         {user.role}
                       </span>
                     </td>
 
                     {/* Status */}
-                    <td className="hidden lg:table-cell p-4">
+                    <td
+                      className="
+                        hidden
+                        p-4
+
+                        lg:table-cell
+                      "
+                    >
                       <span
-                        className={`rounded-full px-3 py-1 text-xs font-medium ${statusBadge(
-                          user.status,
-                        )}`}
+                        className={`
+                          rounded-full
+                          px-3
+                          py-1
+                          text-xs
+                          font-medium
+                          ${statusBadge(user.status)}
+                        `}
                       >
                         {user.status}
                       </span>
                     </td>
 
                     {/* Joined */}
-                    <td className="hidden xl:table-cell p-4 text-gray-600">
-                      {new Date(user.createdAt).toLocaleDateString()}
+                    <td
+                      className="
+                        hidden
+                        p-4
+                        text-gray-600
+
+                        dark:text-gray-400
+
+                        xl:table-cell
+                      "
+                    >
+                      {new Date(
+                        user.createdAt,
+                      ).toLocaleDateString()}
                     </td>
 
                     {/* Actions */}
                     <td className="p-4">
-                      <div className="flex flex-col items-end gap-1 sm:flex-row sm:justify-end">
-                        {/* <button className="rounded-lg px-2 py-1 text-blue-600 hover:bg-blue-50">
-                          View
-                        </button> */}
+                      <div
+                        className="
+                          flex
+                          flex-col
+                          items-end
+                          gap-1
 
+                          sm:flex-row
+                          sm:justify-end
+                        "
+                      >
+                        {/* Block / Unblock */}
                         <button
                           onClick={() =>
-                            statusChangeUser(user._id, user.status)
+                            statusChangeUser(
+                              user._id,
+                              user.status,
+                            )
                           }
-                          className={`rounded-lg px-2 py-1 ${
-                            user.status === "active"
-                              ? "text-red-600 hover:bg-red-50"
-                              : "text-green-600 hover:bg-green-50"
-                          }`}
+                          className={`
+                            rounded-lg
+                            px-3
+                            py-1.5
+                            font-medium
+                            transition
+
+                            ${
+                              user.status === "active"
+                                ? `
+                                  text-red-600
+                                  hover:bg-red-50
+
+                                  dark:text-red-400
+                                  dark:hover:bg-red-500/10
+                                `
+                                : `
+                                  text-green-600
+                                  hover:bg-green-50
+
+                                  dark:text-green-400
+                                  dark:hover:bg-green-500/10
+                                `
+                            }
+                          `}
                         >
-                          {user.status === "active" ? "Block" : "Unblock"}
+                          {user.status === "active"
+                            ? "Block"
+                            : "Unblock"}
                         </button>
 
+                        {/* Delete */}
                         <button
-                          onClick={() => deleteUser(user._id)}
-                          className="rounded-lg px-2 py-1 text-gray-700 hover:bg-gray-100"
+                          onClick={() =>
+                            deleteUser(user._id)
+                          }
+                          className="
+                            rounded-lg
+                            px-3
+                            py-1.5
+                            font-medium
+                            text-gray-700
+                            transition
+                            hover:bg-gray-100
+
+                            dark:text-gray-300
+                            dark:hover:bg-gray-800
+                          "
                         >
                           Delete
                         </button>
@@ -221,7 +516,16 @@ export default function AdminUsersPage({ users }: UsersTableProps) {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="py-16 text-center text-gray-500">
+                  <td
+                    colSpan={6}
+                    className="
+                      py-16
+                      text-center
+                      text-gray-500
+
+                      dark:text-gray-400
+                    "
+                  >
                     No users found
                   </td>
                 </tr>
@@ -232,9 +536,28 @@ export default function AdminUsersPage({ users }: UsersTableProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex flex-col gap-2 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
-        <span>Total Users: {users.length}</span>
-        <span>Showing all records</span>
+      <div
+        className="
+          flex
+          flex-col
+          gap-2
+          text-sm
+          text-gray-500
+
+          dark:text-gray-400
+
+          md:flex-row
+          md:items-center
+          md:justify-between
+        "
+      >
+        <span>
+          Total Users: {users.length}
+        </span>
+
+        <span>
+          Showing all records
+        </span>
       </div>
     </div>
   );

@@ -6,26 +6,111 @@ const FetureProducts = async () => {
   const products = res?.data?.slice(0, 8) || [];
 
   return (
-    <div className="relative min-h-screen overflow-hidden ">
+    <section
+      className="
+        relative min-h-screen
+        overflow-hidden
+        bg-white
+        transition-colors duration-300
+
+        dark:bg-gray-950
+      "
+    >
       {/* Background Effects */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Orange Glow */}
+        <div
+          className="
+            absolute
+            -left-20 -top-20
+            h-72 w-72
+            rounded-full
+            bg-orange-500/5
+            blur-3xl
+            dark:bg-orange-500/10
+          "
+        />
+
+        <div
+          className="
+            absolute
+            -bottom-20 -right-20
+            h-72 w-72
+            rounded-full
+            bg-amber-500/5
+            blur-3xl
+            dark:bg-amber-500/10
+          "
+        />
+      </div>
 
       {/* Content */}
-      <div className="relative z-10 px-4 py-8 md:px-8 lg:px-12">
+      <div className="relative z-10 px-4 py-12 md:px-8 lg:px-12">
         {/* Header */}
-        <div className="max-w-7xl mx-auto mb-10">
-          <span className="inline-flex items-center rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1 text-sm text-orange-300">
+        <div className="mx-auto mb-10 max-w-7xl">
+          {/* Badge */}
+          <span
+            className="
+              inline-flex
+              items-center
+              rounded-full
+              border
+              border-orange-500/30
+              bg-orange-500/10
+              px-4 py-1
+              text-sm
+              font-medium
+              text-orange-600
+
+              dark:text-orange-300
+            "
+          >
             ResellHub Marketplace
           </span>
 
-          <h1 className="mt-4 text-4xl md:text-5xl font-bold tracking-tight">
-            Explore Feture
-            <span className="bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent">
+          {/* Heading */}
+          <h1
+            className="
+              mt-4
+              text-4xl
+              font-bold
+              tracking-tight
+              text-gray-900
+
+              dark:text-white
+
+              md:text-5xl
+            "
+          >
+            Explore Feature
+            <span
+              className="
+                bg-gradient-to-r
+                from-orange-500
+                to-amber-500
+                bg-clip-text
+                text-transparent
+
+                dark:from-orange-400
+                dark:to-amber-300
+              "
+            >
               {" "}
               Products
             </span>
           </h1>
 
-          <p className="mt-3 max-w-2xl text-zinc-400 text-lg">
+          {/* Description */}
+          <p
+            className="
+              mt-3
+              max-w-2xl
+              text-lg
+              text-gray-600
+
+              dark:text-zinc-400
+            "
+          >
             Discover quality second-hand products from trusted sellers at
             affordable prices.
           </p>
@@ -34,7 +119,7 @@ const FetureProducts = async () => {
         {/* Products */}
         <ProductListingContainer products={products} />
       </div>
-    </div>
+    </section>
   );
 };
 

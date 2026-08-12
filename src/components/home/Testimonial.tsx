@@ -25,34 +25,143 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="w-full py-14 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Title */}
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-10">
-          What Our Users Say
-        </h2>
+    <section
+      className="
+        w-full
+        bg-gray-50
+        py-14
+        transition-colors duration-300
+        dark:bg-gray-950
+      "
+    >
+      <div className="mx-auto max-w-7xl px-4">
+        {/* Header */}
+        <div className="mb-10 text-center">
+          <span
+            className="
+              text-sm
+              font-semibold
+              uppercase
+              tracking-wider
+              text-orange-500
+              dark:text-orange-400
+            "
+          >
+            Testimonials
+          </span>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((item, index) => (
+          <h2
+            className="
+              mt-2
+              text-2xl
+              font-bold
+              text-gray-800
+              transition-colors
+              dark:text-white
+              md:text-3xl
+            "
+          >
+            What Our Users Say
+          </h2>
+
+          <p
+            className="
+              mx-auto
+              mt-3
+              max-w-2xl
+              text-sm
+              text-gray-500
+              dark:text-gray-400
+            "
+          >
+            See what buyers and sellers are saying about their
+            Resellhub experience.
+          </p>
+        </div>
+
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {testimonials.map((item) => (
             <div
-              key={index}
-              className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition"
+              key={item.name}
+              className="
+                group
+                rounded-2xl
+                border
+                border-gray-100
+                bg-white
+                p-6
+                shadow-sm
+                transition-all duration-300
+
+                hover:-translate-y-1
+                hover:border-orange-200
+                hover:shadow-lg
+
+                dark:border-gray-800
+                dark:bg-gray-900
+                dark:hover:border-orange-500/30
+                dark:hover:bg-gray-900
+              "
             >
               {/* Stars */}
-              <div className="flex gap-1 text-orange-500 mb-4">
+              <div
+                className="
+                  mb-4
+                  flex gap-1
+                  text-orange-500
+                  dark:text-orange-400
+                "
+              >
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={16} fill="currentColor" />
+                  <Star
+                    key={i}
+                    size={16}
+                    fill="currentColor"
+                    className="transition-transform duration-300 group-hover:scale-110"
+                  />
                 ))}
               </div>
 
               {/* Comment */}
-              <p className="text-gray-600 text-sm mb-4">{item.comment}</p>
+              <p
+                className="
+                  mb-6
+                  text-sm
+                  leading-6
+                  text-gray-600
+                  dark:text-gray-300
+                "
+              >
+                “{item.comment}”
+              </p>
+
+              {/* Divider */}
+              <div className="mb-4 h-px bg-gray-100 dark:bg-gray-800" />
 
               {/* User Info */}
               <div>
-                <h4 className="font-semibold text-gray-800">{item.name}</h4>
-                <p className="text-xs text-gray-500">{item.role}</p>
+                <h4
+                  className="
+                    font-semibold
+                    text-gray-800
+                    dark:text-white
+                  "
+                >
+                  {item.name}
+                </h4>
+
+                <p
+                  className="
+                    mt-1
+                    text-xs
+                    font-medium
+                    text-orange-500
+                    dark:text-orange-400
+                  "
+                >
+                  {item.role}
+                </p>
               </div>
             </div>
           ))}

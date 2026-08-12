@@ -5,7 +5,7 @@ import {
   Smartphone,
   Laptop,
   Computer,
-Camera ,
+  Camera,
   Watch,
   Headphones,
 } from "lucide-react";
@@ -21,25 +21,66 @@ const categories = [
 
 const CategorySection = () => {
   return (
-    <section className="w-full py-12 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8">
+    <section className="w-full bg-white py-12 transition-colors dark:bg-gray-950">
+      <div className="mx-auto max-w-7xl px-4">
+        {/* Heading */}
+        <h2 className="mb-8 text-2xl font-bold text-gray-800 transition-colors dark:text-white md:text-3xl">
           Browse Categories
         </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-          {categories.map((cat, index) => {
+        {/* Categories */}
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
+          {categories.map((cat) => {
             const Icon = cat.icon;
 
             return (
               <Link
-                key={index}
+                key={cat.name}
                 href={`/products?category=${encodeURIComponent(cat.name)}`}
-                className="flex flex-col items-center justify-center p-5 rounded-xl border hover:shadow-md hover:scale-105 transition cursor-pointer bg-gray-50"
-              >
-                <Icon className="w-8 h-8 text-orange-500 mb-2" />
+                className="
+                  group
+                  flex flex-col items-center justify-center
+                  rounded-xl border
+                  border-gray-200
+                  bg-gray-50
+                  p-5
+                  transition-all duration-300
+                  hover:-translate-y-1
+                  hover:border-orange-300
+                  hover:bg-orange-50
+                  hover:shadow-md
 
-                <p className="text-sm font-medium text-gray-700">{cat.name}</p>
+                  dark:border-gray-800
+                  dark:bg-gray-900
+                  dark:hover:border-orange-500/50
+                  dark:hover:bg-gray-800
+                "
+              >
+                {/* Icon */}
+                <Icon
+                  className="
+                    mb-2 h-8 w-8
+                    text-orange-500
+                    transition-all duration-300
+                    group-hover:scale-110
+                    group-hover:text-orange-600
+                    dark:text-orange-400
+                    dark:group-hover:text-orange-300
+                  "
+                />
+
+                {/* Category Name */}
+                <p
+                  className="
+                    text-sm font-medium
+                    text-gray-700
+                    transition-colors
+                    dark:text-gray-300
+                    dark:group-hover:text-white
+                  "
+                >
+                  {cat.name}
+                </p>
               </Link>
             );
           })}
