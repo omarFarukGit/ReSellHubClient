@@ -28,7 +28,8 @@ export default async function Success({
       ? session.payment_intent
       : session.payment_intent?.id || "TXN-096631954";
 
-  const productName = session.metadata?.productName || "MacBook Pro M1 2021";
+  const productName =
+    session.metadata?.productName || "MacBook Pro M1 2021";
 
   const amount = session.amount_total
     ? `$${(session.amount_total / 100).toFixed(2)}`
@@ -48,15 +49,18 @@ export default async function Success({
       phone: session.metadata?.phone,
       address: session.metadata?.address,
     },
+
     sellerInfo: {
       userId: session.metadata?.sellerId,
       name: session.metadata?.sellerName,
       email: session.metadata?.sellerEmail,
     },
+
     productId: session.metadata?.productId,
     productName: session.metadata?.productName,
     productPrice: session.metadata?.productPrice,
     productImage: session.metadata?.productImage,
+
     transactionId,
     paymentStatus: "paid",
     orderStatus: "pending",
@@ -80,64 +84,229 @@ export default async function Success({
   createOrder(orderData);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-8 border border-slate-200">
-        {/* HEADER */}
-        <div className="text-center mb-6">
-          <div className="mx-auto w-14 h-14 flex items-center justify-center rounded-full bg-orange-100 text-orange-600 text-2xl">
-            ✓
-          </div>
-
-          <h1 className="text-2xl font-bold text-orange-600 mt-3">
-            Payment Successful
-          </h1>
-
-          <p className="text-slate-500 text-sm">Thank you for your purchase</p>
-        </div>
-
-        {/* ORDER DETAILS */}
-        <div className="space-y-3 text-sm">
-          <div className="flex justify-between border-b pb-2">
-            <span className="text-slate-500">Transaction ID</span>
-            <span className="font-medium text-slate-900">{transactionId}</span>
-          </div>
-
-          <div className="flex justify-between border-b pb-2">
-            <span className="text-slate-500">Order ID</span>
-            <span className="font-medium text-slate-900">{orderId}</span>
-          </div>
-
-          <div className="flex justify-between border-b pb-2">
-            <span className="text-slate-500">Product</span>
-            <span className="font-medium text-slate-900">{productName}</span>
-          </div>
-
-          <div className="flex justify-between border-b pb-2">
-            <span className="text-slate-500">Amount</span>
-            <span className="font-semibold text-orange-600">{amount}</span>
-          </div>
-
-          <div className="flex justify-between border-b pb-2">
-            <span className="text-slate-500">Date</span>
-            <span className="font-medium text-slate-900">{date}</span>
-          </div>
-
-          <div className="flex justify-between pt-2">
-            <span className="text-slate-500">Status</span>
-            <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold">
-              SUCCESS
-            </span>
-          </div>
-        </div>
-
-        {/* BUTTON */}
-        <div className="mt-6">
-          <Link
-            href="/"
-            className="block text-center bg-orange-500 text-white py-3 rounded-xl font-medium hover:bg-orange-600 transition shadow-md"
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-8 text-slate-900 transition-colors dark:bg-slate-950 dark:text-white">
+      <div className="w-full max-w-xl">
+        {/* SUCCESS CARD */}
+        <div
+          className="
+            overflow-hidden rounded-3xl
+            border border-slate-200
+            bg-white shadow-xl
+            dark:border-slate-800
+            dark:bg-slate-900
+          "
+        >
+          {/* TOP SUCCESS SECTION */}
+          <div
+            className="
+              border-b border-slate-200
+              bg-orange-50 px-6 py-8
+              text-center
+              dark:border-slate-800
+              dark:bg-orange-950/20
+            "
           >
-            Back to Home
-          </Link>
+            {/* SUCCESS ICON */}
+            <div
+              className="
+                mx-auto flex h-16 w-16
+                items-center justify-center
+                rounded-full
+                bg-orange-100
+                text-3xl font-bold
+                text-orange-600
+                dark:bg-orange-500/10
+                dark:text-orange-500
+              "
+            >
+              ✓
+            </div>
+
+            <h1
+              className="
+                mt-4 text-2xl font-bold
+                text-orange-600
+                dark:text-orange-500
+                md:text-3xl
+              "
+            >
+              Payment Successful
+            </h1>
+
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              Thank you for your purchase!
+            </p>
+          </div>
+
+          {/* ORDER DETAILS */}
+          <div className="px-6 py-7 md:px-8">
+            <h2 className="mb-5 text-lg font-semibold">
+              Order Details
+            </h2>
+
+            <div className="space-y-0 text-sm">
+              {/* Transaction ID */}
+              <div
+                className="
+                  flex flex-col gap-1 border-b
+                  border-slate-200 py-4
+                  sm:flex-row sm:items-center sm:justify-between
+                  dark:border-slate-800
+                "
+              >
+                <span className="text-slate-500 dark:text-slate-400">
+                  Transaction ID
+                </span>
+
+                <span
+                  className="
+                    max-w-full break-all
+                    font-medium text-slate-900
+                    dark:text-white
+                    sm:max-w-[60%] sm:text-right
+                  "
+                >
+                  {transactionId}
+                </span>
+              </div>
+
+              {/* Order ID */}
+              <div
+                className="
+                  flex flex-col gap-1 border-b
+                  border-slate-200 py-4
+                  sm:flex-row sm:items-center sm:justify-between
+                  dark:border-slate-800
+                "
+              >
+                <span className="text-slate-500 dark:text-slate-400">
+                  Order ID
+                </span>
+
+                <span className="font-medium text-slate-900 dark:text-white">
+                  {orderId}
+                </span>
+              </div>
+
+              {/* Product */}
+              <div
+                className="
+                  flex flex-col gap-1 border-b
+                  border-slate-200 py-4
+                  sm:flex-row sm:items-center sm:justify-between
+                  dark:border-slate-800
+                "
+              >
+                <span className="text-slate-500 dark:text-slate-400">
+                  Product
+                </span>
+
+                <span
+                  className="
+                    font-medium text-slate-900
+                    dark:text-white
+                    sm:text-right
+                  "
+                >
+                  {productName}
+                </span>
+              </div>
+
+              {/* Amount */}
+              <div
+                className="
+                  flex flex-col gap-1 border-b
+                  border-slate-200 py-4
+                  sm:flex-row sm:items-center sm:justify-between
+                  dark:border-slate-800
+                "
+              >
+                <span className="text-slate-500 dark:text-slate-400">
+                  Amount
+                </span>
+
+                <span
+                  className="
+                    text-lg font-bold
+                    text-orange-600
+                    dark:text-orange-500
+                  "
+                >
+                  {amount}
+                </span>
+              </div>
+
+              {/* Date */}
+              <div
+                className="
+                  flex flex-col gap-1 border-b
+                  border-slate-200 py-4
+                  sm:flex-row sm:items-center sm:justify-between
+                  dark:border-slate-800
+                "
+              >
+                <span className="text-slate-500 dark:text-slate-400">
+                  Date
+                </span>
+
+                <span className="font-medium text-slate-900 dark:text-white">
+                  {date}
+                </span>
+              </div>
+
+              {/* Status */}
+              <div
+                className="
+                  flex items-center
+                  justify-between
+                  py-4
+                "
+              >
+                <span className="text-slate-500 dark:text-slate-400">
+                  Payment Status
+                </span>
+
+                <span
+                  className="
+                    rounded-full
+                    bg-green-100
+                    px-3 py-1
+                    text-xs font-semibold
+                    text-green-700
+                    dark:bg-green-500/10
+                    dark:text-green-400
+                  "
+                >
+                  ✓ SUCCESS
+                </span>
+              </div>
+            </div>
+
+            {/* BUTTON */}
+            <Link
+              href="/"
+              className="
+                mt-6 block w-full
+                rounded-xl
+                bg-orange-500
+                px-4 py-3
+                text-center
+                font-semibold text-white
+                shadow-sm
+                transition
+                hover:bg-orange-600
+                dark:bg-orange-500
+                dark:hover:bg-orange-400
+              "
+            >
+              Back to Home
+            </Link>
+
+            {/* SMALL MESSAGE */}
+            <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-500">
+              Your payment has been successfully processed.
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -41,7 +41,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
         </span>
 
         <h1 className="mt-4 text-4xl md:text-5xl font-bold tracking-tight">
-          Explore Feture
+          Explore
           <span className="bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent">
             {" "}
             Products

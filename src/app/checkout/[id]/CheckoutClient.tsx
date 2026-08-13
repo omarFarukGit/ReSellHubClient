@@ -56,115 +56,254 @@ export default function CheckoutClient({ product }: CheckoutClientProps) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-10 bg-slate-50 min-h-screen">
-      <h1 className="text-4xl font-bold mb-10 text-slate-900">Checkout</h1>
+    <div className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900 transition-colors dark:bg-slate-950 dark:text-white md:px-6 md:py-10">
+      <div className="mx-auto max-w-7xl">
+        {/* Header */}
+        <div className="mb-8 md:mb-10">
+          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
+            Checkout
+          </h1>
 
-      <form onSubmit={handleCheckout} className="grid lg:grid-cols-3 gap-8">
-        {/* LEFT FORM */}
-        <div className="lg:col-span-2 bg-white border rounded-2xl p-8 shadow-sm">
-          <h2 className="text-2xl font-semibold mb-8 text-slate-900">
-            Delivery Information
-          </h2>
-
-          <input
-            name="fullName"
-            placeholder="Full Name"
-            value={formData.fullName}
-            onChange={handleChange}
-            className="w-full border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 p-3 mb-3 rounded-xl outline-none"
-            required
-          />
-
-          <input
-            name="phone"
-            placeholder="Phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 p-3 mb-3 rounded-xl outline-none"
-            required
-          />
-
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 p-3 mb-3 rounded-xl outline-none"
-            required
-          />
-
-          <input
-            name="address"
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 p-3 mb-3 rounded-xl outline-none"
-            required
-          />
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            Complete your delivery information and proceed with payment.
+          </p>
         </div>
 
-        {/* RIGHT SUMMARY */}
-        <div className="bg-white border rounded-2xl p-8 h-fit shadow-sm">
-          <h2 className="text-2xl font-bold mb-6 text-slate-900">
-            Order Summary
-          </h2>
+        <form
+          onSubmit={handleCheckout}
+          className="grid gap-6 lg:grid-cols-3 lg:gap-8"
+        >
+          {/* LEFT FORM */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900 md:p-8 lg:col-span-2">
+            <div className="mb-7">
+              <h2 className="text-xl font-semibold md:text-2xl">
+                Delivery Information
+              </h2>
 
-          <h3 className="font-semibold text-slate-800">{product.title}</h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                Enter your information to receive your order.
+              </p>
+            </div>
 
-          <p className="text-sm text-slate-500">{product.condition}</p>
-
-          <hr className="my-4" />
-
-          <div className="flex justify-between text-slate-700">
-            <span>Subtotal</span>
-            <span>${product.price}</span>
-          </div>
-
-          <div className="flex justify-between text-slate-700">
-            <span>Tax</span>
-            <span>${tax.toFixed(2)}</span>
-          </div>
-
-          <div className="flex justify-between font-bold mt-4 text-slate-900">
-            <span>Total</span>
-            <span className="text-orange-600">${total.toFixed(2)}</span>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full mt-6 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed transition text-white py-3 rounded-xl font-semibold shadow-md flex items-center justify-center gap-2 cursor-pointer"
-          >
-            {loading ? (
-              <>
-                <svg
-                  className="w-5 h-5 animate-spin"
-                  viewBox="0 0 24 24"
-                  fill="none"
+            <div className="space-y-4">
+              {/* Full Name */}
+              <div>
+                <label
+                  htmlFor="fullName"
+                  className="mb-1.5 block text-sm font-medium"
                 >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    className="opacity-25"
-                  />
-                  <path
-                    fill="currentColor"
-                    className="opacity-75"
-                    d="M4 12a8 8 0 018-8v8H4z"
-                  />
-                </svg>
-                Processing Payment...
-              </>
-            ) : (
-              <>Pay ${total.toFixed(2)}</>
-            )}
-          </button>
-        </div>
-      </form>
+                  Full Name
+                </label>
+
+                <input
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className="
+                    w-full rounded-xl border border-slate-200
+                    bg-white px-4 py-3 text-sm text-slate-900
+                    outline-none transition
+                    placeholder:text-slate-400
+                    focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10
+                    dark:border-slate-700 dark:bg-slate-950
+                    dark:text-white dark:placeholder:text-slate-500
+                    dark:focus:border-orange-500
+                  "
+                  required
+                />
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="mb-1.5 block text-sm font-medium"
+                >
+                  Phone Number
+                </label>
+
+                <input
+                  id="phone"
+                  name="phone"
+                  placeholder="+880 1712-345678"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="
+                    w-full rounded-xl border border-slate-200
+                    bg-white px-4 py-3 text-sm text-slate-900
+                    outline-none transition
+                    placeholder:text-slate-400
+                    focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10
+                    dark:border-slate-700 dark:bg-slate-950
+                    dark:text-white dark:placeholder:text-slate-500
+                    dark:focus:border-orange-500
+                  "
+                  required
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-1.5 block text-sm font-medium"
+                >
+                  Email Address
+                </label>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="
+                    w-full rounded-xl border border-slate-200
+                    bg-white px-4 py-3 text-sm text-slate-900
+                    outline-none transition
+                    placeholder:text-slate-400
+                    focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10
+                    dark:border-slate-700 dark:bg-slate-950
+                    dark:text-white dark:placeholder:text-slate-500
+                    dark:focus:border-orange-500
+                  "
+                  required
+                />
+              </div>
+
+              {/* Address */}
+              <div>
+                <label
+                  htmlFor="address"
+                  className="mb-1.5 block text-sm font-medium"
+                >
+                  Delivery Address
+                </label>
+
+                <input
+                  id="address"
+                  name="address"
+                  placeholder="Enter your delivery address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="
+                    w-full rounded-xl border border-slate-200
+                    bg-white px-4 py-3 text-sm text-slate-900
+                    outline-none transition
+                    placeholder:text-slate-400
+                    focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10
+                    dark:border-slate-700 dark:bg-slate-950
+                    dark:text-white dark:placeholder:text-slate-500
+                    dark:focus:border-orange-500
+                  "
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT SUMMARY */}
+          <div className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900 md:p-8">
+            <h2 className="text-xl font-bold md:text-2xl">
+              Order Summary
+            </h2>
+
+            {/* Product */}
+            <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+              <h3 className="font-semibold text-slate-900 dark:text-white">
+                {product.title}
+              </h3>
+
+              <p className="mt-1 text-sm capitalize text-slate-500 dark:text-slate-400">
+                Condition: {product.condition}
+              </p>
+            </div>
+
+            <div className="my-5 h-px bg-slate-200 dark:bg-slate-800" />
+
+            {/* Subtotal */}
+            <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+              <span>Subtotal</span>
+              <span className="font-medium text-slate-900 dark:text-white">
+                ${product.price.toLocaleString()}
+              </span>
+            </div>
+
+            {/* Tax */}
+            <div className="mt-3 flex justify-between text-sm text-slate-600 dark:text-slate-400">
+              <span>Tax (8%)</span>
+              <span className="font-medium text-slate-900 dark:text-white">
+                ${tax.toFixed(2)}
+              </span>
+            </div>
+
+            <div className="my-5 h-px bg-slate-200 dark:bg-slate-800" />
+
+            {/* Total */}
+            <div className="flex items-center justify-between">
+              <span className="text-base font-semibold">Total</span>
+
+              <span className="text-2xl font-bold text-orange-600 dark:text-orange-500">
+                ${total.toFixed(2)}
+              </span>
+            </div>
+
+            {/* Checkout Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="
+                mt-7 flex w-full cursor-pointer items-center
+                justify-center gap-2 rounded-xl
+                bg-orange-500 px-4 py-3.5
+                font-semibold text-white shadow-sm
+                transition
+                hover:bg-orange-600
+                disabled:cursor-not-allowed
+                disabled:bg-orange-300
+                dark:hover:bg-orange-500
+                dark:disabled:bg-orange-900
+              "
+            >
+              {loading ? (
+                <>
+                  <svg
+                    className="h-5 w-5 animate-spin"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      className="opacity-25"
+                    />
+
+                    <path
+                      fill="currentColor"
+                      className="opacity-75"
+                      d="M4 12a8 8 0 018-8v8H4z"
+                    />
+                  </svg>
+
+                  Processing Payment...
+                </>
+              ) : (
+                <>Pay ${total.toFixed(2)}</>
+              )}
+            </button>
+
+            <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-500">
+              You will be redirected to the secure payment page.
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
