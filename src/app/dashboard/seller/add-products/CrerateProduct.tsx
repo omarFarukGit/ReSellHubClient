@@ -79,10 +79,7 @@ export default function CreateProductPage({ user }: any) {
       if (res) {
         toast.success("Product created successfully ✅");
 
-        // ✅ reset form
         form.reset();
-
-        // ✅ clear images
         setImages([]);
       } else {
         toast.error("Failed to create product ❌");
@@ -96,39 +93,43 @@ export default function CreateProductPage({ user }: any) {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-10">
+    <div className="min-h-screen bg-zinc-50 py-10 text-zinc-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100">
       <div className="mx-auto max-w-5xl px-4">
+        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Sell Your Product</h1>
-          <p className="text-zinc-500 mt-2">
+
+          <p className="mt-2 text-zinc-500 dark:text-zinc-400">
             Create a listing and reach thousands of buyers.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Images */}
-          <div className="rounded-2xl bg-white border p-6">
-            <h2 className="font-semibold text-xl mb-5">Product Images</h2>
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <h2 className="mb-5 text-xl font-semibold">Product Images</h2>
 
             <input
               type="file"
               multiple
               accept="image/*"
               onChange={handleImageUpload}
-              className="w-full"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 p-2 text-sm text-zinc-700 file:mr-4 file:rounded-lg file:border-0 file:bg-orange-500 file:px-4 file:py-2 file:text-white hover:file:bg-orange-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
             />
 
             {uploading && (
-              <p className="mt-3 text-orange-500">Uploading images...</p>
+              <p className="mt-3 text-orange-500 dark:text-orange-400">
+                Uploading images...
+              </p>
             )}
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
+            <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4">
               {images.map((img, index) => (
                 <Image
                   key={index}
                   src={img}
-                  alt={"create image"}
-                  className="h-32 w-full rounded-xl object-cover border"
+                  alt="create image"
+                  className="h-32 w-full rounded-xl border border-zinc-200 object-cover dark:border-zinc-700"
                   width={200}
                   height={200}
                 />
@@ -137,18 +138,21 @@ export default function CreateProductPage({ user }: any) {
           </div>
 
           {/* Product Details */}
-          <div className="rounded-2xl bg-white border p-6">
-            <h2 className="font-semibold text-xl mb-5">Product Details</h2>
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <h2 className="mb-5 text-xl font-semibold">Product Details</h2>
 
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid gap-5 md:grid-cols-2">
               <input
                 name="name"
                 placeholder="Product Name"
                 required
-                className="border rounded-xl px-4 py-3"
+                className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
               />
 
-              <select name="category" className="border rounded-xl px-4 py-3">
+              <select
+                name="category"
+                className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+              >
                 <option>Phone</option>
                 <option>Computer</option>
                 <option>Laptop</option>
@@ -160,24 +164,24 @@ export default function CreateProductPage({ user }: any) {
               <input
                 name="brand"
                 placeholder="Brand"
-                className="border rounded-xl px-4 py-3"
+                className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
               />
 
               <input
                 name="model"
                 placeholder="Model"
-                className="border rounded-xl px-4 py-3"
+                className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
               />
             </div>
           </div>
 
           {/* Condition */}
-          <div className="rounded-2xl bg-white border p-6">
-            <h2 className="font-semibold text-xl mb-5">Condition</h2>
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <h2 className="mb-5 text-xl font-semibold">Condition</h2>
 
             <select
               name="condition"
-              className="w-full border rounded-xl px-4 py-3"
+              className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
             >
               <option value="new">Brand New</option>
               <option value="like-new">Like New</option>
@@ -187,65 +191,69 @@ export default function CreateProductPage({ user }: any) {
           </div>
 
           {/* Price */}
-          <div className="rounded-2xl bg-white border p-6">
-            <h2 className="font-semibold text-xl mb-5">Pricing</h2>
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <h2 className="mb-5 text-xl font-semibold">Pricing</h2>
 
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid gap-5 md:grid-cols-2">
               <input
                 type="number"
                 name="price"
                 required
                 placeholder="Price"
-                className="border rounded-xl px-4 py-3"
+                className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
               />
 
-              <label className="flex items-center gap-3">
-                <input type="checkbox" name="negotiable" />
+              <label className="flex items-center gap-3 text-zinc-700 dark:text-zinc-300">
+                <input
+                  type="checkbox"
+                  name="negotiable"
+                  className="h-4 w-4 accent-orange-500"
+                />
                 Negotiable
               </label>
             </div>
           </div>
 
           {/* Location */}
-          <div className="rounded-2xl bg-white border p-6">
-            <h2 className="font-semibold text-xl mb-5">Location</h2>
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <h2 className="mb-5 text-xl font-semibold">Location</h2>
 
             <input
               name="location"
               placeholder="Dhaka"
               required
-              className="w-full border rounded-xl px-4 py-3"
+              className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
             />
           </div>
 
           {/* Description */}
-          <div className="rounded-2xl bg-white border p-6">
-            <h2 className="font-semibold text-xl mb-5">Description</h2>
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <h2 className="mb-5 text-xl font-semibold">Description</h2>
 
             <textarea
               name="description"
               rows={6}
               required
               placeholder="Write details about your product..."
-              className="w-full border rounded-xl p-4"
+              className="w-full rounded-xl border border-zinc-200 bg-white p-4 text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
             />
           </div>
 
           {/* Seller */}
-          <div className="rounded-2xl bg-white border p-6">
-            <h2 className="font-semibold text-xl mb-5">Seller Information</h2>
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <h2 className="mb-5 text-xl font-semibold">Seller Information</h2>
 
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid gap-5 md:grid-cols-2">
               <input
                 value={user?.name}
                 disabled
-                className="border rounded-xl px-4 py-3"
+                className="rounded-xl border border-zinc-200 bg-zinc-100 px-4 py-3 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400"
               />
 
               <input
                 value={user?.email}
                 disabled
-                className="border rounded-xl px-4 py-3"
+                className="rounded-xl border border-zinc-200 bg-zinc-100 px-4 py-3 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400"
               />
             </div>
           </div>
@@ -255,7 +263,7 @@ export default function CreateProductPage({ user }: any) {
             <button
               type="submit"
               disabled={uploading || loading}
-              className="bg-orange-500 cursor-pointer hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-medium disabled:opacity-50"
+              className="cursor-pointer rounded-xl bg-orange-500 px-8 py-3 font-medium text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-orange-600 dark:hover:bg-orange-700"
             >
               {loading ? "Publishing..." : "Publish Product"}
             </button>

@@ -6,34 +6,44 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { OrdersTableProps } from "@/types/orderType";
 
-type OrderStatus = "pending" | "shipped" | "delivered" | "cancelled";
+type OrderStatus =
+  | "pending"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
 
 const statusBadge = (status: OrderStatus) => {
   switch (status) {
     case "pending":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/10 dark:text-yellow-400";
+
+    case "processing":
+      return "bg-purple-100 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400";
+
     case "shipped":
-      return "bg-blue-100 text-blue-700";
+      return "bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400";
+
     case "delivered":
-      return "bg-green-100 text-green-700";
+      return "bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400";
+
     case "cancelled":
-      return "bg-red-100 text-red-700";
+      return "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400";
+
+    default:
+      return "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400";
   }
 };
 
-export default function SellerOrdersPage({ orders }: OrdersTableProps) {
-  console.log(orders, "ordr");
+export default function SellerOrdersPage({
+  orders,
+}: OrdersTableProps) {
   const router = useRouter();
 
   const updateStatus = async (
     orderId: string,
     sellerId: string,
-    orderStatus:
-      | "pending"
-      | "processing"
-      | "shipped"
-      | "delivered"
-      | "cancelled",
+    orderStatus: OrderStatus,
   ) => {
     try {
       const res = await fetch(
@@ -51,144 +61,251 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
         toast.error("Status update failed ❌");
         return;
       }
-      console.log(res, orderId, sellerId, "orderstatus");
+
       toast.success("Status updated successfully ✅");
+
       router.refresh();
     } catch (error: unknown) {
       toast.error("Something went wrong ❌");
-      console.log(error);
+      console.error(error);
     }
   };
 
   if (!orders?.length) {
     return <OrderNotFound />;
   }
+
   return (
-    <div className="p-6 md:p-10 space-y-6">
+    <div className="space-y-6 p-6 md:p-10">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold">Seller Orders</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Seller Orders
+        </h1>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Manage all incoming orders from buyers
         </p>
       </div>
 
       {/* Table */}
-      <div className="overflow-hidden rounded-xl bg-white shadow">
+      <div
+        className="
+          overflow-hidden
+          rounded-2xl
+          border
+          border-gray-200
+          bg-white
+          shadow-sm
+          dark:border-gray-700
+          dark:bg-gray-900
+        "
+      >
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-100 text-left">
+            {/* Table Header */}
+            <thead
+              className="
+                bg-gray-50
+                text-left
+                text-gray-700
+                dark:bg-gray-800
+                dark:text-gray-300
+              "
+            >
               <tr>
                 <th className="p-4">Product</th>
 
-                <th className="hidden md:table-cell p-4">Buyer</th>
+                <th className="hidden p-4 md:table-cell">
+                  Buyer
+                </th>
 
-                <th className="hidden lg:table-cell p-4">Price</th>
+                <th className="hidden p-4 lg:table-cell">
+                  Price
+                </th>
 
-                <th className="p-4">Status</th>
+                <th className="p-4">
+                  Status
+                </th>
 
-                <th className="hidden lg:table-cell p-4">Date</th>
-                <th className="hidden lg:table-cell p-4">Location</th>
+                <th className="hidden p-4 lg:table-cell">
+                  Date
+                </th>
 
-                <th className="p-4 text-right">Actions</th>
+                <th className="hidden p-4 lg:table-cell">
+                  Location
+                </th>
+
+                <th className="p-4 text-right">
+                  Actions
+                </th>
               </tr>
             </thead>
 
+            {/* Table Body */}
             <tbody>
               {orders.length > 0 ? (
                 orders.map((order) => (
                   <tr
                     key={order._id}
-                    className="border-t hover:bg-gray-50 transition"
+                    className="
+                      border-t
+                      border-gray-200
+                      transition
+                      hover:bg-gray-50
+                      dark:border-gray-700
+                      dark:hover:bg-gray-800/50
+                    "
                   >
                     {/* Product */}
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <Image
-                          src={order.productImage}
-                          className="h-10 w-10 rounded object-cover"
-                          alt={order.productName}
-                          width={200}
-                          height={200}
-                        />
+                        <div
+                          className="
+                            overflow-hidden
+                            rounded-lg
+                            border
+                            border-gray-200
+                            dark:border-gray-700
+                          "
+                        >
+                          <Image
+                            src={order.productImage}
+                            className="h-10 w-10 object-cover"
+                            alt={order.productName}
+                            width={200}
+                            height={200}
+                          />
+                        </div>
 
                         <div>
-                          <p className="font-medium">{order.productName}</p>
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            {order.productName}
+                          </p>
 
                           {/* Mobile Info */}
-                          <div className="md:hidden text-xs text-gray-500 space-y-1">
+                          <div className="space-y-1 text-xs text-gray-500 dark:text-gray-400 md:hidden">
                             <p>{order.buyerInfo.name}</p>
-                            <p>$ {order.productPrice}</p>
+                            <p>
+                              $ {order.productPrice}
+                            </p>
                           </div>
                         </div>
                       </div>
                     </td>
 
                     {/* Buyer */}
-                    <td className="hidden md:table-cell p-4 text-gray-600">
+                    <td className="hidden p-4 text-gray-600 dark:text-gray-300 md:table-cell">
                       {order.buyerInfo.name}
                     </td>
 
                     {/* Price */}
-                    <td className="hidden lg:table-cell p-4 font-semibold">
+                    <td className="hidden p-4 font-semibold text-gray-900 dark:text-white lg:table-cell">
                       $ {order.productPrice}
                     </td>
 
                     {/* Status */}
                     <td className="p-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${statusBadge(
-                          order.orderStatus,
-                        )}`}
+                        className={`
+                          inline-flex
+                          rounded-full
+                          px-3
+                          py-1
+                          text-xs
+                          font-medium
+                          ${statusBadge(order.orderStatus)}
+                        `}
                       >
                         {order.orderStatus}
                       </span>
                     </td>
 
                     {/* Date */}
-                    <td className="hidden lg:table-cell p-4 text-gray-600">
-                      {new Date(order.createdAt).toLocaleDateString()}
+                    <td className="hidden p-4 text-gray-600 dark:text-gray-400 lg:table-cell">
+                      {new Date(
+                        order.createdAt,
+                      ).toLocaleDateString()}
                     </td>
-                    {/* Loccation */}
-                    <td className="hidden lg:table-cell p-4 text-gray-600">
-                      {order.buyerInfo.address}
+
+                    {/* Location */}
+                    <td className="hidden max-w-[200px] p-4 text-gray-600 dark:text-gray-400 lg:table-cell">
+                      <span className="line-clamp-2">
+                        {order.buyerInfo.address}
+                      </span>
                     </td>
 
                     {/* Actions */}
                     <td className="p-4">
                       <div className="flex flex-wrap justify-end gap-2 text-xs">
+                        {/* View */}
                         <button
-                          className="rounded px-2 py-1 text-blue-600 hover:bg-blue-50"
+                          type="button"
+                          className="
+                            rounded-lg
+                            px-3
+                            py-1.5
+                            font-medium
+                            text-blue-600
+                            transition
+                            hover:bg-blue-50
+                            dark:text-blue-400
+                            dark:hover:bg-blue-500/10
+                          "
                           onClick={() =>
-                            router.push(`/products/${order.productId}`)
+                            router.push(
+                              `/products/${order.productId}`,
+                            )
                           }
                         >
                           View
                         </button>
 
+                        {/* Status */}
                         <select
                           value={order.orderStatus}
                           onChange={(e) =>
                             updateStatus(
                               order._id,
                               order.sellerInfo.userId,
-                              e.target.value as
-                                | "pending"
-                                | "processing"
-                                | "shipped"
-                                | "delivered"
-                                | "cancelled",
+                              e.target.value as OrderStatus,
                             )
                           }
-                          className={`rounded-md border px-2 py-1 text-xs font-medium ${statusBadge(
-                            order.orderStatus,
-                          )}`}
+                          className={`
+                            cursor-pointer
+                            rounded-lg
+                            border
+                            border-transparent
+                            px-2
+                            py-1.5
+                            text-xs
+                            font-medium
+                            outline-none
+                            transition
+                            focus:ring-2
+                            focus:ring-blue-500/30
+                            ${statusBadge(order.orderStatus)}
+                          `}
                         >
-                          <option value="pending">Pending</option>
-                          <option value="processing">Processing</option>
-                          <option value="shipped">Shipped</option>
-                          <option value="delivered">Delivered</option>
-                          <option value="cancelled">Cancelled</option>
+                          <option value="pending">
+                            Pending
+                          </option>
+
+                          <option value="processing">
+                            Processing
+                          </option>
+
+                          <option value="shipped">
+                            Shipped
+                          </option>
+
+                          <option value="delivered">
+                            Delivered
+                          </option>
+
+                          <option value="cancelled">
+                            Cancelled
+                          </option>
                         </select>
                       </div>
                     </td>
@@ -196,7 +313,15 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="py-16 text-center text-gray-500">
+                  <td
+                    colSpan={7}
+                    className="
+                      py-16
+                      text-center
+                      text-gray-500
+                      dark:text-gray-400
+                    "
+                  >
                     No orders found
                   </td>
                 </tr>
@@ -207,8 +332,22 @@ export default function SellerOrdersPage({ orders }: OrdersTableProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex flex-col gap-2 text-xs text-gray-500 md:flex-row md:justify-between">
-        <span>Total Orders: {orders.length}</span>
+      <div
+        className="
+          flex
+          flex-col
+          gap-2
+          text-xs
+          text-gray-500
+          dark:text-gray-400
+          md:flex-row
+          md:justify-between
+        "
+      >
+        <span>
+          Total Orders: {orders.length}
+        </span>
+
         <span>Seller Dashboard</span>
       </div>
     </div>
