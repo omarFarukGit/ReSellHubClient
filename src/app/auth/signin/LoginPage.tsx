@@ -15,7 +15,7 @@ import {
 } from "@heroui/react";
 
 import { toast } from "react-toastify";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { ShoppingBag, Eye, EyeOff } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
@@ -74,7 +74,7 @@ const LoginPage = () => {
 
   const signIn = async () => {
     await authClient.signIn.social({
-      provider: "github",
+      provider: "google",
     });
   };
 
@@ -88,10 +88,8 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <div className="grid min-h-screen lg:grid-cols-2">
-
         {/* ================= LEFT SIDE ================= */}
         <div className="relative hidden overflow-hidden bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 p-12 text-white lg:flex flex-col justify-between">
-
           <div className="relative z-10">
             {/* Logo */}
             <div className="flex items-center gap-3">
@@ -100,13 +98,9 @@ const LoginPage = () => {
               </div>
 
               <div>
-                <h1 className="text-3xl font-bold">
-                  ResellHub
-                </h1>
+                <h1 className="text-3xl font-bold">ResellHub</h1>
 
-                <p className="text-orange-100">
-                  Buy • Sell • Trade
-                </p>
+                <p className="text-orange-100">Buy • Sell • Trade</p>
               </div>
             </div>
 
@@ -132,7 +126,6 @@ const LoginPage = () => {
 
         {/* ================= RIGHT SIDE ================= */}
         <div className="flex min-h-screen items-center justify-center bg-gray-50 px-5 py-10 dark:bg-zinc-950">
-
           <Card
             className="
               w-full max-w-md
@@ -219,95 +212,150 @@ const LoginPage = () => {
               </div>
             </div>
 
-            {/* ================= FORM ================= */}
-            <Form onSubmit={onSubmit} className="mt-6 space-y-5">
+            {/* Email */}
+            <TextField
+              name="email"
+              type="email"
+              isRequired
+              className="space-y-2"
+            >
+              <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+                Email Address
+              </Label>
 
-              {/* Email */}
-              <TextField name="email" type="email" isRequired>
-                <Label className="text-gray-700 dark:text-zinc-200">
-                  Email
-                </Label>
-
+              <div className="group relative">
                 <Input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="john@example.com"
                   className="
-                    bg-white
-                    text-gray-900
-                    dark:bg-zinc-800
-                    dark:text-white
-                  "
+        h-12
+        w-full
+        rounded-xl
+        border
+        border-gray-200
+        bg-gray-50
+        px-4
+        text-sm
+        text-gray-900
+        shadow-sm
+        outline-none
+        transition-all
+        duration-200
+
+        placeholder:text-gray-400
+
+        hover:border-orange-300
+        hover:bg-white
+
+        focus:border-orange-500
+        focus:bg-white
+        focus:ring-4
+        focus:ring-orange-500/10
+
+        dark:border-zinc-700
+        dark:bg-zinc-800/80
+        dark:text-white
+        dark:placeholder:text-zinc-500
+
+        dark:hover:border-orange-500/50
+        dark:hover:bg-zinc-800
+
+        dark:focus:border-orange-500
+        dark:focus:bg-zinc-800
+        dark:focus:ring-orange-500/10
+      "
+                />
+              </div>
+
+              <FieldError className="text-xs text-red-500" />
+            </TextField>
+
+            {/* Password */}
+            <TextField name="password" isRequired className="space-y-2">
+              <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+                Password
+              </Label>
+
+              <div className="group relative">
+                <Input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="
+        h-12
+        w-full
+        rounded-xl
+        border
+        border-gray-200
+        bg-gray-50
+        px-4
+        pr-12
+        text-sm
+        text-gray-900
+        shadow-sm
+        outline-none
+        transition-all
+        duration-200
+
+        placeholder:text-gray-400
+
+        hover:border-orange-300
+        hover:bg-white
+
+        focus:border-orange-500
+        focus:bg-white
+        focus:ring-4
+        focus:ring-orange-500/10
+
+        dark:border-zinc-700
+        dark:bg-zinc-800/80
+        dark:text-white
+        dark:placeholder:text-zinc-500
+
+        dark:hover:border-orange-500/50
+        dark:hover:bg-zinc-800
+
+        dark:focus:border-orange-500
+        dark:focus:bg-zinc-800
+        dark:focus:ring-orange-500/10
+      "
                 />
 
-                <FieldError />
-              </TextField>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="
+        absolute
+        right-3
+        top-1/2
+        flex
+        h-8
+        w-8
+        -translate-y-1/2
+        items-center
+        justify-center
+        rounded-lg
+        text-gray-400
+        transition-all
+        duration-200
 
-              {/* Password */}
-              <TextField name="password" isRequired>
-                <Label className="text-gray-700 dark:text-zinc-200">
-                  Password
-                </Label>
+        hover:bg-orange-50
+        hover:text-orange-500
 
-                <div className="relative">
-                  <Input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter password"
-                    className="
-                      w-full
-                      pr-10
-                      bg-white
-                      text-gray-900
-                      dark:bg-zinc-800
-                      dark:text-white
-                    "
-                  />
+        dark:text-zinc-400
+        dark:hover:bg-orange-500/10
+        dark:hover:text-orange-400
+      "
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setShowPassword(!showPassword)
-                    }
-                    className="
-                      absolute
-                      right-3
-                      top-1/2
-                      -translate-y-1/2
-                      text-gray-500
-                      hover:text-gray-700
-                      dark:text-zinc-400
-                      dark:hover:text-white
-                    "
-                  >
-                    {showPassword ? (
-                      <EyeOff size={18} />
-                    ) : (
-                      <Eye size={18} />
-                    )}
-                  </button>
-                </div>
-
-                <FieldError />
-              </TextField>
-
-              {/* Login Button */}
-              <Button
-                type="submit"
-                isDisabled={loading}
-                className="
-                  w-full
-                  bg-orange-500
-                  text-white
-                  hover:bg-orange-600
-                  dark:bg-orange-500
-                  dark:hover:bg-orange-600
-                "
-              >
-                {loading ? "Signing In..." : "Login"}
-              </Button>
-            </Form>
+              <FieldError className="text-xs text-red-500" />
+            </TextField>
 
             {/* Divider */}
             <div className="my-6 flex items-center gap-3">
@@ -337,14 +385,13 @@ const LoginPage = () => {
                 dark:hover:bg-zinc-700
               "
             >
-              <FaGithub size={18} />
-              Continue with GitHub
+              <FaGoogle size={18} />
+              Continue with Google
             </Button>
 
             {/* Signup */}
             <p className="mt-6 text-center text-sm text-gray-600 dark:text-zinc-400">
               Don't have an account?{" "}
-
               <Link
                 href="/auth/signup"
                 className="

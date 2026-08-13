@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 import { EyeOff, Eye } from "lucide-react";
 
@@ -102,9 +102,9 @@ const SignUpPage = () => {
     }
   };
 
-  const signInGithub = async () => {
+  const signInGoogle = async () => {
     await authClient.signIn.social({
-      provider: "github",
+      provider: "google",
     });
   };
 
@@ -145,105 +145,195 @@ const SignUpPage = () => {
             ================================================== */}
             <Form onSubmit={onSubmit} className="space-y-5">
               {/* Full Name */}
-              <TextField isRequired name="name">
-                <Label className="text-gray-700 dark:text-zinc-200">
+              {/* Full Name */}
+              <TextField isRequired name="name" className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
                   Full Name
                 </Label>
 
                 <Input
                   placeholder="Md. Rakib Hasan"
                   className="
-                    h-12
-                    bg-white
-                    text-gray-900
-                    dark:bg-zinc-800
-                    dark:text-white
-                  "
+      h-12
+      w-full
+      rounded-xl
+      border
+      border-gray-200
+      bg-gray-50
+      px-4
+      text-sm
+      text-gray-900
+      shadow-sm
+      outline-none
+      transition-all
+      duration-200
+      placeholder:text-gray-400
+
+      hover:border-orange-300
+      hover:bg-white
+
+      focus:border-orange-500
+      focus:bg-white
+      focus:ring-4
+      focus:ring-orange-500/10
+
+      dark:border-zinc-700
+      dark:bg-zinc-800/80
+      dark:text-white
+      dark:placeholder:text-zinc-500
+
+      dark:hover:border-orange-500/50
+      dark:hover:bg-zinc-800
+
+      dark:focus:border-orange-500
+      dark:focus:bg-zinc-800
+      dark:focus:ring-orange-500/10
+    "
                 />
 
-                <FieldError />
+                <FieldError className="text-xs text-red-500" />
               </TextField>
 
               {/* Email */}
-              <TextField isRequired name="email">
-                <Label className="text-gray-700 dark:text-zinc-200">
-                  Email
+              <TextField isRequired name="email" className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+                  Email Address
                 </Label>
 
                 <Input
                   type="email"
                   placeholder="rakib@gmail.com"
                   className="
-                    h-12
-                    bg-white
-                    text-gray-900
-                    dark:bg-zinc-800
-                    dark:text-white
-                  "
+      h-12
+      w-full
+      rounded-xl
+      border
+      border-gray-200
+      bg-gray-50
+      px-4
+      text-sm
+      text-gray-900
+      shadow-sm
+      outline-none
+      transition-all
+      duration-200
+      placeholder:text-gray-400
+
+      hover:border-orange-300
+      hover:bg-white
+
+      focus:border-orange-500
+      focus:bg-white
+      focus:ring-4
+      focus:ring-orange-500/10
+
+      dark:border-zinc-700
+      dark:bg-zinc-800/80
+      dark:text-white
+      dark:placeholder:text-zinc-500
+
+      dark:hover:border-orange-500/50
+      dark:hover:bg-zinc-800
+
+      dark:focus:border-orange-500
+      dark:focus:bg-zinc-800
+      dark:focus:ring-orange-500/10
+    "
                 />
 
-                <FieldError />
+                <FieldError className="text-xs text-red-500" />
               </TextField>
 
               {/* Password */}
-              <TextField name="password" isRequired>
-                <Label className="text-gray-700 dark:text-zinc-200">
+              <TextField name="password" isRequired className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
                   Password
                 </Label>
 
-                <div className="relative">
+                <div className="group relative">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter password"
+                    placeholder="Enter your password"
                     className="
-                      w-full
-                      pr-10
-                      bg-white
-                      text-gray-900
-                      dark:bg-zinc-800
-                      dark:text-white
-                    "
+        h-12
+        w-full
+        rounded-xl
+        border
+        border-gray-200
+        bg-gray-50
+        px-4
+        pr-12
+        text-sm
+        text-gray-900
+        shadow-sm
+        outline-none
+        transition-all
+        duration-200
+        placeholder:text-gray-400
+
+        hover:border-orange-300
+        hover:bg-white
+
+        focus:border-orange-500
+        focus:bg-white
+        focus:ring-4
+        focus:ring-orange-500/10
+
+        dark:border-zinc-700
+        dark:bg-zinc-800/80
+        dark:text-white
+        dark:placeholder:text-zinc-500
+
+        dark:hover:border-orange-500/50
+        dark:hover:bg-zinc-800
+
+        dark:focus:border-orange-500
+        dark:focus:bg-zinc-800
+        dark:focus:ring-orange-500/10
+      "
                   />
 
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => setShowPassword((prev) => !prev)}
                     className="
-                      absolute
-                      right-3
-                      top-1/2
-                      -translate-y-1/2
-                      text-gray-500
-                      hover:text-gray-700
-                      dark:text-zinc-400
-                      dark:hover:text-white
-                    "
+        absolute
+        right-3
+        top-1/2
+        flex
+        h-8
+        w-8
+        -translate-y-1/2
+        items-center
+        justify-center
+        rounded-lg
+        text-gray-400
+        transition-all
+
+        hover:bg-orange-50
+        hover:text-orange-500
+
+        dark:text-zinc-400
+        dark:hover:bg-orange-500/10
+        dark:hover:text-orange-400
+      "
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
 
-                <Description className="text-gray-500 dark:text-zinc-500">
+                <Description className="text-xs text-gray-500 dark:text-zinc-500">
                   Minimum 8 characters recommended
                 </Description>
 
-                <FieldError />
-              </TextField>
-
-              {/* Hidden Photo */}
-              <TextField name="photo" hidden>
-                <Label>Profile Photo URL</Label>
-
-                <Input
-                  placeholder="https://example.com/photo.jpg"
-                  className="h-12"
-                />
+                <FieldError className="text-xs text-red-500" />
               </TextField>
 
               {/* Phone + Location */}
-              <div className="grid gap-4 md:grid-cols-2">
-                <TextField isRequired name="phone">
-                  <Label className="text-gray-700 dark:text-zinc-200">
+              <div className="grid gap-5 md:grid-cols-2">
+                {/* Phone */}
+                <TextField isRequired name="phone" className="space-y-2">
+                  <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
                     Phone Number
                   </Label>
 
@@ -252,34 +342,93 @@ const SignUpPage = () => {
                     type="tel"
                     placeholder="+8801712345678"
                     className="
-                      h-12
-                      bg-white
-                      text-gray-900
-                      dark:bg-zinc-800
-                      dark:text-white
-                    "
+        h-12
+        w-full
+        rounded-xl
+        border
+        border-gray-200
+        bg-gray-50
+        px-4
+        text-sm
+        text-gray-900
+        shadow-sm
+        outline-none
+        transition-all
+        duration-200
+        placeholder:text-gray-400
+
+        hover:border-orange-300
+        hover:bg-white
+
+        focus:border-orange-500
+        focus:bg-white
+        focus:ring-4
+        focus:ring-orange-500/10
+
+        dark:border-zinc-700
+        dark:bg-zinc-800/80
+        dark:text-white
+        dark:placeholder:text-zinc-500
+
+        dark:hover:border-orange-500/50
+        dark:hover:bg-zinc-800
+
+        dark:focus:border-orange-500
+        dark:focus:bg-zinc-800
+        dark:focus:ring-orange-500/10
+      "
                   />
 
-                  <FieldError />
+                  <FieldError className="text-xs text-red-500" />
                 </TextField>
 
-                <TextField isRequired name="location">
-                  <Label className="text-gray-700 dark:text-zinc-200">
+                {/* Location */}
+                <TextField isRequired name="location" className="space-y-2">
+                  <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
                     Location
                   </Label>
 
                   <Input
                     placeholder="Dhaka, Bangladesh"
                     className="
-                      h-12
-                      bg-white
-                      text-gray-900
-                      dark:bg-zinc-800
-                      dark:text-white
-                    "
+        h-12
+        w-full
+        rounded-xl
+        border
+        border-gray-200
+        bg-gray-50
+        px-4
+        text-sm
+        text-gray-900
+        shadow-sm
+        outline-none
+        transition-all
+        duration-200
+        placeholder:text-gray-400
+
+        hover:border-orange-300
+        hover:bg-white
+
+        focus:border-orange-500
+        focus:bg-white
+        focus:ring-4
+        focus:ring-orange-500/10
+
+        dark:border-zinc-700
+        dark:bg-zinc-800/80
+        dark:text-white
+        dark:placeholder:text-zinc-500
+
+        dark:hover:border-orange-500/50
+        dark:hover:bg-zinc-800
+
+        dark:focus:border-orange-500
+        dark:focus:bg-zinc-800
+        dark:focus:ring-orange-500/10
+      "
                   />
 
-                  <FieldError />
+                  <FieldError className="text-xs text-red-500" />
                 </TextField>
               </div>
 
@@ -409,8 +558,9 @@ const SignUpPage = () => {
             {/* =================================================
                 GITHUB
             ================================================== */}
+            {/* GitHub */}
             <Button
-              onClick={signInGithub}
+              onClick={signInGoogle}
               className="
                 h-12
                 w-full
@@ -419,15 +569,14 @@ const SignUpPage = () => {
                 bg-white
                 text-black
                 hover:bg-gray-50
-
                 dark:border-zinc-700
                 dark:bg-zinc-800
                 dark:text-white
                 dark:hover:bg-zinc-700
               "
             >
-              <FaGithub className="text-lg dark:text-white" />
-              Continue with GitHub
+              <FaGoogle size={18} />
+              Continue with Google
             </Button>
 
             {/* Login */}
