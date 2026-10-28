@@ -212,150 +212,80 @@ const LoginPage = () => {
               </div>
             </div>
 
-            {/* Email */}
-            <TextField
-              name="email"
-              type="email"
-              isRequired
-              className="space-y-2"
-            >
-              <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
-                Email Address
-              </Label>
+ 
+<Form onSubmit={onSubmit} className="mt-6 space-y-5">
+  {/* Email */}
+  <TextField
+    name="email"
+    type="email"
+    isRequired
+    className="space-y-2"
+  >
+    <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+      Email Address
+    </Label>
 
-              <div className="group relative">
-                <Input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="john@example.com"
-                  className="
-        h-12
-        w-full
-        rounded-xl
-        border
-        border-gray-200
-        bg-gray-50
-        px-4
-        text-sm
-        text-gray-900
-        shadow-sm
-        outline-none
-        transition-all
-        duration-200
+    <Input
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="john@example.com"
+      className="h-12 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 text-sm text-gray-900 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+    />
 
-        placeholder:text-gray-400
+    <FieldError className="text-xs text-red-500" />
+  </TextField>
 
-        hover:border-orange-300
-        hover:bg-white
+  {/* Password */}
+  <TextField
+    name="password"
+    isRequired
+    className="space-y-2"
+  >
+    <div className="flex items-center justify-between">
+      <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+        Password
+      </Label>
 
-        focus:border-orange-500
-        focus:bg-white
-        focus:ring-4
-        focus:ring-orange-500/10
+      <Link
+        href="/auth/forgot-password"
+        className="text-sm font-medium text-orange-600 hover:text-orange-700"
+      >
+        Forgot password?
+      </Link>
+    </div>
 
-        dark:border-zinc-700
-        dark:bg-zinc-800/80
-        dark:text-white
-        dark:placeholder:text-zinc-500
+    <div className="relative">
+      <Input
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        type={showPassword ? "text" : "password"}
+        placeholder="Enter your password"
+        className="h-12 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 pr-12 text-sm text-gray-900 outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+      />
 
-        dark:hover:border-orange-500/50
-        dark:hover:bg-zinc-800
+      <button
+        type="button"
+        onClick={() => setShowPassword((prev) => !prev)}
+        className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-gray-400 hover:bg-orange-50 hover:text-orange-500"
+        aria-label={showPassword ? "Hide password" : "Show password"}
+      >
+        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+      </button>
+    </div>
 
-        dark:focus:border-orange-500
-        dark:focus:bg-zinc-800
-        dark:focus:ring-orange-500/10
-      "
-                />
-              </div>
+    <FieldError className="text-xs text-red-500" />
+  </TextField>
 
-              <FieldError className="text-xs text-red-500" />
-            </TextField>
+  {/* Login Button */}
+  <Button
+    type="submit"
+    isDisabled={loading}
+    className="h-12 w-full rounded-xl bg-orange-600 font-semibold text-white shadow-md transition hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-60"
+  >
+    {loading ? "Logging in..." : "Login"}
+  </Button>
+</Form>
 
-            {/* Password */}
-            <TextField name="password" isRequired className="space-y-2">
-              <Label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
-                Password
-              </Label>
-
-              <div className="group relative">
-                <Input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  className="
-        h-12
-        w-full
-        rounded-xl
-        border
-        border-gray-200
-        bg-gray-50
-        px-4
-        pr-12
-        text-sm
-        text-gray-900
-        shadow-sm
-        outline-none
-        transition-all
-        duration-200
-
-        placeholder:text-gray-400
-
-        hover:border-orange-300
-        hover:bg-white
-
-        focus:border-orange-500
-        focus:bg-white
-        focus:ring-4
-        focus:ring-orange-500/10
-
-        dark:border-zinc-700
-        dark:bg-zinc-800/80
-        dark:text-white
-        dark:placeholder:text-zinc-500
-
-        dark:hover:border-orange-500/50
-        dark:hover:bg-zinc-800
-
-        dark:focus:border-orange-500
-        dark:focus:bg-zinc-800
-        dark:focus:ring-orange-500/10
-      "
-                />
-
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="
-        absolute
-        right-3
-        top-1/2
-        flex
-        h-8
-        w-8
-        -translate-y-1/2
-        items-center
-        justify-center
-        rounded-lg
-        text-gray-400
-        transition-all
-        duration-200
-
-        hover:bg-orange-50
-        hover:text-orange-500
-
-        dark:text-zinc-400
-        dark:hover:bg-orange-500/10
-        dark:hover:text-orange-400
-      "
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-
-              <FieldError className="text-xs text-red-500" />
-            </TextField>
 
             {/* Divider */}
             <div className="my-6 flex items-center gap-3">

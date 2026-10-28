@@ -165,7 +165,7 @@ const Navbar = () => {
           {user?.role === "buyer" && <NavbarWishlist />}
 
           {/* Theme Toggle */}
-          <ModeToggle />
+          {/* <ModeToggle /> */}
 
           {!user ? (
             <>
